@@ -43,7 +43,7 @@ module.exports = {
     port: 8080,
     open: true,
     proxy: {
-      '/api': 'http://localhost:8000'
+      '/': 'http://localhost:8000'
     }
   },
   plugins: [
