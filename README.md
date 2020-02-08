@@ -6,4 +6,5 @@ To run the app:
 4. npm run dev
 
 To test the rest api with db:
+
 curl -d '{"name":"alex", "password":"aaaa"}' -H "Content-Type: application/json" -X POST http://localhost:80000/users
