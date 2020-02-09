@@ -4,10 +4,10 @@
   "description": "Flickr Gallery Template",
   "main": "",
   "scripts": {
-    "dev": "webpack-dev-server",
+    "client": "webpack-dev-server",
     "start": "webpack",
-    "dev-server": "node ./src/server/server.js",
-    "dev-db":"mongod --dbpath ./db"
+    "server": "node ./src/server/server.js",
+    "db":"mongod --dbpath ./db"
   },
   "repository": "",
   "keywords": [],
