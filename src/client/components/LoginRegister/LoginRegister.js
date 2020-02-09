@@ -5,6 +5,7 @@ import Modal from '@material-ui/core/Modal';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import CountrySelect from '../CountryAutoComplete';
+import Dropzone from '../dropzone'
 import './LoginRegister.scss'
  /* eslint-disable no-use-before-define */
 import './LoginRegister.scss'
@@ -90,6 +91,7 @@ export default function SimpleModal() {
           <TextField  id="standard-basic" label="Login" />
           <TextField  id="standard-basic" label="Password" />
           <CountrySelect/>
+          <Dropzone/>
           <Button style={{'display':'block', 'float':'right'}} variant="contained" color="primary">Register</Button>
         </form>
         </div>
