@@ -12,5 +12,8 @@ export default {
       size: 200,
       tag: 'art',
       tags: List()
+    }),
+    register_login:Map({
+      isOpenned:false
     })
 };

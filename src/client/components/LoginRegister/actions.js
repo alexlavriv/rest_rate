@@ -1,5 +1,13 @@
 import { LoginRegisterConstants} from './constants.js';
 
+export const openLoginRegisterWindow = (isLogin) =>{
+    return{
+       type:LoginRegisterConstants.OPEN_WINDOW,
+       payload: isLogin
+    };
+   };
+   
+
  const logIn = (userId, password) =>{
     return (   {
         type: LoginRegisterConstants.logIn,
@@ -13,18 +21,39 @@ import { LoginRegisterConstants} from './constants.js';
     })
 }
 
-const register = (register_data) =>{
+const registerAction = (register_data) =>{
     return( 
     {
-        type:LoginRegisterConstants.register,
+        type:LoginRegisterConstants.REGISTER,
+        uri: '/createUser',
         payload:register_data
     })
 }
 
+const registerSuccesAction = (id) =>{
+    return( 
+    {
+        type:LoginRegisterConstants.REGISTER_SUCCESS,
+        payload:id
+    })
+}
+
+const registerFailureAction = (message) =>{
+    return( 
+    {
+        type:LoginRegisterConstants.REGISTER_FAILURE,
+        payload:message
+    })
+}
+
+
 let LoginRegisterActions  = {
     logIn,
     logOut,
-    register
+    registerAction,
+    registerSuccesAction,
+    registerFailureAction
+
 };
 
 export default LoginRegisterActions;
