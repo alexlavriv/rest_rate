@@ -14,6 +14,7 @@ export default {
       tags: List()
     }),
     register_login:Map({
-      isOpenned:false
+      isOpenned:{isLogin:false, isRegister:false},
+      user:{login_name:"", password:""}
     })
 };

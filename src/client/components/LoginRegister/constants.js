@@ -1,0 +1,12 @@
+const LoginRegisterConstants = {
+    REGISTER: 'REGISTER',
+    REGISTER_SUCCESS: 'REGISTER_SUCCESS',
+    REGISTER_FAILURE: 'REGISTER_FAILURE',
+    LOGIN: 'LOGIN',
+    LOGOUT: 'LOGOUT',
+    OPEN_WINDOW : 'OPEN_WINDOW',
+    FIELD_UPDATE: 'FIELD_UPDATE'
+
+};
+
+export { LoginRegisterConstants}

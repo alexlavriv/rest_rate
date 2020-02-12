@@ -11,12 +11,9 @@ mongoose.connect('mongodb://127.0.0.1:27017/rest-rate-api',{
 
 const userSchema = new mongoose.Schema(
     {
-        name:{},
+        login_name:{},
         age:{},
         password:{},
-        email:{
-            type:String,
-            unique: true},
         avatar:{type:Buffer},
         tokens:[{
             token:{

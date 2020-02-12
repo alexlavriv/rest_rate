@@ -1,9 +1,9 @@
 import { LoginRegisterConstants} from './constants.js';
 
-export const openLoginRegisterWindow = (isLogin) =>{
+export const openLoginRegisterWindow = (isLogin, isRegister) =>{
     return{
        type:LoginRegisterConstants.OPEN_WINDOW,
-       payload: isLogin
+       payload: {isLogin, isRegister}
     };
    };
    
@@ -21,11 +21,19 @@ export const openLoginRegisterWindow = (isLogin) =>{
     })
 }
 
-const registerAction = (register_data) =>{
+export const formChangeAction = (id, value) =>{ 
+    return( 
+        {
+            type:LoginRegisterConstants.FIELD_UPDATE,
+            payload: {id,value}
+        })
+}
+export const registerAction = (register_data) =>{
+    console.log("Register data: ",register_data)
     return( 
     {
         type:LoginRegisterConstants.REGISTER,
-        uri: '/createUser',
+        uri: 'http://localhost:8000/users',
         payload:register_data
     })
 }
