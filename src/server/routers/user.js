@@ -50,7 +50,7 @@ router.post('/users/logout', auth,async (req,res)=>{
         res.user.tokens = res.user.tokens.filter((token) =>{ return token.token !== req.token });
         await res.user.save();
         console.log("before sending ok");
-        res.status(200).send()
+        res.status(200).send({})
     }catch(e){
         console.log(e);
         res.status(500).send(e);

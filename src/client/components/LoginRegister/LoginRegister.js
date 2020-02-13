@@ -113,7 +113,7 @@ function mapDispatchToProps(dispatch) {
         formChange: (e) => {dispatch(formChangeAction(e.target.id, e.target.value))},
         register: (userDetails) =>{dispatch(registerAction(userDetails))},
         login: (userDetails) => {dispatch(logIn(userDetails))},
-        logout: () => {dispatch(logOut())}
+        logout: (token) => {dispatch(logOut(token))}
     });
 }
 

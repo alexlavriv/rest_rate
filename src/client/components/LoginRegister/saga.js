@@ -49,9 +49,11 @@ function* logout(action){
       },
       body: JSON.stringify(action.payload)
     });
-    const json = yield call([res, 'json']);
-    yield put(LoginRegisterActions.logoutSucessAction(json));
+
+    yield call([res, 'json']);
+    yield put(LoginRegisterActions.logoutSuccessAction());
   } catch (e) {
+ 
     yield put(LoginRegisterActions.logoutFailureAction(e.message));
   }
 }

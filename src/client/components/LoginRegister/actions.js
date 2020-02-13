@@ -26,6 +26,7 @@ export const registerAction = (userDetails) =>{
 };
 
  export const logOut = (token) => {
+    console.log("logout " + token);
     return( 
     {
         type:LoginRegisterConstants.LOGOUT,
@@ -74,11 +75,10 @@ const loginFailureAction = (message) =>{
         payload:message
     })
 };
-const logoutSuccessAction = (id) =>{
+const logoutSuccessAction = () =>{
     return(
     {
         type:LoginRegisterConstants.LOGOUT_SUCCESS,
-        payload:id
     })
 };
 
