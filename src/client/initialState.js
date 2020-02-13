@@ -1,5 +1,7 @@
 const { List, Map } = require('immutable');
 
+let token = undefined;
+
 export default {
     gallery: Map({
         images: List(),
@@ -14,7 +16,8 @@ export default {
       tags: List()
     }),
     register_login:Map({
-      isOpenned:{isLogin:false, isRegister:false},
-      user:{login_name:"", password:""}
-    })
+      isOpened:{isLogin:false, isRegister:false},
+      user:{login_name:"", password:""},
+      token:""
+    }),
 };

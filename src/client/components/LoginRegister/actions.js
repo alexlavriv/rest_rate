@@ -2,24 +2,37 @@ import { LoginRegisterConstants} from './constants.js';
 
 export const openRegisterWindow = (isLogin, isRegister) =>{
     return{
-       type:LoginRegisterConstants.OPEN_WINDOW,
-       payload: {isLogin, isRegister}
+        type:LoginRegisterConstants.OPEN_WINDOW,
+        payload: {isLogin, isRegister}
     };
-   };
-   
+};
 
- const logIn = (userId, password) =>{
-    return (   {
-        type: LoginRegisterConstants.logIn,
-        payload:{userId, password}
-    })
-}
- const logOut = () =>{
+export const registerAction = (userDetails) =>{
+    console.log("Register data: ",userDetails);
+    return({
+        type:LoginRegisterConstants.REGISTER,
+        uri: 'http://localhost:8080/users/register',
+        payload:userDetails
+        })
+};
+
+ export const logIn = (userDetails) =>{
+     console.log("login data: ", userDetails);
+     return ({
+        type: LoginRegisterConstants.LOGIN,
+        uri: 'http://localhost:8080/users/login',
+        payload: userDetails
+        })
+};
+
+ export const logOut = (token) => {
     return( 
     {
-        type:LoginRegisterConstants.logOut
+        type:LoginRegisterConstants.LOGOUT,
+        uri: 'http://localhost:8080/users/logout',
+        payload: token
     })
-}
+};
 
 export const formChangeAction = (id, value) =>{ 
     return( 
@@ -27,24 +40,15 @@ export const formChangeAction = (id, value) =>{
             type:LoginRegisterConstants.FIELD_UPDATE,
             payload: {id,value}
         })
-}
-export const registerAction = (register_data) =>{
-    console.log("Register data: ",register_data)
-    return( 
-    {
-        type:LoginRegisterConstants.REGISTER,
-        uri: 'http://localhost:8000/users',
-        payload:register_data
-    })
-}
+};
 
-const registerSuccesAction = (id) =>{
+const registerSuccessAction = (id) =>{
     return( 
     {
         type:LoginRegisterConstants.REGISTER_SUCCESS,
         payload:id
     })
-}
+};
 
 const registerFailureAction = (message) =>{
     return( 
@@ -52,16 +56,51 @@ const registerFailureAction = (message) =>{
         type:LoginRegisterConstants.REGISTER_FAILURE,
         payload:message
     })
-}
+
+};
+
+const loginSuccessAction = (id) =>{
+    return(
+    {
+        type:LoginRegisterConstants.LOGIN_SUCCESS,
+        payload:id
+    })
+};
+
+const loginFailureAction = (message) =>{
+    return(
+    {
+        type:LoginRegisterConstants.LOGIN_FAILURE,
+        payload:message
+    })
+};
+const logoutSuccessAction = (id) =>{
+    return(
+    {
+        type:LoginRegisterConstants.LOGOUT_SUCCESS,
+        payload:id
+    })
+};
+
+const logoutFailureAction = (message) =>{
+    return(
+    {
+        type:LoginRegisterConstants.LOGOUT_FAILURE,
+        payload:message
+    })
+};
 
 
 let LoginRegisterActions  = {
     logIn,
     logOut,
     registerAction,
-    registerSuccesAction,
-    registerFailureAction
-
+    registerSuccessAction,
+    registerFailureAction,
+    loginSuccessAction,
+    loginFailureAction,
+    logoutSuccessAction,
+    logoutFailureAction
 };
 
 export default LoginRegisterActions;

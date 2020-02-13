@@ -7,14 +7,15 @@ import Button from '@material-ui/core/Button';
 import CountrySelect from '../CountryAutoComplete';
 import Dropzone from '../dropzone'
 import './LoginRegister.scss'
-import {openRegisterWindow, registerAction, formChangeAction} from './actions'
+import {logIn, logOut, openRegisterWindow, registerAction, formChangeAction} from './actions'
 import {connect} from 'react-redux';
 import { withStyles } from "@material-ui/core/styles";
 import compose from 'recompose/compose';
  /* eslint-disable no-use-before-define */
 
  const styles = theme => {
-return (  {paper: {
+return ({
+    paper: {
     position: 'absolute',
     width: 400,
     backgroundColor: theme.palette.background.paper,
@@ -22,83 +23,98 @@ return (  {paper: {
     boxShadow: theme.shadows[5],
     padding: theme.spacing(2, 4, 3),
   }})
+};
+
+class simpleModal extends React.Component {
+    getModelStyle() {
+        const top = 50;
+        const left = 50;
+        return {
+          top: `${top}%`,
+          left: `${left}%`,
+          transform: `translate(-${top}%, -${left}%)`,
+        };
+    }
+
+    render(){
+        const { classes } = this.props;
+        const modalStyle = this.getModelStyle();
+
+        function renderLogout(props) {
+            return (
+                <div className="loginRegister-root">
+                    <div className="loginRegister-link" onClick={() => props.logout(props.token)}>Logout</div>
+                </div>
+            )
+        }
+
+        function renderLoginRegister(props) {
+            return (
+                <div className="loginRegister-root">
+                    <div className="loginRegister-link" onClick={()=> props.openWindow(true, false)} >Login</div>
+                    <div>|</div>
+                    <div className="loginRegister-link" onClick={()=> props.openWindow(false, true)} >Register</div>
+
+                    <Modal
+                        aria-labelledby="simple-modal-title"
+                        aria-describedby="simple-modal-description"
+                        open={props.open}
+
+                        onClose= {()=> props.openWindow(false,false)}   >
+                        <div style={modalStyle} className={classes.paper} >
+                            <div style={props.isLogin?{'display':'block'}:{'display':'none'}}>
+                                <form  noValidate autoComplete="off">
+                                    <TextField  id="login_name" onChange = {(e)=>props.formChange(e)} label="Login" />
+                                    <TextField  id="password" onChange = {(e)=>props.formChange(e)} label="Password" />
+                                    <Button onClick={ () => props.login(props.userDetails) }
+                                            style={{'display':'block', 'float':'right'}} variant="contained" color="primary">Login</Button>
+                                </form>
+                            </div>
+                            <div style={props.isRegister?{'display':'block'}:{'display':'none'}}>
+                                <form  noValidate autoComplete="off">
+                                    <TextField  id="login_name" onChange = {(e)=>props.formChange(e)} label="Login" />
+                                    <TextField  id="password" onChange = {(e)=>props.formChange(e)} label="Password" />
+                                    <CountrySelect/>
+                                    <Dropzone/>
+                                    <Button onClick={()=>props.register(props.userDetails)}
+                                            style={{'display':'block', 'float':'right'}} variant="contained" color="primary">Register</Button>
+                                </form>
+                            </div>
+                        </div>
+                    </Modal>
+                </div>
+            );
+        }
+
+        if (this.props.token){
+            return renderLogout(this.props);
+        } else {
+            return renderLoginRegister(this.props);
+        }
+    }
 }
-
- class SimpleModal extends React.Component {
-  
-   getModalStyle() {
-    const top = 50 
-    const left = 50
-  
-    return {
-      top: `${top}%`,
-      left: `${left}%`,
-      transform: `translate(-${top}%, -${left}%)`,
-    };
-  }
-
-  render(){
-    const { classes } = this.props;
-    const modalStyle = this.getModalStyle();
-  return (
-      <div className="loginRegister-root">
-      <div className="loginRegister-link" onClick={()=> this.props.openRegisterWindow(true, false)} >Login</div>
-      <div >|</div>
-      <div className="loginRegister-link" onClick={()=> this.props.openRegisterWindow(false, true)} >Register</div>
-
-      <Modal
-          aria-labelledby="simple-modal-title"
-          aria-describedby="simple-modal-description"
-          open={this.props.open}
-   
-          onClose= {()=> this.props.openRegisterWindow(false,false)}   >
-          <div style={modalStyle} className={classes.paper} >
-              <div style={this.props.isLogin?{'display':'block'}:{'display':'none'}}>
-                  <form  noValidate autoComplete="off">
-                      <TextField  id="standard-basic" onChange = {(e)=>this.props.formChange(e)} label="Login" />
-                      <TextField  id="standard-basic" onChange = {(e)=>this.props.formChange(e)} label="Password" />
-                      <Button onClick={()=>this.props.login}
-                          style={{'display':'block', 'float':'right'}} variant="contained" color="primary">Login</Button>
-                  </form>
-              </div>
-              <div style={this.props.isRegister?{'display':'block'}:{'display':'none'}}>
-                  <form  noValidate autoComplete="off">
-                      <TextField  id="login_name" onChange = {(e)=>this.props.formChange(e)} label="Login" />
-                      <TextField  id="password" onChange = {(e)=>this.props.formChange(e)} label="Password" />
-                      <CountrySelect/>
-                      <Dropzone/>
-                      <Button onClick={()=>this.props.register(this.props.userDetails)}
-                                style={{'display':'block', 'float':'right'}} variant="contained" color="primary">Register</Button>
-                </form>
-              </div>
-          </div>
-        </Modal>
-    </div>
-  );
-  }
-}
-
 
 const mapStateToProps = state =>{
   console.log("The state of login register is:");
-  console.log(state["login_register"].get("isOpenned"));
-  const isLogin = state["login_register"].get("isOpenned").isLogin;
-  const isRegister = state["login_register"].get("isOpenned").isRegister;
+  console.log(state["login_register"].get("isOpened"));
+  const isLogin = state["login_register"].get("isOpened").isLogin;
+  const isRegister = state["login_register"].get("isOpened").isRegister;
   const userDetails = state["login_register"].get("user");
   const open = isLogin || isRegister;
+  const token = state["login_register"].get("token");
 
-
-  return {open, isLogin, isRegister, userDetails};
-}
+  return {open, isLogin, isRegister, userDetails, token};
+};
 
 function mapDispatchToProps(dispatch) {
-  return({
-    openRegisterWindow: (isRegister,isLogin) => {dispatch(openRegisterWindow(isRegister, isLogin))},
-    formChange: (e) => {dispatch(formChangeAction(e.target.id, e.target.value))},
-    register: (userDetails) =>{dispatch(registerAction(userDetails))},
-
-  })
+    console.log('dispatch');
+    return({
+        openWindow: (isRegister, isLogin) => {dispatch(openRegisterWindow(isRegister, isLogin))},
+        formChange: (e) => {dispatch(formChangeAction(e.target.id, e.target.value))},
+        register: (userDetails) =>{dispatch(registerAction(userDetails))},
+        login: (userDetails) => {dispatch(logIn(userDetails))},
+        logout: () => {dispatch(logOut())}
+    });
 }
 
-
-export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(SimpleModal));
+export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(simpleModal));

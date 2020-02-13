@@ -1,93 +1,84 @@
-const express = require('express')
-const router =new express.Router()
-const User = require('../models/user')
-const auth = require('../middleware/auth')
-const multer = require('multer')
-const sharp = require('sharp')
+const express = require('express');
+const router =new express.Router();
+const User = require('../models/user');
+const auth = require('../middleware/auth');
+const multer = require('multer');
+const sharp = require('sharp');
 router.get('/test', (req,res)=>{
     res.send('From a new file')
-})
+});
 
 
 
-router.post('/users', async (req, res)=>{
-
-    console.log(req.body)
-    const user = new User(req.body)
-
-   
-  try
-  { 
-    const saved_user = await user.save()
-     const token = await user.generateAuthToken()
-      res.send({saved_user, token} )
+router.post('/users/register', async (req, res) => {
+    console.log(req.body);
+    const user = new User(req.body);
+    try
+    {
+        const saved_user = await user.save();
+        const token = await user.generateAuthToken();
+        res.send({saved_user, token} )
+    } catch(e){
+        res.send(e)
     }
-  catch(e){
-    res.send(e)
-  }
- 
-})
+});
 
 
 router.get("/users/me", auth, async (req, res)=>{
     console.log("in me")
     res.send(res.user)
-
-
-})
-
-
-
+});
 
 router.post('/users/login', async (req,res)=>{
-try{
-    console.log("in router")
- const user = await User.findByCredentials(req.body.email, req.body.password)
- const token = await user.generateAuthToken()
-
- res.send({user, token});
-}catch(e){
-    console.log(e);
-    res.status(400).send(e);
-}
-})
-
+    try{
+        console.log("in login, body:", req.body);
+        const user = await User.findByCredentials(req.body.login_name, req.body.password);
+        if (user){
+            const token = await user.generateAuthToken();
+            res.send(token);
+        } else {
+            res.status(400).send();
+        }
+    }catch(e){
+        console.log(e);
+        res.status(400).send(e);
+    }
+});
 
 router.post('/users/logout', auth,async (req,res)=>{
     try{
-    res.user.tokens = res.user.tokens.filter((token) =>{ return token.token !== req.token})
-    await res.user.save()
-    console.log("before sendig ok")
-     res.status(200).send()
+        res.user.tokens = res.user.tokens.filter((token) =>{ return token.token !== req.token });
+        await res.user.save();
+        console.log("before sending ok");
+        res.status(200).send()
     }catch(e){
-        console.log(e)
+        console.log(e);
         res.status(500).send(e);
     }
-    })
+});
 
-    router.post('/users/logoutAll', auth,async (req,res)=>{
-        try{
-        res.user.tokens =[]
-        await res.user.save()
-        console.log("before sendig ok")
-         res.status(200).send()
-        }catch(e){
-            console.log(e)
-            res.status(500).send(e);
-        }
-        })
+router.post('/users/logoutAll', auth,async (req,res)=>{
+    try{
+        res.user.tokens = [];
+        await res.user.save();
+        console.log("before sendig ok");
+        res.status(200).send();
+    } catch(e) {
+        console.log(e);
+        res.status(500).send(e);
+    }
+});
 
 
 router.patch('/users/me',auth, async (req,res)=>{
-    const updates = Object.keys(req.body)
-
+    const updates = Object.keys(req.body);
     try {
-        console.log("Updating user")
-        const user = res.user
+        console.log("Updating user");
+        const user = res.user;
         
         updates.forEach(update_key =>{
             user[update_key] = req.body[update_key]
-        })
+        });
         await user.save();
 
         //const user = await User.findByIdAndUpdate(req.params.id, {name:req.body})
@@ -96,7 +87,7 @@ router.patch('/users/me',auth, async (req,res)=>{
     } catch (error) {
         res.send('error')
     }
-})
+});
 
 router.delete('/users/me', auth, async(req,res) =>{
     try {

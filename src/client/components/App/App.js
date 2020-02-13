@@ -23,7 +23,6 @@ class App extends React.Component {
           <SearchBar/>
           <LoginRegister/>
         </div>
-
       </div>
     );
   }

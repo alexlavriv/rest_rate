@@ -1,13 +1,13 @@
-const mongoose = require('mongoose')
-const bcrypt = require('bcrypt')
-const jwt = require('jsonwebtoken')
-const Task = require('./review')
+const mongoose = require('mongoose');
+const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
+const Task = require('./review');
 /** Class representing a point. */
 
 mongoose.connect('mongodb://127.0.0.1:27017/rest-rate-api',{
     useNewUrlParser:true,
     useCreateIndex:true
-})
+});
 
 const userSchema = new mongoose.Schema(
     {
@@ -24,36 +24,37 @@ const userSchema = new mongoose.Schema(
     },{
         timestamps:true
     }
-)
+);
 
 userSchema.virtual('reviews',{
     ref:'Review',
     localField:'_id', // the relation field between task and user
     foreignField:'owner'
-})
-userSchema.methods.generateAuthToken = async function (){
-const user = this
-const token = jwt.sign({_id:user._id.toString()},'alexlavriv')
-user.tokens = user.tokens.concat({token})
-    await user.save()
-return token
+});
 
-}
+userSchema.methods.generateAuthToken = async function (){
+    const user = this
+    const token = jwt.sign({_id:user._id.toString()},'alexlavriv');
+    user.tokens = user.tokens.concat({token});
+        await user.save();
+    return token
+};
+
 userSchema.methods.toJSON = function(){
-    console.log("getPublicProfile")
+    console.log("getPublicProfile");
     const user = this;
-    const userObject = user.toObject()
-    delete userObject.password
-    delete userObject.tokens
-    delete userObject.avatar
-    return userObject
-}
-userSchema.statics.findByCredentials = async  (email, password) =>{
+    const userObject = user.toObject();
+    delete userObject.password;
+    delete userObject.tokens;
+    delete userObject.avatar;
+    return userObject;
+};
+
+userSchema.statics.findByCredentials = async  (login_name, password) =>{
     console.log("in model")
-    const user = await User.findOne({email})
+    const user = await User.findOne({login_name});
 
     if (!user){
-    
         throw new Error("Unable to log in")
     }
 
@@ -65,7 +66,7 @@ userSchema.statics.findByCredentials = async  (email, password) =>{
 
     return user;
 
-}
+};
 /** This is a description of the foo function. */
 userSchema.pre('save', async function (next){
     const user = this;
