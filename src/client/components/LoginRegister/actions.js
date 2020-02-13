@@ -1,6 +1,6 @@
 import { LoginRegisterConstants} from './constants.js';
 
-export const openLoginRegisterWindow = (isLogin, isRegister) =>{
+export const openRegisterWindow = (isLogin, isRegister) =>{
     return{
        type:LoginRegisterConstants.OPEN_WINDOW,
        payload: {isLogin, isRegister}

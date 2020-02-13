@@ -3,7 +3,7 @@ import { call, put, takeEvery } from 'redux-saga/effects'
 import LoginRegisterActions from './actions'
 
 function* register(action){
-  console.log('LoginRegister=', action);
+  console.log('Register=', action);
   try {
 
     const res = yield call(fetch, action.uri, {
