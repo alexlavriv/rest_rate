@@ -10,7 +10,6 @@ import './LoginRegister.scss'
 import {logIn, logOut, openRegisterWindow, registerAction, formChangeAction} from './actions'
 import {connect} from 'react-redux';
 import { withStyles } from "@material-ui/core/styles";
-import compose from 'recompose/compose';
  /* eslint-disable no-use-before-define */
 
  const styles = theme => {

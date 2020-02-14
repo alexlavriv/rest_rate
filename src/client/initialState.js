@@ -20,4 +20,7 @@ export default {
       user:{login_name:"", password:""},
       token:""
     }),
+    add_review:Map({
+      show:false
+    })
 };

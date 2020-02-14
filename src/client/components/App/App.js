@@ -8,6 +8,7 @@ import AppActions from './actions';
 import GalleryActions from '../Gallery/actions';
 import { Button } from 'primereact/button';
 import { Dropdown } from 'primereact/dropdown';
+import AddReview from '../AddReview'
 
 class App extends React.Component {
     componentDidMount() {
@@ -23,6 +24,8 @@ class App extends React.Component {
           <SearchBar/>
           <LoginRegister/>
         </div>
+        <div className="addReview-root"><AddReview /></div>
+        
       </div>
     );
   }
