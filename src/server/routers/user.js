@@ -31,7 +31,8 @@ router.post('/users/register', upload.single("avatar"), async (req, res) => {
     {
         const saved_user = await user.save();
         const token = await user.generateAuthToken();
-        res.send({saved_user, token} )
+      
+        res.send({'user':saved_user, token})
     } catch(e){
         res.send(e)
     }
@@ -50,8 +51,9 @@ router.post('/users/login', async (req,res)=>{
         if (user){
             const token = await user.generateAuthToken();
             const ans = {token};
+            user['token'] = token;
             console.log(JSON.stringify(ans));
-            res.send(ans);
+            res.send(user);
         } else {
             res.status(400).send();
         }
