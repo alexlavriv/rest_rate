@@ -7,9 +7,10 @@ import Button from '@material-ui/core/Button';
 import CountrySelect from '../CountryAutoComplete';
 import Dropzone from '../dropzone'
 import './LoginRegister.scss'
-import {logIn, logOut, openRegisterWindow, registerAction, formChangeAction} from './actions'
+import {logIn, logOut, openRegisterWindow, registerAction, formChangeAction,fileChangeAction} from './actions'
 import {connect} from 'react-redux';
 import { withStyles } from "@material-ui/core/styles";
+import {DropzoneArea} from 'material-ui-dropzone'
  /* eslint-disable no-use-before-define */
 
  const styles = theme => {
@@ -74,7 +75,7 @@ class simpleModal extends React.Component {
                                     <TextField fullWidth margin="normal"  id="login_name" onChange = {(e)=>props.formChange(e)} label="Login" />
                                     <TextField fullWidth margin="normal"  id="password" onChange = {(e)=>props.formChange(e)} label="Password" />
                                     <CountrySelect/>
-                                    <Dropzone/>
+                                    <DropzoneArea id="avatar" onChange={(event)=>props.fileChange(event)}/>
                                     <Button onClick={()=>props.register(props.userDetails)}
                                             style={{'display':'block', 'float':'right'}} variant="contained" color="primary">Register</Button>
                                 </form>
@@ -112,7 +113,8 @@ function mapDispatchToProps(dispatch) {
         formChange: (e) => {dispatch(formChangeAction(e.target.id, e.target.value))},
         register: (userDetails) =>{dispatch(registerAction(userDetails))},
         login: (userDetails) => {dispatch(logIn(userDetails))},
-        logout: (token) => {dispatch(logOut(token))}
+        logout: (token) => {dispatch(logOut(token))},
+        fileChange: (file) => {dispatch(fileChangeAction(file[0]))}
     });
 }
 

@@ -9,7 +9,8 @@ const LoginRegisterConstants = {
     LOGIN: 'LOGIN',
     LOGOUT: 'LOGOUT',
     OPEN_WINDOW : 'OPEN_WINDOW',
-    FIELD_UPDATE: 'FIELD_UPDATE'
+    FIELD_UPDATE: 'FIELD_UPDATE',
+    FILE_CHANGE: 'FILE_CHANGE'
 
 };
 

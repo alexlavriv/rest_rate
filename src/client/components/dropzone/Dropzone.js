@@ -9,16 +9,13 @@ class Dropzone extends Component{
     };
   }
   handleChange(files){
+    console.log(files)
     this.setState({
       files: files
     });
   }
   render(){
-    return (
-      <DropzoneArea 
-        onChange={this.handleChange.bind(this)}
-        />
-    )  
+    return null; 
   }
 } 
  

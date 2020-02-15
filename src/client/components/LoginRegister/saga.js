@@ -6,13 +6,14 @@ import {all} from 'redux-saga/effects'
 function* register(action){
   console.log('Register=', action);
   try {
+    var fd = new FormData()
+    Object.keys(action.payload).forEach(function(key,index) {
+      fd.append(key, action.payload[key])
+  });
 
     const res = yield call(fetch, action.uri, {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(action.payload)
+      body: fd
     });
 
     const json = yield call([res, 'json']); //retrieve body of response

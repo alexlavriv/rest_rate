@@ -24,7 +24,13 @@ export const registerAction = (userDetails) =>{
         payload: userDetails
         })
 };
-
+export const fileChangeAction = (file)=>{
+    return( 
+        {
+            type:LoginRegisterConstants.FILE_CHANGE,
+            payload: file
+        })
+}
  export const logOut = (token) => {
     console.log("logout " + token);
     return( 

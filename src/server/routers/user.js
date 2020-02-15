@@ -4,15 +4,29 @@ const User = require('../models/user');
 const auth = require('../middleware/auth');
 const multer = require('multer');
 const sharp = require('sharp');
+const fs = require('fs');
 router.get('/test', (req,res)=>{
     res.send('From a new file')
 });
 
 
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, './tmp')
+  },
+  filename: function (req, file, cb) {
+    cb(null, file.originalname)
+  }
+})
+const upload = multer({storage: storage})
+ 
 
-router.post('/users/register', async (req, res) => {
-    console.log(req.body);
+router.post('/users/register', upload.single("avatar"), async (req, res) => {
+    console.log("REGISTER")
+    const {file} = req;
     const user = new User(req.body);
+    user.avatar = fs.readFileSync(file.path);
+    console.log(req)
     try
     {
         const saved_user = await user.save();
