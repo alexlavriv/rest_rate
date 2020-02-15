@@ -15,6 +15,18 @@ const reviewSechema = new mongoose.Schema({
     },{
         timestamps:true
     })
+
+reviewSechema.statics.get_all = async  () =>{
+    console.log("in model")
+    const review_list = await Review.find();
+
+    if (!review_list){
+        throw new Error("Unable to log in")
+    }
+
+    return review_list;
+
+};
 const Review = mongoose.model('Review',reviewSechema)
 
 module.exports = Review

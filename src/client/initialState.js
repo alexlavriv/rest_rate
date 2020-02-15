@@ -23,5 +23,8 @@ export default {
     add_review:Map({
       show:false,
       review:{}
+    }),
+    review_list:Map({
+      reviews:[]
     })
 };

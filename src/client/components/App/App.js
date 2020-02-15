@@ -3,6 +3,7 @@ import './App.scss';
 import Gallery from '../Gallery';
 import SearchBar from '../SearchBar'
 import LoginRegister from '../LoginRegister'
+import ReviewList from '../ReviewList'
 import { connect } from 'react-redux';
 import AppActions from './actions';
 import GalleryActions from '../Gallery/actions';
@@ -16,15 +17,15 @@ class App extends React.Component {
     }
 
   render() {
-        console.log('tags=', this.props.tags);
+     
     return (
       <div className="app-root">
         <div className="app-header">
-        
           <div className="logo">REST RATE</div>
           <SearchBar/>
           <LoginRegister/>
         </div>
+        <ReviewList />
         <div className="addReview-root"><AddReview /></div>
         
       </div>

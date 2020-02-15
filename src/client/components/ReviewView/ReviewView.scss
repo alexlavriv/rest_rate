@@ -1,0 +1,22 @@
+.ReviewView-root{
+   text-align: left;
+   margin: 30px 50px 20px 50px;
+   border: solid rgb(192, 190, 190) 1px;
+   padding: 10px;
+   width: 85%;
+}
+.ReviewView-header{
+    font-size: 30px;
+}
+.ReviewView-body{
+    margin-top: 10px;
+}
+
+.ReviewView-rating{
+    margin-top: 10px;
+}
+.ReviewView-author{
+    font-style: italic;
+    padding-right: 30px;
+    text-align: right;
+}

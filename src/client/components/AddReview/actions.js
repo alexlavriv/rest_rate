@@ -27,10 +27,10 @@ export function addReviewAction(review) {
   }
 }
 
-export function addReviewSuccessAction(review) {
+export function addReviewSuccessAction(review_list) {
   return {
     type: AddReviewActionsConstants.ADD_REVIEW_SUCCESS,
-    payload: review
+    payload: review_list
   }
 }
 

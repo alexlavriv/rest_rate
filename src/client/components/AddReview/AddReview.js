@@ -66,11 +66,12 @@ class AddReview extends React.Component {
     }
 }
 
-const mapStateToProps = state =>{
-    const open = state["add_review"].get("show") 
+const mapStateToProps = (state) =>{
+ 
+    const open = state.add_review.get("show") 
     console.log("mapStateToProps " + open)
-    const review = state["add_review"].get('review')
-  const token = state["login_register"].get("token");
+    const review = state.add_review.get('review')
+  const token = state.add_review.get("token");
 
   return {open, token, review};
 };

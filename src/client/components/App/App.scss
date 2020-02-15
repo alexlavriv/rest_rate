@@ -15,9 +15,9 @@ body, html {
 }
 .addReview-root{
  color:red;
- position: absolute;
- top: 85%;
- right: 7%;
+ position: fixed;
+ top: 90%;
+ right: 5%;
 }
 
 .app-header {
@@ -26,7 +26,7 @@ body, html {
   color: black;
   font-size: 20pt;
   text-align: left;
-  border: solid rgb(51, 51, 51) 1px;
+  border: solid rgb(192, 190, 190)  1px;
   display: grid;
   grid-template-columns: auto auto auto;
 }
