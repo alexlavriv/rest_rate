@@ -63,16 +63,16 @@ class simpleModal extends React.Component {
                         <div style={modalStyle} className={classes.paper} >
                             <div style={props.isLogin?{'display':'block'}:{'display':'none'}}>
                                 <form  noValidate autoComplete="off">
-                                    <TextField  id="login_name" onChange = {(e)=>props.formChange(e)} label="Login" />
-                                    <TextField  id="password" onChange = {(e)=>props.formChange(e)} label="Password" />
+                                    <TextField fullWidth margin="normal"  id="login_name" onChange = {(e)=>props.formChange(e)} label="Login" />
+                                    <TextField fullWidth margin="normal" id="password" onChange = {(e)=>props.formChange(e)} label="Password" />
                                     <Button onClick={ () => props.login(props.userDetails) }
                                             style={{'display':'block', 'float':'right'}} variant="contained" color="primary">Login</Button>
                                 </form>
                             </div>
                             <div style={props.isRegister?{'display':'block'}:{'display':'none'}}>
                                 <form  noValidate autoComplete="off">
-                                    <TextField  id="login_name" onChange = {(e)=>props.formChange(e)} label="Login" />
-                                    <TextField  id="password" onChange = {(e)=>props.formChange(e)} label="Password" />
+                                    <TextField fullWidth margin="normal"  id="login_name" onChange = {(e)=>props.formChange(e)} label="Login" />
+                                    <TextField fullWidth margin="normal"  id="password" onChange = {(e)=>props.formChange(e)} label="Password" />
                                     <CountrySelect/>
                                     <Dropzone/>
                                     <Button onClick={()=>props.register(props.userDetails)}

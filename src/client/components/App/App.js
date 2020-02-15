@@ -20,6 +20,7 @@ class App extends React.Component {
     return (
       <div className="app-root">
         <div className="app-header">
+        
           <div className="logo">REST RATE</div>
           <SearchBar/>
           <LoginRegister/>

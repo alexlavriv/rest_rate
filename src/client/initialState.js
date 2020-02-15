@@ -21,6 +21,7 @@ export default {
       token:""
     }),
     add_review:Map({
-      show:false
+      show:false,
+      review:{}
     })
 };

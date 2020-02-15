@@ -8,7 +8,7 @@ import {connect} from 'react-redux';
 import { withStyles } from "@material-ui/core/styles";
 import IconButton from '@material-ui/core/IconButton';
 import AddCircleIcon from '@material-ui/icons/AddCircle';
-import {showWindowAction} from './actions'
+import {showWindowAction, formChangeAction, addReviewAction} from './actions'
 
 
 
@@ -17,7 +17,7 @@ const styles = theme => {
     return ({
         paper: {
         position: 'absolute',
-        width: 400,
+        width: 800,
         backgroundColor: theme.palette.background.paper,
         border: '2px solid #000',
         boxShadow: theme.shadows[5],
@@ -48,9 +48,18 @@ class AddReview extends React.Component {
                 aria-labelledby="simple-modal-title"
                 aria-describedby="simple-modal-description"
                 open={this.props.open}
-
                 onClose= {()=> this.props.openWindow(false)}   >
-                <div style={modalStyle} className={classes.paper} > </div>
+                <div style={modalStyle} className={classes.paper} > 
+                
+                <TextField  id="rest_name" fullWidth margin="normal" onChange = {(e)=>this.props.formChange(e)} label="Restaraunt Name" />
+                <TextField  id="rest_review"  multiline rows="20"
+          variant="outlined" fullWidth
+          margin="normal" onChange = {(e)=>this.props.formChange(e)} label="Review" />
+                <Button onClick={()=>this.props.sumbit_review(this.props.review)}
+                        style={{'display':'block', 'float':'right'}} variant="contained" color="primary">ADD</Button>
+
+                
+                </div>
             </Modal>
         </div>
           );
@@ -60,16 +69,19 @@ class AddReview extends React.Component {
 const mapStateToProps = state =>{
     const open = state["add_review"].get("show") 
     console.log("mapStateToProps " + open)
-
+    const review = state["add_review"].get('review')
   const token = state["login_register"].get("token");
 
-  return {open, token};
+  return {open, token, review};
 };
 
 function mapDispatchToProps(dispatch) {
     console.log('dispatch');
     return({
+        sumbit_review:(review)=>{dispatch(addReviewAction(review))},
         openWindow: (show) => {dispatch (showWindowAction(show))},
+        formChange: (e) => {dispatch(formChangeAction(e.target.id, e.target.value))},
+
     });
 }
 
