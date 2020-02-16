@@ -10,22 +10,14 @@ router.get('/test', (req,res)=>{
 });
 
 
-const storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, './tmp')
-  },
-  filename: function (req, file, cb) {
-    cb(null, file.originalname)
-  }
-})
-const upload = multer({storage: storage})
+const upload = multer()
  
 
-router.post('/users/register', upload.single("avatar"), async (req, res) => {
+router.post('/users/register',upload.single('avatar'), async (req, res) => {
     console.log("REGISTER")
     const {file} = req;
     const user = new User(req.body);
-    user.avatar = fs.readFileSync(file.path);
+    user.avatar = file.buffer
     console.log(req)
     try
     {
@@ -50,10 +42,7 @@ router.post('/users/login', async (req,res)=>{
         const user = await User.findByCredentials(req.body.login_name, req.body.password);
         if (user){
             const token = await user.generateAuthToken();
-            const ans = {token};
-            user['token'] = token;
-            console.log(JSON.stringify(ans));
-            res.send(user);
+            res.send({user, token});
         } else {
             res.status(400).send();
         }

@@ -41,15 +41,19 @@ function* login(action){
 }
 
 function* logout(action){
-  console.log('Login=', action);
+  console.log('Logout=', action.payload);
+  const body = JSON.stringify({'token': action.payload})
+  const req = {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+
+    },
+    body
+  }
+  console.log(req)
   try {
-    const res = yield call(fetch, action.uri, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(action.payload)
-    });
+    const res = yield call(fetch, action.uri, req);
 
     yield call([res, 'json']);
     yield put(LoginRegisterActions.logoutSuccessAction());

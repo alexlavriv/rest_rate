@@ -8,7 +8,7 @@ const LoginRegisterReducer = (state = initialState.register_login, action) => {
             state = state.set('isOpened', action.payload);
             return state;}
         case LoginRegisterConstants.FIELD_UPDATE:
-           { let user = (state.has('user')) ? state.get('user'):{}
+            {let user = (state.has('user')) ? state.get('user'):{}
             user[action.payload.id] = action.payload.value;
             state = state.set('user', user);
             return state;}

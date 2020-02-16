@@ -47,7 +47,8 @@ class simpleModal extends React.Component {
             console.log(imgSrc);
             return (
                 <div className="loginRegister-root">
-                    <img src={imgSrc}></img>
+                    <div>{props.userDetails.login_name} </div>
+                    <img className="loginRegister-avatar" src={imgSrc}></img>
                     <div className="loginRegister-link" onClick={() => props.logout(props.token)}>Logout</div>
                 </div>
             )
@@ -57,7 +58,7 @@ class simpleModal extends React.Component {
             return (
                 <div className="loginRegister-root">
                     <div className="loginRegister-link" onClick={()=> props.openWindow(true, false)} >Login</div>
-                    <div>|</div>
+                  
                     <div className="loginRegister-link" onClick={()=> props.openWindow(false, true)} >Register</div>
 
                     <Modal
