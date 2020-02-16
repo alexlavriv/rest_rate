@@ -1,20 +1,20 @@
-import { ReviewViewConstatns} from './constants.js';
+import {ReviewViewConstatns} from './constants.js';
 
-export const GetRewiewsAction = () =>{
+export const GetReviewsAction = () =>{
     return{
         type:ReviewViewConstatns.GET_REVIEWS,
         payload: {}
     };
 };
 
-export const GetRewiewsSuccessAction = (reviews) =>{
+export const GetReviewsSuccessAction = (reviews) =>{
   return{
       type:ReviewViewConstatns.GET_REVIEWS,
       payload: reviews
   };
 };
 
-export const GetRewiewsFailureAction = (message) =>{
+export const GetReviewsFailureAction = (message) =>{
   return{
       type:ReviewViewConstatns.GET_REVIEWS,
       payload: {message}

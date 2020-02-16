@@ -1,17 +1,14 @@
-
 import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
+import {withStyles} from '@material-ui/core/styles';
 import Modal from '@material-ui/core/Modal';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import CountrySelect from '../CountryAutoComplete';
-import Dropzone from '../dropzone'
 import './LoginRegister.scss'
-import {logIn, logOut, openRegisterWindow, registerAction, formChangeAction,fileChangeAction} from './actions'
+import {fileChangeAction, formChangeAction, logIn, logOut, openRegisterWindow, registerAction} from './actions'
 import {connect} from 'react-redux';
-import { withStyles } from "@material-ui/core/styles";
 import {DropzoneArea} from 'material-ui-dropzone'
- /* eslint-disable no-use-before-define */
+/* eslint-disable no-use-before-define */
 
  const styles = theme => {
 return ({
@@ -41,14 +38,14 @@ class simpleModal extends React.Component {
         const modalStyle = this.getModelStyle();
 
         function renderLogout(props) {
-            console.log('renderLogout')
-            console.log(props.userDetails)
-            const imgSrc = `data:image/gif;base64,${props.userDetails.avatar}`
+            console.log('renderLogout');
+            console.log(props.userDetails);
+            const imgSrc = `data:image/gif;base64,${props.userDetails.avatar}`;
             console.log(imgSrc);
             return (
                 <div className="loginRegister-root">
                     <div>{props.userDetails.login_name} </div>
-                    <img className="loginRegister-avatar" src={imgSrc}></img>
+                    <img className="loginRegister-avatar" src={imgSrc} alt="Edit Profile"/>
                     <div className="loginRegister-link" onClick={() => props.logout(props.token)}>Logout</div>
                 </div>
             )

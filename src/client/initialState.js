@@ -1,7 +1,5 @@
 const { List, Map } = require('immutable');
 
-let token = undefined;
-
 export default {
     gallery: Map({
         images: List(),
@@ -11,18 +9,18 @@ export default {
         galleryWidth: 0
     }),
     app: Map({
-      size: 200,
-      tag: 'art',
-      tags: List()
+        size: 200,
+        tag: 'art',
+        tags: List()
     }),
     register_login:Map({
-      isOpened:{isLogin:false, isRegister:false},
-      user:{login_name:"", password:""},
-      token:""
+        isOpened:{isLogin:false, isRegister:false},
+        user:{login_name:"", password:""},
+        token:""
     }),
     add_review:Map({
-      show:false,
-      review:{}
+        show:false,
+        review:{}
     }),
     review_list:Map({
       reviews:[]

@@ -1,6 +1,6 @@
-import { ReviewListConstants} from './constants.js';
+import {ReviewListConstants} from './constants.js';
 
-export const GetRewiewsAction = () =>{
+export const GetReviewsAction = () =>{
     return{
         type:ReviewListConstants.GET_REVIEWS,
         uri:'http://localhost:8000/all_reviews',
@@ -9,7 +9,7 @@ export const GetRewiewsAction = () =>{
 };
 
 export const GetReviewsSuccessAction = (reviews) =>{
-  console.log(reviews)
+  console.log("GOT REVIEWS:\n" + reviews["bathroom_rating"]);
   return{
       type:ReviewListConstants.GET_REVIEWS_SUCCESS,
       payload: reviews

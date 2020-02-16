@@ -1,16 +1,15 @@
-
 import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
+import {withStyles} from '@material-ui/core/styles';
 import Modal from '@material-ui/core/Modal';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import {connect} from 'react-redux';
-import { withStyles } from "@material-ui/core/styles";
 import IconButton from '@material-ui/core/IconButton';
 import AddCircleIcon from '@material-ui/icons/AddCircle';
-import {showWindowAction, formChangeAction, addReviewAction} from './actions'
-
-
+import {addReviewAction, formChangeAction, showWindowAction} from './actions'
+import Rating from '@material-ui/lab/Rating';
+import Typography from '@material-ui/core/Typography';
+import './AddReview.scss'
 
 
 const styles = theme => {
@@ -37,52 +36,84 @@ class AddReview extends React.Component {
     }
 
     render(){
-               const { classes } = this.props;
+        const { classes } = this.props;
         const modalStyle = this.getModelStyle();
-      return (
-        <div>
-          <IconButton onClick={()=>this.props.openWindow(true)}  color="primary" aria-label="add review">
-            <AddCircleIcon  style={{ fontSize: 70 }}  />
-          </IconButton>
-          <Modal
+        function setRating(props, id, name) {
+            return (
+                <div>
+                    <Typography component="legend">{name}</Typography>
+                    <Rating name={id}
+                            onChange={(event, newValue) => props.changeRatings(id, newValue)}
+                    />
+                </div>
+            )
+        }
+        const modal = (
+            <Modal
                 aria-labelledby="simple-modal-title"
                 aria-describedby="simple-modal-description"
                 open={this.props.open}
-                onClose= {()=> this.props.openWindow(false)}   >
-                <div style={modalStyle} className={classes.paper} > 
-                
-                <TextField  id="rest_name" fullWidth margin="normal" onChange = {(e)=>this.props.formChange(e)} label="Restaraunt Name" />
-                <TextField  id="rest_review"  multiline rows="20"
-          variant="outlined" fullWidth
-          margin="normal" onChange = {(e)=>this.props.formChange(e)} label="Review" />
-                <Button onClick={()=>this.props.sumbit_review(this.props.review)}
-                        style={{'display':'block', 'float':'right'}} variant="contained" color="primary">ADD</Button>
+                onClose= {()=> this.props.openWindow(false)}>
+                <div style={modalStyle} className={classes.paper}>
 
-                
+                    <TextField id="rest_name" fullWidth margin="normal" onChange = {(e)=>this.props.formChange(e)}
+                               label="Restaurant Name" />
+                    <TextField id="rest_review"  multiline rows="20" variant="outlined" fullWidth
+                               margin="normal" onChange = {(e)=>this.props.formChange(e)}
+                               label="Review" />
+                    <div className="ratings" >
+                        {setRating(this.props,"bathroom_rating", "Bathroom Quality:")}
+                        {setRating(this.props,"staff_rating", "Staff Kindness:")}
+                        {setRating(this.props,"clean_rating", "Cleanliness:")}
+                        {setRating(this.props,"drive_rating", "Drive-thru quality:")}
+                        {setRating(this.props,"delivery_rating", "Delivery Speed:")}
+                        {setRating(this.props,"food_rating", "Food Quality:")}
+                    </div>
+
+                    <Button onClick={()=>this.props.submit_review(this.props.review)}
+                            style={{'display':'block', 'float':'right'}} variant="contained" color="primary">ADD</Button>
                 </div>
-            </Modal>
-        </div>
-          );
+            </Modal>);
+        // TODO: add token logic
+        // if (this.props.token){
+            return (
+                <div>
+                    <IconButton onClick={()=>this.props.openWindow(true)}  color="primary" aria-label="add review">
+                        <AddCircleIcon  style={{ fontSize: 70 }}  />
+                    </IconButton>
+                    {modal}
+                </div>
+            );
+        // } else {
+        //     return (
+        //         <div>
+        //             <IconButton alt="Please Log In" disabled>
+        //                 <AddCircleIcon  style={{ fontSize: 70 }}  />
+        //             </IconButton>
+        //         </div>
+        //     )
+        // }
+
     }
 }
 
 const mapStateToProps = (state) =>{
- 
-    const open = state.add_review.get("show") 
-    console.log("mapStateToProps " + open)
-    const review = state.add_review.get('review')
-  const token = state.add_review.get("token");
+    const open = state.add_review.get("show");
+    console.log("mapStateToProps " + open);
+    const review = state.add_review.get('review');
+    const token = state.add_review.get("token");
 
-  return {open, token, review};
+    return {open, token, review};
 };
 
 function mapDispatchToProps(dispatch) {
     console.log('dispatch');
     return({
-        sumbit_review:(review)=>{dispatch(addReviewAction(review))},
+        submit_review:(review)=>{dispatch(addReviewAction(review))},
         openWindow: (show) => {dispatch (showWindowAction(show))},
         formChange: (e) => {dispatch(formChangeAction(e.target.id, e.target.value))},
-
+        changeRatings: (id, val) => {
+            dispatch(formChangeAction(id, val))}
     });
 }
 

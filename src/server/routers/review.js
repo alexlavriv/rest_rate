@@ -12,7 +12,7 @@ router.post('/review', async (req, res) => {
     try
     {
         await review.save();
-        const review_list = await Review.get_all()
+        const review_list = await Review.get_all();
         res.send({review_list} )
     } catch(e){
         res.send(e)
@@ -22,16 +22,14 @@ router.post('/review', async (req, res) => {
 router.get('/all_reviews', async (req, res) => {
     try
     {
-        console.log("In all reviews")
-        const review_list = await Review.get_all()
-        console.log("got from db")
-        console.log(review_list)
+        console.log("In all reviews");
+        const review_list = await Review.get_all();
+        console.log("got from db");
+        console.log(review_list);
         res.send({review_list} )
     } catch(e){
         res.send(e)
     }
 });
-
-
 
 module.exports = router;

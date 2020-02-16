@@ -1,4 +1,4 @@
-import { AddReviewActionsConstants} from './constants.js';
+import {AddReviewActionsConstants} from './constants.js';
 
 
 export function showWindowAction(is_open) {
@@ -11,6 +11,7 @@ export function showWindowAction(is_open) {
 }
 
 export function formChangeAction(id, value) {
+  console.log("form change action");
   return {
     type: AddReviewActionsConstants.REST_REVIEW_FORM_CHANGE,
     payload: {
@@ -40,5 +41,15 @@ export function addReviewFailAction(message) {
     payload: message
   }
 }
+
+// export function changeRatingsAction(e, value) {
+//   let id = e.target.id;
+//   return {
+//     type: AddReviewActionsConstants.REST_REVIEW_RATING_CHANGE,
+//     payload: {
+//       id, value
+//     }
+//   }
+// }
 
 
