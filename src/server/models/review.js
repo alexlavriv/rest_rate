@@ -13,6 +13,7 @@ const reviewSchema = new mongoose.Schema({
     drive_rating: {type: Number},
     delivery_rating: {type: Number},
     food_rating: {type: Number},
+    files:{type:Array}
     // owner:{
     //     type: mongoose.Schema.Types.ObjectId,
     //     require: true,

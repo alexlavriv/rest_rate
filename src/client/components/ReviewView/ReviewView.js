@@ -3,7 +3,7 @@ import './ReviewView.scss'
 import {connect} from 'react-redux';
 import Typography from "@material-ui/core/Typography";
 import Rating from "@material-ui/lab/Rating";
-
+import ImageGrid from '../ImageGrid'
 
 class ReviewView extends React.Component {
 
@@ -23,6 +23,7 @@ class ReviewView extends React.Component {
                 <div className="ReviewView-body">
                     {this.props.review.rest_review}
                 </div>
+                <ImageGrid images={this.props.review.files}/>
                 <div className="ReviewView-rating">
                     {showRating(this.props.review, "bathroom_rating", "Bathroom Quality:")}
                     {showRating(this.props.review, "staff_rating", "Staff Kindness:")}
@@ -31,6 +32,7 @@ class ReviewView extends React.Component {
                     {showRating(this.props.review, "delivery_rating", "Delivery Speed:")}
                     {showRating(this.props.review, "food_rating", "Food Quality:")}
                 </div>
+
                 <div className="ReviewView-author">Alex Lavriv  {this.props.test}</div>
             </div>
         );

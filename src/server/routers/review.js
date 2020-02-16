@@ -5,10 +5,16 @@ const auth = require('../middleware/auth');
 const multer = require('multer');
 const sharp = require('sharp');
 
+const upload = multer()
 
-router.post('/review', async (req, res) => {
+router.post('/review',upload.array('files'), async (req, res) => {
     console.log(req.body);
+    const {files} = req;
+    
     const review = new Review(req.body);
+    files.forEach(file => {
+        review.files.push(file.buffer);
+    });
     try
     {
         await review.save();

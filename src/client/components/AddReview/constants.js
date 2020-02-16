@@ -5,6 +5,7 @@ const AddReviewActionsConstants = {
     ADD_REVIEW:'ADD_REVIEW',
     ADD_REVIEW_SUCCESS:'ADD_REVIEW_SUCCESS',
     ADD_REVIEW_FAIL:'ADD_REVIEW_FAIL',
+    REST_REVIEW_FILE_CHANGE:'REST_REVIEW_FILE_CHANGE'
 };
 
 export { AddReviewActionsConstants}

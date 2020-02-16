@@ -20,6 +20,14 @@ export function formChangeAction(id, value) {
   }
 }
 
+export function fileChangeAction(files) {
+  console.log("form change action");
+  return {
+    type: AddReviewActionsConstants.REST_REVIEW_FILE_CHANGE,
+    payload: files
+  }
+}
+
 export function addReviewAction(review) {
   return {
     type: AddReviewActionsConstants.ADD_REVIEW,

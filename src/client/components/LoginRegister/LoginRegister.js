@@ -38,10 +38,9 @@ class simpleModal extends React.Component {
         const modalStyle = this.getModelStyle();
 
         function renderLogout(props) {
-            console.log('renderLogout');
-            console.log(props.userDetails);
+
             const imgSrc = `data:image/gif;base64,${props.userDetails.avatar}`;
-            console.log(imgSrc);
+          
             return (
                 <div className="loginRegister-root">
                     <div>{props.userDetails.login_name} </div>

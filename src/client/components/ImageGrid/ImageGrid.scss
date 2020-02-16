@@ -1,0 +1,19 @@
+.image-grid-root{
+ display: grid ;
+ grid-template-columns: repeat(4,auto);
+ margin-left: auto;
+ margin-right: auto;
+ margin-top:30px;
+ margin-bottom:20px;
+ column-gap:50px;
+width: 90%;
+    
+  
+}
+
+.image-sim{
+  
+    width: 240px;
+    height: 180px;
+   
+}

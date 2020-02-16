@@ -6,9 +6,11 @@ import Button from '@material-ui/core/Button';
 import {connect} from 'react-redux';
 import IconButton from '@material-ui/core/IconButton';
 import AddCircleIcon from '@material-ui/icons/AddCircle';
-import {addReviewAction, formChangeAction, showWindowAction} from './actions'
+import {addReviewAction, formChangeAction, showWindowAction, fileChangeAction} from './actions'
 import Rating from '@material-ui/lab/Rating';
 import Typography from '@material-ui/core/Typography';
+import {DropzoneArea} from 'material-ui-dropzone'
+
 import './AddReview.scss'
 
 
@@ -58,7 +60,7 @@ class AddReview extends React.Component {
 
                     <TextField id="rest_name" fullWidth margin="normal" onChange = {(e)=>this.props.formChange(e)}
                                label="Restaurant Name" />
-                    <TextField id="rest_review"  multiline rows="20" variant="outlined" fullWidth
+                    <TextField id="rest_review"  multiline rows="15" variant="outlined" fullWidth
                                margin="normal" onChange = {(e)=>this.props.formChange(e)}
                                label="Review" />
                     <div className="ratings" >
@@ -70,6 +72,7 @@ class AddReview extends React.Component {
                         {setRating(this.props,"food_rating", "Food Quality:")}
                     </div>
 
+                    <div className="addreview-dropzone"><DropzoneArea filesLimit='20' onChange={(event)=>this.props.fileChange(event)} /></div>
                     <Button onClick={()=>this.props.submit_review(this.props.review)}
                             style={{'display':'block', 'float':'right'}} variant="contained" color="primary">ADD</Button>
                 </div>
@@ -113,7 +116,8 @@ function mapDispatchToProps(dispatch) {
         openWindow: (show) => {dispatch (showWindowAction(show))},
         formChange: (e) => {dispatch(formChangeAction(e.target.id, e.target.value))},
         changeRatings: (id, val) => {
-            dispatch(formChangeAction(id, val))}
+            dispatch(formChangeAction(id, val))},
+        fileChange:(files)=>{dispatch(fileChangeAction(files))}
     });
 }
 
