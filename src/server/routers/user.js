@@ -5,20 +5,31 @@ const auth = require('../middleware/auth');
 const multer = require('multer');
 const sharp = require('sharp');
 const fs = require('fs');
+
 router.get('/test', (req,res)=>{
     res.send('From a new file')
 });
+const upload = multer();
 
-
-const upload = multer()
- 
+router.get("/users/:username", async (req, res) => {
+    console.log("in available, username:", req.params.username);
+    User.findOne({login_name: req.params.username}, async (err, foundUsername) => {
+        if (err) {
+            res.status(400).send();
+        } else if (!foundUsername) {
+            res.send({'available': true});
+        } else {
+            res.send({'available': false});
+        }
+    });
+});
 
 router.post('/users/register',upload.single('avatar'), async (req, res) => {
-    console.log("REGISTER")
+    console.log("REGISTER");
     const {file} = req;
     const user = new User(req.body);
-    user.avatar = file.buffer
-    console.log(req)
+    user.avatar = file.buffer;
+    console.log(req);
     try
     {
         const saved_user = await user.save();
@@ -32,9 +43,11 @@ router.post('/users/register',upload.single('avatar'), async (req, res) => {
 
 
 router.get("/users/me", auth, async (req, res)=>{
-    console.log("in me")
+    console.log("in me");
     res.send(res.user)
 });
+
+
 
 router.post('/users/login', async (req,res)=>{
     try{

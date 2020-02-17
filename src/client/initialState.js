@@ -14,9 +14,10 @@ export default {
         tags: List()
     }),
     register_login:Map({
-        isOpened:{isLogin:false, isRegister:false},
-        user:{login_name:"", password:""},
-        token:""
+        isOpened: {isLogin:false, isRegister:false},
+        user: {login_name:"", password:""},
+        token: "",
+        available: true
     }),
     add_review:Map({
         show:false,

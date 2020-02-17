@@ -73,12 +73,11 @@ class AddReview extends React.Component {
                     </div>
 
                     <div className="addreview-dropzone"><DropzoneArea filesLimit='20' onChange={(event)=>this.props.fileChange(event)} /></div>
-                    <Button onClick={()=>this.props.submit_review(this.props.review)}
+                    <Button onClick={()=>this.props.submit_review(this.props.review, this.props.user.login_name)}
                             style={{'display':'block', 'float':'right'}} variant="contained" color="primary">ADD</Button>
                 </div>
             </Modal>);
-        // TODO: add token logic
-        // if (this.props.token){
+        if (this.props.token){
             return (
                 <div>
                     <IconButton onClick={()=>this.props.openWindow(true)}  color="primary" aria-label="add review">
@@ -87,15 +86,15 @@ class AddReview extends React.Component {
                     {modal}
                 </div>
             );
-        // } else {
-        //     return (
-        //         <div>
-        //             <IconButton alt="Please Log In" disabled>
-        //                 <AddCircleIcon  style={{ fontSize: 70 }}  />
-        //             </IconButton>
-        //         </div>
-        //     )
-        // }
+        } else {
+            return (
+                <div>
+                    <IconButton alt="Please Log In" disabled>
+                        <AddCircleIcon  style={{ fontSize: 70 }}  />
+                    </IconButton>
+                </div>
+            )
+        }
 
     }
 }
@@ -104,15 +103,15 @@ const mapStateToProps = (state) =>{
     const open = state.add_review.get("show");
     console.log("mapStateToProps " + open);
     const review = state.add_review.get('review');
-    const token = state.add_review.get("token");
-
-    return {open, token, review};
+    const token = state.login_register.get("token");
+    const user = state.login_register.get('user');
+    return {open, token, review, user};
 };
 
 function mapDispatchToProps(dispatch) {
     console.log('dispatch');
     return({
-        submit_review:(review)=>{dispatch(addReviewAction(review))},
+        submit_review:(review, loginName)=>{dispatch(addReviewAction(review, loginName))},
         openWindow: (show) => {dispatch (showWindowAction(show))},
         formChange: (e) => {dispatch(formChangeAction(e.target.id, e.target.value))},
         changeRatings: (id, val) => {

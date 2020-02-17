@@ -5,7 +5,15 @@ import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import CountrySelect from '../CountryAutoComplete';
 import './LoginRegister.scss'
-import {fileChangeAction, formChangeAction, logIn, logOut, openRegisterWindow, registerAction} from './actions'
+import {
+    checkUsernameAction,
+    fileChangeAction,
+    formChangeAction,
+    logIn,
+    logOut,
+    openRegisterWindow,
+    registerAction
+} from './actions'
 import {connect} from 'react-redux';
 import {DropzoneArea} from 'material-ui-dropzone'
 /* eslint-disable no-use-before-define */
@@ -65,21 +73,22 @@ class simpleModal extends React.Component {
                         onClose= {()=> props.openWindow(false,false)}   >
                         <div style={modalStyle} className={classes.paper} >
                             <div style={props.isLogin?{'display':'block'}:{'display':'none'}}>
-                                <form  noValidate autoComplete="off">
-                                    <TextField fullWidth margin="normal"  id="login_name" onChange = {(e)=>props.formChange(e)} label="Login" />
-                                    <TextField fullWidth margin="normal" id="password" onChange = {(e)=>props.formChange(e)} label="Password" />
+                                <form onChange = {(e)=>props.formChange(e)} onSubmit={() => props.login(props.userDetails)} noValidate autoComplete="off">
+                                    <TextField fullWidth margin="normal"  id="login_name"  label="Login" />
+                                    <TextField fullWidth margin="normal" id="password" label="Password" />
                                     <Button onClick={ () => props.login(props.userDetails) }
                                             style={{'display':'block', 'float':'right'}} variant="contained" color="primary">Login</Button>
                                 </form>
                             </div>
                             <div style={props.isRegister?{'display':'block'}:{'display':'none'}}>
-                                <form  noValidate autoComplete="off">
-                                    <TextField fullWidth margin="normal"  id="login_name" onChange = {(e)=>props.formChange(e)} label="Login" />
-                                    <TextField fullWidth margin="normal"  id="password" onChange = {(e)=>props.formChange(e)} label="Password" />
+                                <form noValidate autoComplete="off" onChange = {(e)=>props.formChange(e)}>
+                                    <TextField required fullWidth margin="normal" id="login_name"
+                                               onBlur = {(e)=>props.checkAvailability(e.target.value)} label="Login" />
+                                    <TextField required fullWidth margin="normal"  id="password" label="Password" />
                                     <CountrySelect/>
                                     <DropzoneArea id="avatar" onChange={(event)=>props.fileChange(event)}/>
-                                    <Button onClick={()=>props.register(props.userDetails)}
-                                            style={{'display':'block', 'float':'right'}} variant="contained" color="primary">Register</Button>
+                                    <Button  onClick={()=>props.register(props.userDetails)}
+                                            style={{'display':'block', 'float':'right'}} variant="contained" color="primary" disabled={!props.available}>Register</Button>
                                 </form>
                             </div>
                         </div>
@@ -104,8 +113,9 @@ const mapStateToProps = state =>{
   const userDetails = state["login_register"].get("user");
   const open = isLogin || isRegister;
   const token = state["login_register"].get("token");
+  const available = state['login_register'].get('available');
 
-  return {open, isLogin, isRegister, userDetails, token};
+  return {open, isLogin, isRegister, userDetails, token, available};
 };
 
 function mapDispatchToProps(dispatch) {
@@ -113,6 +123,7 @@ function mapDispatchToProps(dispatch) {
     return({
         openWindow: (isRegister, isLogin) => {dispatch(openRegisterWindow(isRegister, isLogin))},
         formChange: (e) => {dispatch(formChangeAction(e.target.id, e.target.value))},
+        checkAvailability: (username) => {dispatch(checkUsernameAction(username))},
         register: (userDetails) =>{dispatch(registerAction(userDetails))},
         login: (userDetails) => {dispatch(logIn(userDetails))},
         logout: (token) => {dispatch(logOut(token))},

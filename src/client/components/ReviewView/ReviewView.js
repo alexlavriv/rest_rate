@@ -33,7 +33,7 @@ class ReviewView extends React.Component {
                     {showRating(this.props.review, "food_rating", "Food Quality:")}
                 </div>
 
-                <div className="ReviewView-author">Alex Lavriv  {this.props.test}</div>
+                <div className="ReviewView-author">{this.props.review.user}</div>
             </div>
         );
     }

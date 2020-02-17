@@ -28,10 +28,10 @@ export function fileChangeAction(files) {
   }
 }
 
-export function addReviewAction(review) {
+export function addReviewAction(review, loginName) {
   return {
     type: AddReviewActionsConstants.ADD_REVIEW,
-    uri: 'http://localhost:8080/review',
+    uri: 'http://localhost:8080/review/' + loginName,
     payload: review
   }
 }

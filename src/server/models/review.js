@@ -4,24 +4,23 @@ mongoose.connect('mongodb://127.0.0.1:27017/rest-rate-api',{
     useNewUrlParser:true,
     useCreateIndex:true
 });
-const reviewSchema = new mongoose.Schema({
-    rest_name: {type: String},
-    rest_review: {type: String},
-    bathroom_rating: {type: Number},
-    staff_rating: {type: Number},
-    clean_rating: {type: Number},
-    drive_rating: {type: Number},
-    delivery_rating: {type: Number},
-    food_rating: {type: Number},
-    files:{type:Array}
-    // owner:{
-    //     type: mongoose.Schema.Types.ObjectId,
-    //     require: true,
-    //     ref:'User'
-    // }}
-    },{
+const reviewSchema = new mongoose.Schema(
+    {
+        rest_name: {type: String},
+        rest_review: {type: String},
+        bathroom_rating: {type: Number},
+        staff_rating: {type: Number},
+        clean_rating: {type: Number},
+        drive_rating: {type: Number},
+        delivery_rating: {type: Number},
+        food_rating: {type: Number},
+        files: {type: Array},
+        user: String
+    },
+    {
         timestamps:true
-    });
+    }
+);
 
 reviewSchema.statics.get_all = async  () =>{
     console.log("in model");
@@ -34,6 +33,8 @@ reviewSchema.statics.get_all = async  () =>{
     return review_list;
 
 };
+
+
 const Review = mongoose.model('Review',reviewSchema);
 
 module.exports = Review;

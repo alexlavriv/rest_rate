@@ -41,6 +41,8 @@ module.exports = {
   },
   devServer: {
     port: 8080,
+    inline: true,
+    hot: true,
     open: true,
     proxy: {
       '/': 'http://localhost:8000'

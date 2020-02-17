@@ -22,7 +22,7 @@ export const registerAction = (userDetails) =>{
         type: LoginRegisterConstants.LOGIN,
         uri: 'http://localhost:8080/users/login',
         payload: userDetails
-        })
+        });
 };
 export const fileChangeAction = (file)=>{
     return( 
@@ -30,7 +30,7 @@ export const fileChangeAction = (file)=>{
             type:LoginRegisterConstants.FILE_CHANGE,
             payload: file
         })
-}
+};
  export const logOut = (token) => {
     console.log("logout " + token);
     return( 
@@ -40,6 +40,27 @@ export const fileChangeAction = (file)=>{
         payload: token
     })
 };
+
+export const checkUsernameAction = (username) => {
+    console.log("IN CHECKUSERNAME$$$$$$$$$$");
+    return(
+        {
+            type:LoginRegisterConstants.VALIDATE_USERNAME,
+            uri: 'http://localhost:8080/users/' + username,
+        }
+    );
+};
+
+export const usernameAvailable = (json) => {
+    console.log("IN AVAILABLE$$$$$$$$$$$$$$$$$$$$$$");
+    return(
+        {
+            type:LoginRegisterConstants.USERNAME_AVAILABLE,
+            payload: json
+        }
+    );
+};
+
 
 export const formChangeAction = (id, value) =>{ 
     return( 
@@ -66,11 +87,11 @@ const registerFailureAction = (message) =>{
 
 };
 
-const loginSuccessAction = (id) =>{
+const loginSuccessAction = (json) =>{
     return(
     {
         type:LoginRegisterConstants.LOGIN_SUCCESS,
-        payload:id
+        payload:json
     })
 };
 
@@ -106,7 +127,9 @@ let LoginRegisterActions  = {
     loginSuccessAction,
     loginFailureAction,
     logoutSuccessAction,
-    logoutFailureAction
+    logoutFailureAction,
+    checkUsernameAction,
+    usernameAvailable
 };
 
 export default LoginRegisterActions;
