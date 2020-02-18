@@ -70,6 +70,7 @@ class simpleModal extends React.Component {
                     <Tooltip title={props.userDetails.login_name + ' - Edit Profile'}>
                         <Avatar className="edit-profile-avatar" onClick={() => {props.ShowEditUser(true)}} src={imgSrc} />
                     </Tooltip>
+                    <ShowEditUser />
                     <div className="loginRegister-link" onClick={() => props.logout(props.token)}>Logout</div>
                 </div>
             )

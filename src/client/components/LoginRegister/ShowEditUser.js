@@ -40,17 +40,9 @@ class ShowEditUser extends React.Component{
                     open={this.props.show}
                     onClose= { () => {this.props.ShowEditUser(false)}}   >
                     <div style={modalStyle} className={classes.paper} >
-                        {/*<div style={props.show ? {'display' : 'block'} : {'display' : 'none'}}>*/}
-                        {/*    <h2>Hi</h2>*/}
-                        {/*</div>*/}
+
                         <div style={this.props.show?{'display':'block'}:{'display':'none'}}>
-                            <form onChange = {(e)=>this.props.formChange(e)} onSubmit={() => this.props.login(props.userDetails)} noValidate autoComplete="off">
-                                <TextField fullWidth margin="normal"  id="login_name"  label="Login" />
-                                <TextField fullWidth margin="normal" id="password" label="Password" />
-                                <div className="login-error" style={this.props.login_error?{' visibility':'visible'}:{'visibility':'hidden'}}>Wrong login or password</div>
-                                <Button onClick={ () => this.props.login(this.props.userDetails) }
-                                        style={{'display':'block', 'float':'right'}}  variant="contained" color="primary">Login</Button>
-                            </form>
+                            <h2>IM AN EDIT WINDOW!!</h2>
                         </div>
                     </div>
                 </Modal>
