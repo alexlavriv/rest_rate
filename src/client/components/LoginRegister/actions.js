@@ -136,17 +136,16 @@ const LoginRegisterActions  = {
 };
 
 
-const ShowEditUserShowAction = (show) =>{
+const EditUserShowAction = (show) =>{
     return(
-    {
-        type:LoginRegisterConstants.LOGOUT_FAILURE,
-        payload:show
-    })
+        {
+            type:LoginRegisterConstants.TOGGLE_EDIT_WINDOW,
+            payload:show
+        });
 };
 
+const EditUserActions = {
+    EditUserShowAction
+};
 
-const ShowEditUserActions = {
-    ShowEditUserShowAction
-}
-
-export  {LoginRegisterActions, ShowEditUserActions};
+export  {LoginRegisterActions, EditUserActions};

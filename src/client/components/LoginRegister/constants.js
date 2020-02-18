@@ -13,6 +13,7 @@ const LoginRegisterConstants = {
     FILE_CHANGE: 'FILE_CHANGE',
     VALIDATE_USERNAME: 'VALIDATE_USERNAME',
     USERNAME_AVAILABLE: 'USERNAME_AVAILABLE',
+    TOGGLE_EDIT_WINDOW: 'TOGGLE_EDIT_WINDOW'
 };
 
 export { LoginRegisterConstants}

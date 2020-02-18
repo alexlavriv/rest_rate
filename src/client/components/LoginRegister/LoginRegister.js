@@ -6,10 +6,11 @@ import Button from '@material-ui/core/Button';
 import CountrySelect from '../CountryAutoComplete';
 import './LoginRegister.scss'
 import Tooltip from '@material-ui/core/Tooltip';
-import {LoginRegisterActions} from './actions'
+import {EditUserActions, LoginRegisterActions} from './actions'
 import {connect} from 'react-redux';
 import {DropzoneArea} from 'material-ui-dropzone'
 import ShowEditUser from './ShowEditUser'
+import Avatar from "@material-ui/core/Avatar";
 /* eslint-disable no-use-before-define */
 
  const styles = theme => {
@@ -55,17 +56,20 @@ class simpleModal extends React.Component {
           
             return (
                 <div className="loginRegister-root">
-                    <HtmlTooltip title={ <React.Fragment>
-                                    
-                                      {props.userDetails.login_name}
-                                    
-                                     </React.Fragment>}
+                    {/*<HtmlTooltip title={ <React.Fragment>*/}
+                    {/*                */}
+                    {/*                  {props.userDetails.login_name}*/}
+                    {/*                */}
+                    {/*                 </React.Fragment>}*/}
                     
                     
-                     >
-                        <img className="loginRegister-avatar" src={imgSrc} alt="Edit Profile"/>
-                    </HtmlTooltip>
-                    <ShowEditUser />
+                    {/* >*/}
+                    {/*    <img className="loginRegister-avatar" src={imgSrc} alt="Edit Profile"/>*/}
+                    {/*</HtmlTooltip>*/}
+                    {/*<ShowEditUser />*/}
+                    <Tooltip title={props.userDetails.login_name + ' - Edit Profile'}>
+                        <Avatar className="edit-profile-avatar" onClick={() => {props.ShowEditUser(true)}} src={imgSrc} />
+                    </Tooltip>
                     <div className="loginRegister-link" onClick={() => props.logout(props.token)}>Logout</div>
                 </div>
             )
@@ -145,7 +149,8 @@ function mapDispatchToProps(dispatch) {
         register: (userDetails) =>{dispatch(LoginRegisterActions.registerAction(userDetails))},
         login: (userDetails) => {dispatch(LoginRegisterActions.logIn(userDetails))},
         logout: (token) => {dispatch(LoginRegisterActions.logOut(token))},
-        fileChange: (file) => {dispatch(LoginRegisterActions.fileChangeAction(file[0]))}
+        fileChange: (file) => {dispatch(LoginRegisterActions.fileChangeAction(file[0]))},
+        ShowEditUser: (show) => {dispatch(EditUserActions.EditUserShowAction(show))}
     });
 }
 

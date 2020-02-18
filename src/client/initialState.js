@@ -18,7 +18,8 @@ export default {
         user: {login_name:"", password:""},
         token: "",
         available: true,
-        login_error:false
+        login_error:false,
+        showEditWindow: false
     }),
     add_review:Map({
         show:false,

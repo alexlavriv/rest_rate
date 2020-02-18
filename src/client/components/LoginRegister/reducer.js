@@ -47,6 +47,11 @@ const LoginRegisterReducer = (state = initialState.register_login, action) => {
             user['avatar'] = action.payload;
             state = state.set('user', user);
             return state;}
+        case LoginRegisterConstants.TOGGLE_EDIT_WINDOW:
+        {
+            state = state.set('showEditWindow', action.payload);
+            return state;
+        }
         default: //otherwise state is lost!
         return state;
     }
