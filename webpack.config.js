@@ -5,10 +5,12 @@ const CleanWebpackPlugin = require('clean-webpack-plugin');
 const outputDirectory = 'dist';
 
 module.exports = {
+  devtool: "source-map",
   entry: ['babel-polyfill', './src/client/main.js'],
   output: {
     path: path.join(__dirname, outputDirectory),
-    filename: 'bundle.js'
+    filename: 'bundle.js',
+    sourceMapFilename: "[name].js.map"
   },
   module: {
     rules: [{

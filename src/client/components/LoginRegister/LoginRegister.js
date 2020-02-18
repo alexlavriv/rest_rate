@@ -5,15 +5,8 @@ import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import CountrySelect from '../CountryAutoComplete';
 import './LoginRegister.scss'
-import {
-    checkUsernameAction,
-    fileChangeAction,
-    formChangeAction,
-    logIn,
-    logOut,
-    openRegisterWindow,
-    registerAction
-} from './actions'
+import Tooltip from '@material-ui/core/Tooltip';
+import {LoginRegisterActions} from './actions'
 import {connect} from 'react-redux';
 import {DropzoneArea} from 'material-ui-dropzone'
 /* eslint-disable no-use-before-define */
@@ -29,6 +22,16 @@ return ({
     padding: theme.spacing(2, 4, 3),
   }})
 };
+
+const HtmlTooltip = withStyles(theme => ({
+    tooltip: {
+      backgroundColor: '#f5f5f9',
+      color: 'rgba(0, 0, 0, 0.87)',
+      maxWidth: 220,
+      fontSize: theme.typography.pxToRem(16),
+      border: '1px solid #dadde9',
+    },
+  }))(Tooltip);
 
 class simpleModal extends React.Component {
     getModelStyle() {
@@ -51,8 +54,16 @@ class simpleModal extends React.Component {
           
             return (
                 <div className="loginRegister-root">
-                    <div>{props.userDetails.login_name} </div>
-                    <img className="loginRegister-avatar" src={imgSrc} alt="Edit Profile"/>
+                    <HtmlTooltip title={ <React.Fragment>
+                                    
+                                      {props.userDetails.login_name}
+                                    
+                                     </React.Fragment>}
+                    
+                    
+                     >
+                        <img className="loginRegister-avatar" src={imgSrc} alt="Edit Profile"/>
+                    </HtmlTooltip>
                     <div className="loginRegister-link" onClick={() => props.logout(props.token)}>Logout</div>
                 </div>
             )
@@ -76,18 +87,21 @@ class simpleModal extends React.Component {
                                 <form onChange = {(e)=>props.formChange(e)} onSubmit={() => props.login(props.userDetails)} noValidate autoComplete="off">
                                     <TextField fullWidth margin="normal"  id="login_name"  label="Login" />
                                     <TextField fullWidth margin="normal" id="password" label="Password" />
+                                    <div className="login-error" style={props.login_error?{' visibility':'visible'}:{'visibility':'hidden'}}>Wrong login or password</div>
                                     <Button onClick={ () => props.login(props.userDetails) }
-                                            style={{'display':'block', 'float':'right'}} variant="contained" color="primary">Login</Button>
+                                           style={{'display':'block', 'float':'right'}}  variant="contained" color="primary">Login</Button>
                                 </form>
                             </div>
                             <div style={props.isRegister?{'display':'block'}:{'display':'none'}}>
-                                <form noValidate autoComplete="off" onChange = {(e)=>props.formChange(e)}>
-                                    <TextField required fullWidth margin="normal" id="login_name"
-                                               onBlur = {(e)=>props.checkAvailability(e.target.value)} label="Login" />
+                                <form noValidate autoComplete="off" onChange={(e)=>props.formChange(e)} >
+                                    <TextField style={{"height":"50px"}} onChange={(e)=>props.checkAvailability(e.target.value)} error={!props.available} helperText={props.available===false ? "USER ALREADY EXISTS":""} required fullWidth margin="normal" id="login_name"
+                                             label="Login" />
                                     <TextField required fullWidth margin="normal"  id="password" label="Password" />
-                                    <CountrySelect/>
-                                    <DropzoneArea id="avatar" onChange={(event)=>props.fileChange(event)}/>
-                                    <Button  onClick={()=>props.register(props.userDetails)}
+                                    <CountrySelect  />
+                                    <div  className="loginRegister-dropzone" >
+                                    <DropzoneArea   filesLimit={1} id="avatar" onChange={(event)=>props.fileChange(event)}/>
+                                    </div>
+                                    <Button    margin="normal" onClick={()=>props.register(props.userDetails)}
                                             style={{'display':'block', 'float':'right'}} variant="contained" color="primary" disabled={!props.available}>Register</Button>
                                 </form>
                             </div>
@@ -114,20 +128,22 @@ const mapStateToProps = state =>{
   const open = isLogin || isRegister;
   const token = state["login_register"].get("token");
   const available = state['login_register'].get('available');
+  const login_error = state['login_register'].get('login_error');
 
-  return {open, isLogin, isRegister, userDetails, token, available};
+
+  return {open, isLogin, isRegister, userDetails, token, available, login_error};
 };
 
 function mapDispatchToProps(dispatch) {
     console.log('dispatch');
     return({
-        openWindow: (isRegister, isLogin) => {dispatch(openRegisterWindow(isRegister, isLogin))},
-        formChange: (e) => {dispatch(formChangeAction(e.target.id, e.target.value))},
-        checkAvailability: (username) => {dispatch(checkUsernameAction(username))},
-        register: (userDetails) =>{dispatch(registerAction(userDetails))},
-        login: (userDetails) => {dispatch(logIn(userDetails))},
-        logout: (token) => {dispatch(logOut(token))},
-        fileChange: (file) => {dispatch(fileChangeAction(file[0]))}
+        openWindow: (isRegister, isLogin) => {dispatch(LoginRegisterActions.openRegisterWindow(isRegister, isLogin))},
+        formChange: (e) => {dispatch(LoginRegisterActions.formChangeAction(e.target.id, e.target.value))},
+        checkAvailability: (username) => {dispatch(LoginRegisterActions.checkUsernameAction(username))},
+        register: (userDetails) =>{dispatch(LoginRegisterActions.registerAction(userDetails))},
+        login: (userDetails) => {dispatch(LoginRegisterActions.logIn(userDetails))},
+        logout: (token) => {dispatch(LoginRegisterActions.logOut(token))},
+        fileChange: (file) => {dispatch(LoginRegisterActions.fileChangeAction(file[0]))}
     });
 }
 

@@ -1,6 +1,6 @@
 import {LoginRegisterConstants} from './constants'
 import { call, put, takeEvery } from 'redux-saga/effects'
-import LoginRegisterActions from './actions'
+import {LoginRegisterActions} from './actions'
 import {all} from 'redux-saga/effects'
 
 function* register(action){

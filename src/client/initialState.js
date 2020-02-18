@@ -17,7 +17,8 @@ export default {
         isOpened: {isLogin:false, isRegister:false},
         user: {login_name:"", password:""},
         token: "",
-        available: true
+        available: true,
+        login_error:false
     }),
     add_review:Map({
         show:false,

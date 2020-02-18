@@ -10,9 +10,18 @@ import {addReviewAction, formChangeAction, showWindowAction, fileChangeAction} f
 import Rating from '@material-ui/lab/Rating';
 import Typography from '@material-ui/core/Typography';
 import {DropzoneArea} from 'material-ui-dropzone'
-
+import Tooltip from '@material-ui/core/Tooltip';
 import './AddReview.scss'
 
+const HtmlTooltip = withStyles(theme => ({
+    tooltip: {
+      backgroundColor: '#f5f5f9',
+      color: 'rgba(0, 0, 0, 0.87)',
+      maxWidth: 220,
+      fontSize: theme.typography.pxToRem(16),
+      border: '1px solid #dadde9',
+    },
+  }))(Tooltip);
 
 const styles = theme => {
     return ({
@@ -77,24 +86,19 @@ class AddReview extends React.Component {
                             style={{'display':'block', 'float':'right'}} variant="contained" color="primary">ADD</Button>
                 </div>
             </Modal>);
-        if (this.props.token){
             return (
                 <div>
-                    <IconButton onClick={()=>this.props.openWindow(true)}  color="primary" aria-label="add review">
-                        <AddCircleIcon  style={{ fontSize: 70 }}  />
-                    </IconButton>
+                    <HtmlTooltip classes={{ tooltip: classes.noMaxWidth }} disableHoverListener={this.props.token} title="Please login to add reviews">
+                        <span>
+                            <IconButton disabled={!this.props.token} onClick={()=>this.props.openWindow(true)}  color="primary" aria-label="add review">
+                                <AddCircleIcon  style={{ fontSize: 70 }}  />
+                            </IconButton>
+                        </span>
+                    </HtmlTooltip>
                     {modal}
                 </div>
             );
-        } else {
-            return (
-                <div>
-                    <IconButton alt="Please Log In" disabled>
-                        <AddCircleIcon  style={{ fontSize: 70 }}  />
-                    </IconButton>
-                </div>
-            )
-        }
+       
 
     }
 }

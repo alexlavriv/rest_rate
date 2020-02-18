@@ -33,6 +33,7 @@ export default function CountrySelect() {
       classes={{
         option: classes.option,
       }}
+   
       autoHighlight
       getOptionLabel={option => option.label}
       renderOption={option => (
@@ -47,6 +48,8 @@ export default function CountrySelect() {
           label="Choose a country"
           variant="outlined"
           fullWidth
+         
+          margin="normal"
           inputProps={{
             ...params.inputProps,
             autoComplete: 'new-password', // disable autocomplete and autofill

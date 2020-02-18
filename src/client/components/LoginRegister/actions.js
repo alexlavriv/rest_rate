@@ -1,13 +1,13 @@
 import { LoginRegisterConstants} from './constants.js';
 
-export const openRegisterWindow = (isLogin, isRegister) =>{
+const openRegisterWindow = (isLogin, isRegister) =>{
     return{
         type:LoginRegisterConstants.OPEN_WINDOW,
         payload: {isLogin, isRegister}
     };
 };
 
-export const registerAction = (userDetails) =>{
+ const registerAction = (userDetails) =>{
     console.log("Register data: ",userDetails);
     return({
         type:LoginRegisterConstants.REGISTER,
@@ -16,7 +16,7 @@ export const registerAction = (userDetails) =>{
         })
 };
 
- export const logIn = (userDetails) =>{
+  const logIn = (userDetails) =>{
      console.log("login data: ", userDetails);
      return ({
         type: LoginRegisterConstants.LOGIN,
@@ -24,14 +24,14 @@ export const registerAction = (userDetails) =>{
         payload: userDetails
         });
 };
-export const fileChangeAction = (file)=>{
+ const fileChangeAction = (file)=>{
     return( 
         {
             type:LoginRegisterConstants.FILE_CHANGE,
             payload: file
         })
 };
- export const logOut = (token) => {
+  const logOut = (token) => {
     console.log("logout " + token);
     return( 
     {
@@ -41,7 +41,7 @@ export const fileChangeAction = (file)=>{
     })
 };
 
-export const checkUsernameAction = (username) => {
+ const checkUsernameAction = (username) => {
     console.log("IN CHECKUSERNAME$$$$$$$$$$");
     return(
         {
@@ -51,7 +51,7 @@ export const checkUsernameAction = (username) => {
     );
 };
 
-export const usernameAvailable = (json) => {
+ const usernameAvailable = (json) => {
     console.log("IN AVAILABLE$$$$$$$$$$$$$$$$$$$$$$");
     return(
         {
@@ -62,7 +62,7 @@ export const usernameAvailable = (json) => {
 };
 
 
-export const formChangeAction = (id, value) =>{ 
+ const formChangeAction = (id, value) =>{ 
     return( 
         {
             type:LoginRegisterConstants.FIELD_UPDATE,
@@ -118,7 +118,9 @@ const logoutFailureAction = (message) =>{
 };
 
 
-let LoginRegisterActions  = {
+const LoginRegisterActions  = {
+    openRegisterWindow,
+    fileChangeAction,
     logIn,
     logOut,
     registerAction,
@@ -129,7 +131,22 @@ let LoginRegisterActions  = {
     logoutSuccessAction,
     logoutFailureAction,
     checkUsernameAction,
-    usernameAvailable
+    usernameAvailable,
+    formChangeAction
 };
 
-export default LoginRegisterActions;
+
+const ShowEditUserShowAction = (show) =>{
+    return(
+    {
+        type:LoginRegisterConstants.LOGOUT_FAILURE,
+        payload:show
+    })
+};
+
+
+const ShowEditUserActions = {
+    ShowEditUserShowAction
+}
+
+export  {LoginRegisterActions, ShowEditUserActions};

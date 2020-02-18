@@ -19,13 +19,21 @@ const LoginRegisterReducer = (state = initialState.register_login, action) => {
             state = state.set('user', user);
             return state;}
         case LoginRegisterConstants.REGISTER_SUCCESS:
-            console.log("in register");
-        case LoginRegisterConstants.LOGIN_SUCCESS:
             {console.log("in register\\login success");
             console.log(action.payload);
             state = state.set('user', action.payload.user);
             state = state.set('token', action.payload.token);
             state = state.set('isOpened', {isLogin:false, isRegister:false});
+            return state;}
+        case LoginRegisterConstants.LOGIN_SUCCESS:
+            {
+            if (!action.payload.token){
+                state = state.set('login_error', true);
+            }
+            else
+          {  state = state.set('user', action.payload.user);
+            state = state.set('token', action.payload.token);
+            state = state.set('isOpened', {isLogin:false, isRegister:false});}
             return state;}
         case LoginRegisterConstants.LOGOUT_SUCCESS:
             {state = state.set('token', "");
