@@ -9,6 +9,7 @@ import Tooltip from '@material-ui/core/Tooltip';
 import {LoginRegisterActions} from './actions'
 import {connect} from 'react-redux';
 import {DropzoneArea} from 'material-ui-dropzone'
+import ShowEditUser from './ShowEditUser'
 /* eslint-disable no-use-before-define */
 
  const styles = theme => {
@@ -64,6 +65,7 @@ class simpleModal extends React.Component {
                      >
                         <img className="loginRegister-avatar" src={imgSrc} alt="Edit Profile"/>
                     </HtmlTooltip>
+                    <ShowEditUser />
                     <div className="loginRegister-link" onClick={() => props.logout(props.token)}>Logout</div>
                 </div>
             )

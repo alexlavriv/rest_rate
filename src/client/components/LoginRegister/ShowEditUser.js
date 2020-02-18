@@ -34,17 +34,7 @@ class ShowEditUser extends React.Component{
         const { classes } = this.props;
         const modalStyle = this.getModelStyle();
         return (<div>
-              <Modal
-                        aria-labelledby="simple-modal-title"
-                        aria-describedby="simple-modal-description"
-                        open={this.props.ShowEditUser_show}
-
-                        onClose= {()=> this.props.setShowEditUser_show(false)}   >
-                        <div style={modalStyle} className={classes.paper} >
-                            
-                        
-                        </div>
-                    </Modal>
+            <h2> I am ShowEditUser</h2>
 
 
         </div>)
