@@ -4,8 +4,6 @@ import {addReviewSuccessAction, addReviewFailAction} from './actions'
 import {all} from 'redux-saga/effects'
 
 function* addReview(action){
-	console.log('addReview=', action);
-	console.log('review:', action.payload);
 	try {
 		let fd = new FormData();
 		Object.keys(action.payload).forEach(function(key,index) {

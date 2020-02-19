@@ -10,7 +10,6 @@ const router = new express.Router();
 const upload = multer();
 
 router.post('/review/:login_name',upload.array('files'), async (req, res) => {
-    console.log(req.body);
     const {files} = req;
     const login_name = req.params.login_name;
     const review = new Review(req.body);
@@ -18,10 +17,8 @@ router.post('/review/:login_name',upload.array('files'), async (req, res) => {
     const restaurantName = review.rest_name;
     Restaurant.findOne({rest_name: restaurantName}, async (err, foundRestaurant) => {
         if (err) {
-            console.log("error finding restaurant");
             res.status(400).send();
         } else if (!foundRestaurant) {
-            console.log("found restaurant by the name " + restaurantName);
             const restaurant = new Restaurant({rest_name: restaurantName});
             restaurant.save();
         }

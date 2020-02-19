@@ -56,19 +56,8 @@ class simpleModal extends React.Component {
           
             return (
                 <div className="loginRegister-root">
-                    {/*<HtmlTooltip title={ <React.Fragment>*/}
-                    {/*                */}
-                    {/*                  {props.userDetails.login_name}*/}
-                    {/*                */}
-                    {/*                 </React.Fragment>}*/}
-                    
-                    
-                    {/* >*/}
-                    {/*    <img className="loginRegister-avatar" src={imgSrc} alt="Edit Profile"/>*/}
-                    {/*</HtmlTooltip>*/}
-                    {/*<ShowEditUser />*/}
                     <Tooltip title={props.userDetails.login_name + ' - Edit Profile'}>
-                        <Avatar className="edit-profile-avatar" onClick={() => {props.ShowEditUser(true)}} src={imgSrc} />
+                        <Avatar  className="edit-profile-avatar" onClick={() => {props.ShowEditUser(true)}} src={imgSrc} />
                     </Tooltip>
                     <ShowEditUser />
                     <div className="loginRegister-link" onClick={() => props.logout(props.token)}>Logout</div>
@@ -92,8 +81,8 @@ class simpleModal extends React.Component {
                         <div style={modalStyle} className={classes.paper} >
                             <div style={props.isLogin?{'display':'block'}:{'display':'none'}}>
                                 <form onChange = {(e)=>props.formChange(e)} onSubmit={() => props.login(props.userDetails)} noValidate autoComplete="off">
-                                    <TextField fullWidth margin="normal"  id="login_name"  label="Login" />
-                                    <TextField fullWidth margin="normal" id="password" label="Password" />
+                                    <TextField fullWidth margin="normal"  id="login_name"  label="Username" />
+                                    <TextField fullWidth margin="normal" type="password" id="password" label="Password" />
                                     <div className="login-error" style={props.login_error?{' visibility':'visible'}:{'visibility':'hidden'}}>Wrong login or password</div>
                                     <Button onClick={ () => props.login(props.userDetails) }
                                            style={{'display':'block', 'float':'right'}}  variant="contained" color="primary">Login</Button>
@@ -102,8 +91,8 @@ class simpleModal extends React.Component {
                             <div style={props.isRegister?{'display':'block'}:{'display':'none'}}>
                                 <form noValidate autoComplete="off" onChange={(e)=>props.formChange(e)} >
                                     <TextField style={{"height":"50px"}} onChange={(e)=>props.checkAvailability(e.target.value)} error={!props.available} helperText={props.available===false ? "USER ALREADY EXISTS":""} required fullWidth margin="normal" id="login_name"
-                                             label="Login" />
-                                    <TextField required fullWidth margin="normal"  id="password" label="Password" />
+                                             label="Username" />
+                                    <TextField required fullWidth type="password" margin="normal"  id="password" label="Password" />
                                     <CountrySelect  />
                                     <div  className="loginRegister-dropzone" >
                                     <DropzoneArea   filesLimit={1} id="avatar" onChange={(event)=>props.fileChange(event)}/>
@@ -127,8 +116,6 @@ class simpleModal extends React.Component {
 }
 
 const mapStateToProps = state =>{
-  console.log("The state of login register is:");
-  console.log(state["login_register"].get("isOpened"));
   const isLogin = state["login_register"].get("isOpened").isLogin;
   const isRegister = state["login_register"].get("isOpened").isRegister;
   const userDetails = state["login_register"].get("user");
@@ -142,7 +129,6 @@ const mapStateToProps = state =>{
 };
 
 function mapDispatchToProps(dispatch) {
-    console.log('dispatch');
     return({
         openWindow: (isRegister, isLogin) => {dispatch(LoginRegisterActions.openRegisterWindow(isRegister, isLogin))},
         formChange: (e) => {dispatch(LoginRegisterActions.formChangeAction(e.target.id, e.target.value))},

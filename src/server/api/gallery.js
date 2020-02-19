@@ -13,15 +13,12 @@ async function getImages(tag) {
 
 module.exports = (app) => {
     app.post('/api/load/images', function (req, res) {
-        console.log('in load images');
         GalleryModel
             .findOne({tag: req.body.tag})
             .then(doc => {
                 if (doc != null) {
-                    console.log('tag found=', req.body.tag);
                     res.json(doc.photos);
                 } else {
-                    console.log('new tag=', req.body.tag);
                     getImages(req.body.tag)
                         .then(e => e.data)
                         .then(e => {

@@ -9,7 +9,6 @@ class Dropzone extends Component{
     };
   }
   handleChange(files){
-    console.log(files)
     this.setState({
       files: files
     });

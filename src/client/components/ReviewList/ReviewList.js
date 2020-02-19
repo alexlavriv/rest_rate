@@ -6,11 +6,9 @@ import ReviewView from '../ReviewView'
 
 class ReviewList extends React.Component {
     componentDidMount(){
-        console.log("ReviewList mount");
         this.props.getReviews();
     }
     render(){
-        console.log(this.props.reviews);
         const reviewViews = this.props.reviews.map(current_review => {
             return (
                 <ReviewView key={current_review._id} review={current_review}/>

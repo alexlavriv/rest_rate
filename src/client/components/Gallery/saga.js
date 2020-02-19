@@ -3,7 +3,6 @@ import { call, put, takeEvery } from 'redux-saga/effects'
 import GalleryActions from './actions'
 
 function* loadImages(action){
-  console.log('GallerySaga=', action);
   try {
     const res = yield call(fetch, action.uri,
       {

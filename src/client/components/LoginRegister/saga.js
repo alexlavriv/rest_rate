@@ -1,10 +1,9 @@
 import {LoginRegisterConstants} from './constants'
 import { call, put, takeEvery } from 'redux-saga/effects'
-import {LoginRegisterActions} from './actions'
+import {LoginRegisterActions, EditUserActions} from './actions'
 import {all} from 'redux-saga/effects'
 
 function* register(action){
-    console.log('Register=', action);
     try {
         let fd = new FormData();
         Object.keys(action.payload).forEach(function(key,index) {
@@ -15,7 +14,7 @@ function* register(action){
             method: 'POST',
             body: fd
         });
-
+        console.log("register fd:", fd);
         const json = yield call([res, 'json']); //retrieve body of response
         yield put(LoginRegisterActions.registerSuccessAction(json));
     } catch (e) {
@@ -24,7 +23,6 @@ function* register(action){
 }
 
 function* login(action){
-    console.log('Login=', action);
     try {
         const res = yield call(fetch, action.uri, {
             method: 'POST',
@@ -33,18 +31,15 @@ function* login(action){
             },
             body: JSON.stringify(action.payload)
         });
-        console.log("LOGINLOGN");
         const json = yield call([res, 'json']);
         yield put(LoginRegisterActions.loginSuccessAction(json));
     } catch (e) {
         yield put(LoginRegisterActions.loginFailureAction(e.message));
     }
-    console.log('out of LOGIN');
 }
 
 function* logout(action){
-    console.log('Logout=', action.payload);
-    const body = JSON.stringify({'token': action.payload})
+    const body = JSON.stringify({'token': action.payload});
     const req = {
         method: 'POST',
         headers: {
@@ -53,7 +48,6 @@ function* logout(action){
         },
         body
     };
-    console.log(req);
     try {
         const res = yield call(fetch, action.uri, req);
 
@@ -66,7 +60,6 @@ function* logout(action){
 }
 
 function* validateUsername(action) {
-    console.log('validate = ', action);
     try {
         const res = yield call(fetch, action.uri, {
             method: 'GET',
@@ -74,15 +67,30 @@ function* validateUsername(action) {
                 'Content-Type': 'application/json'
             },
         });
-        console.log('validate, res =', res);
         const json = yield call([res, 'json']);
-        console.log('json:', json);
         yield put(LoginRegisterActions.usernameAvailable(json));
     } catch (e) {
-        console.log("some error", e);
 
     }
-    console.log('out of validate')
+}
+
+function* edit(action) {
+    console.log("edit", action.payload);
+    try {
+        // let fd = new FormData();
+        // Object.keys(action.payload).forEach(function(key,index) {
+        //     fd.append(key, action.payload[key]);
+        // });
+        const res = yield call(fetch, action.uri, {
+            method: 'PATCH',
+            body: {'test': 1111}
+        });
+        const json = yield call([res, 'json']); //retrieve body of response
+        yield put(EditUserActions.EditSuccessAction(json));
+    } catch (e) {
+        yield put(EditUserActions.EditFailureAction(e.message));
+    }
+    console.log("edit out");
 }
 
 function* LoginRegisterSaga() {
@@ -90,7 +98,8 @@ function* LoginRegisterSaga() {
         takeEvery(LoginRegisterConstants.REGISTER, register),
         takeEvery(LoginRegisterConstants.LOGIN, login),
         takeEvery(LoginRegisterConstants.LOGOUT, logout),
-        takeEvery(LoginRegisterConstants.VALIDATE_USERNAME, validateUsername)
+        takeEvery(LoginRegisterConstants.VALIDATE_USERNAME, validateUsername),
+        takeEvery(LoginRegisterConstants.EDIT, edit)
     ]);
 }
 

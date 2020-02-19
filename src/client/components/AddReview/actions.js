@@ -11,7 +11,6 @@ export function showWindowAction(is_open) {
 }
 
 export function formChangeAction(id, value) {
-  console.log("form change action");
   return {
     type: AddReviewActionsConstants.REST_REVIEW_FORM_CHANGE,
     payload: {
@@ -21,7 +20,6 @@ export function formChangeAction(id, value) {
 }
 
 export function fileChangeAction(files) {
-  console.log("form change action");
   return {
     type: AddReviewActionsConstants.REST_REVIEW_FILE_CHANGE,
     payload: files

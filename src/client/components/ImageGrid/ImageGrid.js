@@ -11,8 +11,8 @@ import {connect} from 'react-redux';
 class ImageGrid extends React.Component {
 
     render(){
-        const reviewViews = this.props.images.map((current_iamge, index) => {
-            const imgSrc = `data:image/gif;base64,${current_iamge}`;
+        const reviewViews = this.props.images.map((currentImage, index) => {
+            const imgSrc = `data:image/gif;base64,${currentImage}`;
             return (
                 <img key={index} className="image-sim" src={imgSrc}/>
             );
@@ -31,7 +31,6 @@ const mapStateToProps = state =>{
 };
 
 function mapDispatchToProps(dispatch) {
-    console.log('dispatch');
     return({
        
     });

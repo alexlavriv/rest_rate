@@ -8,7 +8,6 @@ const openRegisterWindow = (isLogin, isRegister) =>{
 };
 
  const registerAction = (userDetails) =>{
-    console.log("Register data: ",userDetails);
     return({
         type:LoginRegisterConstants.REGISTER,
         uri: 'http://localhost:8080/users/register',
@@ -17,7 +16,6 @@ const openRegisterWindow = (isLogin, isRegister) =>{
 };
 
   const logIn = (userDetails) =>{
-     console.log("login data: ", userDetails);
      return ({
         type: LoginRegisterConstants.LOGIN,
         uri: 'http://localhost:8080/users/login',
@@ -32,8 +30,7 @@ const openRegisterWindow = (isLogin, isRegister) =>{
         })
 };
   const logOut = (token) => {
-    console.log("logout " + token);
-    return( 
+    return(
     {
         type:LoginRegisterConstants.LOGOUT,
         uri: 'http://localhost:8080/users/logout',
@@ -42,7 +39,6 @@ const openRegisterWindow = (isLogin, isRegister) =>{
 };
 
  const checkUsernameAction = (username) => {
-    console.log("IN CHECKUSERNAME$$$$$$$$$$");
     return(
         {
             type:LoginRegisterConstants.VALIDATE_USERNAME,
@@ -52,7 +48,6 @@ const openRegisterWindow = (isLogin, isRegister) =>{
 };
 
  const usernameAvailable = (json) => {
-    console.log("IN AVAILABLE$$$$$$$$$$$$$$$$$$$$$$");
     return(
         {
             type:LoginRegisterConstants.USERNAME_AVAILABLE,
@@ -62,8 +57,8 @@ const openRegisterWindow = (isLogin, isRegister) =>{
 };
 
 
- const formChangeAction = (id, value) =>{ 
-    return( 
+ const formChangeAction = (id, value) =>{
+    return(
         {
             type:LoginRegisterConstants.FIELD_UPDATE,
             payload: {id,value}
@@ -144,8 +139,50 @@ const EditUserShowAction = (show) =>{
         });
 };
 
+const ToggleEdit = (enable) => {
+    return(
+        {
+            type:LoginRegisterConstants.TOGGLE_EDIT,
+            payload: enable
+        }
+    );
+};
+
+const SaveEditedDetails = (prevUserName, userDetails) => {
+    console.log('prevUserName', prevUserName);
+    console.log('userDetails', userDetails);
+    return(
+        {
+            type:LoginRegisterConstants.EDIT,
+            uri: 'http://localhost:8080/users/' + prevUserName,
+            payload: userDetails
+        }
+    );
+};
+
+const EditSuccessAction = (id) => {
+    return(
+        {
+            type: LoginRegisterConstants.EDIT_SUCCESS,
+            payload: id
+        }
+    );
+};
+const EditFailureAction = (message) => {
+    return(
+        {
+            type: LoginRegisterConstants.EDIT_FAILURE,
+            payload: message
+        }
+    );
+};
+
 const EditUserActions = {
-    EditUserShowAction
+    EditUserShowAction,
+    ToggleEdit,
+    SaveEditedDetails,
+    EditSuccessAction,
+    EditFailureAction
 };
 
 export  {LoginRegisterActions, EditUserActions};

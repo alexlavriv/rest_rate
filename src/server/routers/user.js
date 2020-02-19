@@ -1,5 +1,5 @@
 const express = require('express');
-const router =new express.Router();
+const router = new express.Router();
 const User = require('../models/user');
 const auth = require('../middleware/auth');
 const multer = require('multer');
@@ -25,11 +25,10 @@ router.get("/users/:username", async (req, res) => {
 });
 
 router.post('/users/register',upload.single('avatar'), async (req, res) => {
-    console.log("REGISTER");
+    console.log("REGISTER", req.body);
     const {file} = req;
     const user = new User(req.body);
     user.avatar = file.buffer;
-    console.log(req);
     try
     {
         const saved_user = await user.save();
@@ -41,6 +40,21 @@ router.post('/users/register',upload.single('avatar'), async (req, res) => {
     }
 });
 
+router.patch("/users/:username", async (req, res) => {
+    console.log("EDIT", req.body);
+    // User.findOneAndUpdate({login_name: req.params.username}, {login_name: req.body.login_name}, async (err, replaced) => {
+    //     if (err) {
+    //         console.log("EDIT ERROR");
+    //         res.status(400).send(err);
+    //     } else if (!replaced) {
+    //         console.log("EDIT ERROR2");
+    //         res.status(400).send("Couldn't replace user");
+    //     } else {
+    //         console.log("EDIT SUCCESS", replaced);
+    //         res.send({'user': replaced});
+    //     }
+    // });
+});
 
 router.get("/users/me", auth, async (req, res)=>{
     console.log("in me");
@@ -132,10 +146,12 @@ avatar = multer({
            {return cb(new Error('File must be a jpe?g or png'))}
            cb(undefined, true);
     }
-})
+});
+
 const errorMiddleware = (req,res,next)=>{
     throw new Error('From my middleware')
-}
+};
+
 router.post('/users/me/avatar', auth ,avatar.single('avatar'), async (req,res) =>{
     const buffer =await sharp(req.file.buffer).resize({width:250, height:250}).png().toBuffer()
     res.user.avatar = buffer
@@ -143,13 +159,13 @@ router.post('/users/me/avatar', auth ,avatar.single('avatar'), async (req,res) =
     res.send()
 }, (error, req,res, next)=>{
     res.status(400).send({message:"fucking fuck"})
-})
+});
 
 router.delete('/users/me/avatar', auth, async (req,res) =>{
     res.user.avatar = undefined
     await res.user.save()
     res.send()
-})
+});
 
 router.get('/users/:id/avatar', async (req,res)=>{
     try{
@@ -163,7 +179,7 @@ router.get('/users/:id/avatar', async (req,res)=>{
     }catch(e){
         res.status(404).send()
     }
-})
+});
 
 
 module.exports = router;

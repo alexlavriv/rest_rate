@@ -6,7 +6,6 @@ let _handleError = function(err){
 
 module.exports = (app) => {
     app.get('/api/load/tags', function(req, res) {
-        console.log('app.get/api/load/tags');
         AppModel
             .findOne()
             .then(doc => {
@@ -16,7 +15,6 @@ module.exports = (app) => {
 
     });
     app.post('/api/load/images', function(req, res, next) {
-        console.log('updating tag array');
         AppModel
             .findOne()
             .then(doc => {

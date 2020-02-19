@@ -105,7 +105,6 @@ class AddReview extends React.Component {
 
 const mapStateToProps = (state) =>{
     const open = state.add_review.get("show");
-    console.log("mapStateToProps " + open);
     const review = state.add_review.get('review');
     const token = state.login_register.get("token");
     const user = state.login_register.get('user');
@@ -113,7 +112,6 @@ const mapStateToProps = (state) =>{
 };
 
 function mapDispatchToProps(dispatch) {
-    console.log('dispatch');
     return({
         submit_review:(review, loginName)=>{dispatch(addReviewAction(review, loginName))},
         openWindow: (show) => {dispatch (showWindowAction(show))},

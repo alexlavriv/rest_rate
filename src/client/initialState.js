@@ -19,7 +19,8 @@ export default {
         token: "",
         available: true,
         login_error:false,
-        showEditWindow: false
+        showEditWindow: false,
+        enableEdit: false
     }),
     add_review:Map({
         show:false,

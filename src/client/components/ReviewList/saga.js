@@ -4,7 +4,6 @@ import {GetReviewsFailureAction, GetReviewsSuccessAction} from './actions'
 import {all} from 'redux-saga/effects'
 
 function* getReviews(action){
-  console.log('GetReviewsSaga=', action);
   try {
 
     const res = yield call(fetch, action.uri, {
