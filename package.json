@@ -1,7 +1,7 @@
 {
   "private": true,
   "version": "0.0.1",
-  "description": "Flickr Gallery Template",
+  "description": "Rest Rate",
   "main": "",
   "scripts": {
     "client": "webpack-dev-server",
@@ -65,7 +65,9 @@
     "url-loader": "^1.1.2",
     "webpack": "^4.41.5",
     "webpack-cli": "^3.3.10",
-    "webpack-dev-server": "^3.10.3"
+    "webpack-dev-server": "^3.10.3",
+    "react-geosuggest": "^2.12.1",
+    "react-script-tag": "^1.1.2"
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^1.2.27",

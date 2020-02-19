@@ -14,6 +14,9 @@ const userSchema = new mongoose.Schema(
         login_name:{},
         age:{},
         password:{},
+        location:{
+            type:String,
+        },
         avatar:{type:Buffer},
         tokens:[{
             token:{

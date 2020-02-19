@@ -11,6 +11,9 @@ import {connect} from 'react-redux';
 import {DropzoneArea} from 'material-ui-dropzone'
 import ShowEditUser from './ShowEditUser'
 import Avatar from "@material-ui/core/Avatar";
+import Geosuggest from 'react-geosuggest';
+import ScriptTag from 'react-script-tag';
+import FormControl from "@material-ui/core/FormControl";
 /* eslint-disable no-use-before-define */
 
  const styles = theme => {
@@ -25,15 +28,6 @@ return ({
   }})
 };
 
-const HtmlTooltip = withStyles(theme => ({
-    tooltip: {
-      backgroundColor: '#f5f5f9',
-      color: 'rgba(0, 0, 0, 0.87)',
-      maxWidth: 220,
-      fontSize: theme.typography.pxToRem(16),
-      border: '1px solid #dadde9',
-    },
-  }))(Tooltip);
 
 class simpleModal extends React.Component {
     getModelStyle() {
@@ -89,11 +83,12 @@ class simpleModal extends React.Component {
                                 </form>
                             </div>
                             <div style={props.isRegister?{'display':'block'}:{'display':'none'}}>
+
                                 <form noValidate autoComplete="off" onChange={(e)=>props.formChange(e)} >
                                     <TextField style={{"height":"50px"}} onChange={(e)=>props.checkAvailability(e.target.value)} error={!props.available} helperText={props.available===false ? "USER ALREADY EXISTS":""} required fullWidth margin="normal" id="login_name"
                                              label="Username" />
                                     <TextField required fullWidth type="password" margin="normal"  id="password" label="Password" />
-                                    <CountrySelect  />
+                                    <Geosuggest onSuggestSelect={(value)=>{props.locationChange(value.label)}} onChange={(value) => {props.locationChange(value.label)}} />
                                     <div  className="loginRegister-dropzone" >
                                     <DropzoneArea   filesLimit={1} id="avatar" onChange={(event)=>props.fileChange(event)}/>
                                     </div>
@@ -132,6 +127,7 @@ function mapDispatchToProps(dispatch) {
     return({
         openWindow: (isRegister, isLogin) => {dispatch(LoginRegisterActions.openRegisterWindow(isRegister, isLogin))},
         formChange: (e) => {dispatch(LoginRegisterActions.formChangeAction(e.target.id, e.target.value))},
+        locationChange: (label) => {dispatch(LoginRegisterActions.formChangeAction('location', label))},
         checkAvailability: (username) => {dispatch(LoginRegisterActions.checkUsernameAction(username))},
         register: (userDetails) =>{dispatch(LoginRegisterActions.registerAction(userDetails))},
         login: (userDetails) => {dispatch(LoginRegisterActions.logIn(userDetails))},

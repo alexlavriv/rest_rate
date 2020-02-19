@@ -17,6 +17,8 @@ import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 import CountrySelect from "../CountryAutoComplete";
 import {DropzoneArea} from "material-ui-dropzone";
 import Avatar from "@material-ui/core/Avatar";
+import Geosuggest from "react-geosuggest";
+import Tooltip from "@material-ui/core/Tooltip";
 
 const styles = theme => {
     return ({
@@ -47,17 +49,21 @@ class ShowEditUser extends React.Component{
 
         function renderEditButton(props) {
             return(
-                <IconButton onClick={() => {props.enableEdit()}} edge="end" aria-label="edit">
-                    <EditIcon />
-                </IconButton>
+                <Tooltip title={"Edit Profile"}>
+                    <IconButton onClick={() => {props.enableEdit()}} edge="end" aria-label="edit">
+                        <EditIcon />
+                    </IconButton>
+                </Tooltip>
             )
         }
 
         function renderBackButton(props) {
             return(
-                <IconButton onClick={() => {props.disableEdit()}} edge="end" aria-label="edit">
-                    <ArrowBackIosIcon />
-                </IconButton>
+                <Tooltip title={"Cancel"}>
+                    <IconButton onClick={() => {props.disableEdit()}} edge="end" aria-label="edit">
+                        <ArrowBackIosIcon />
+                    </IconButton>
+                </Tooltip>
             )
         }
 
@@ -74,9 +80,9 @@ class ShowEditUser extends React.Component{
                                error={!props.available} helperText={props.available===false ? "USER ALREADY EXISTS":""}
                                required fullWidth margin="normal" id="login_name"
                                label="Username" defaultValue={props.userDetails.login_name}/>
-                    <CountrySelect disabled={!props.showEdit}  />
+                    <Geosuggest placeholder={props.userDetails.location} disabled={!props.showEdit} onSuggestSelect={(value)=>{props.locationChange(value.label)}} onChange={(value) => {props.locationChange(value.label)}} />
 
-                    <Button margin="normal" onClick={() => {props.save(prevLoginName, props.userDetails); prevLoginName = props.userDetails.login_name}}
+                    <Button margin="normal" onClick={() => {props.save(prevLoginName, props.userDetails); prevLoginName = props.userDetails.login_name; props.disableEdit()}}
                             style={{'display':'block', 'float':'right'}} variant="contained"
                             color="primary" disabled={!props.available}>Save</Button>
                 </form>
@@ -88,7 +94,7 @@ class ShowEditUser extends React.Component{
                     aria-labelledby="simple-modal-title"
                     aria-describedby="simple-modal-description"
                     open={this.props.show}
-                    onClose= { () => {this.props.ShowEditUser(false)}}   >
+                    onClose= {() => {this.props.ShowEditUser(false); this.props.disableEdit()}}   >
                     <div style={modalStyle} className={classes.paper} >
 
                         <div style={this.props.show?{'display':'block'}:{'display':'none'}}>
@@ -125,6 +131,7 @@ function mapDispatchToProps(dispatch) {
     return({
         ShowEditUser: (show) => {dispatch(EditUserActions.EditUserShowAction(show))},
         formChange: (e) => {dispatch(LoginRegisterActions.formChangeAction(e.target.id, e.target.value))},
+        locationChange: (label) => {dispatch(LoginRegisterActions.formChangeAction('location', label))},
         checkAvailability: (username) => {dispatch(LoginRegisterActions.checkUsernameAction(username))},
         save: (prevLoginName, userDetails) =>{dispatch(EditUserActions.SaveEditedDetails(prevLoginName, userDetails))},
         fileChange: (file) => {dispatch(LoginRegisterActions.fileChangeAction(file[0]))},

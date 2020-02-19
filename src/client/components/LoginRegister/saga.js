@@ -77,13 +77,13 @@ function* validateUsername(action) {
 function* edit(action) {
     console.log("edit", action.payload);
     try {
-        // let fd = new FormData();
-        // Object.keys(action.payload).forEach(function(key,index) {
-        //     fd.append(key, action.payload[key]);
-        // });
+
         const res = yield call(fetch, action.uri, {
+            headers: {
+                'Content-Type': 'application/json'
+            },
             method: 'PATCH',
-            body: {'test': 1111}
+            body: JSON.stringify(action.payload)
         });
         const json = yield call([res, 'json']); //retrieve body of response
         yield put(EditUserActions.EditSuccessAction(json));

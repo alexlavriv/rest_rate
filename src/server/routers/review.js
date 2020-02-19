@@ -11,7 +11,6 @@ const upload = multer();
 
 router.post('/review/:login_name',upload.array('files'), async (req, res) => {
     const {files} = req;
-    const login_name = req.params.login_name;
     const review = new Review(req.body);
     review.user = req.params.login_name;
     const restaurantName = review.rest_name;

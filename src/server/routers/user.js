@@ -40,20 +40,20 @@ router.post('/users/register',upload.single('avatar'), async (req, res) => {
     }
 });
 
-router.patch("/users/:username", async (req, res) => {
+router.patch("/users/edit", async (req, res) => {
     console.log("EDIT", req.body);
-    // User.findOneAndUpdate({login_name: req.params.username}, {login_name: req.body.login_name}, async (err, replaced) => {
-    //     if (err) {
-    //         console.log("EDIT ERROR");
-    //         res.status(400).send(err);
-    //     } else if (!replaced) {
-    //         console.log("EDIT ERROR2");
-    //         res.status(400).send("Couldn't replace user");
-    //     } else {
-    //         console.log("EDIT SUCCESS", replaced);
-    //         res.send({'user': replaced});
-    //     }
-    // });
+    User.findOneAndUpdate({login_name: req.body.prevUserName}, {login_name: req.body.userDetails.login_name, location: req.body.userDetails.location}, async (err, replaced) => {
+        if (err) {
+            console.log("EDIT ERROR");
+            res.status(400).send(err);
+        } else if (!replaced) {
+            console.log("EDIT ERROR2");
+            res.status(400).send("Couldn't replace user");
+        } else {
+            console.log("EDIT SUCCESS", replaced);
+            res.send({'user': replaced});
+        }
+    });
 });
 
 router.get("/users/me", auth, async (req, res)=>{

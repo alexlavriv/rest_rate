@@ -88,7 +88,7 @@ class AddReview extends React.Component {
             </Modal>);
             return (
                 <div>
-                    <HtmlTooltip classes={{ tooltip: classes.noMaxWidth }} disableHoverListener={this.props.token} title="Please login to add reviews">
+                    <HtmlTooltip classes={{ tooltip: classes.noMaxWidth }} disableHoverListener={this.props.token !== undefined} title="Please login to add reviews">
                         <span>
                             <IconButton disabled={!this.props.token} onClick={()=>this.props.openWindow(true)}  color="primary" aria-label="add review">
                                 <AddCircleIcon  style={{ fontSize: 70 }}  />

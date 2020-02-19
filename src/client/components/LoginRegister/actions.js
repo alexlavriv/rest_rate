@@ -58,6 +58,7 @@ const openRegisterWindow = (isLogin, isRegister) =>{
 
 
  const formChangeAction = (id, value) =>{
+     console.log("change form action id: " + id + " value: " + value);
     return(
         {
             type:LoginRegisterConstants.FIELD_UPDATE,
@@ -154,8 +155,8 @@ const SaveEditedDetails = (prevUserName, userDetails) => {
     return(
         {
             type:LoginRegisterConstants.EDIT,
-            uri: 'http://localhost:8080/users/' + prevUserName,
-            payload: userDetails
+            uri: 'http://localhost:8080/users/edit',
+            payload: {userDetails, prevUserName}
         }
     );
 };
