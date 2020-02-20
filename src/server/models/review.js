@@ -15,7 +15,11 @@ const reviewSchema = new mongoose.Schema(
         delivery_rating: {type: Number},
         food_rating: {type: Number},
         files: {type: Array},
-        user: String
+        user: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'User'
+        },
+        user_name: String
     },
     {
         timestamps:true

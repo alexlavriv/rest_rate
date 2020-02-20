@@ -42,7 +42,7 @@ const openRegisterWindow = (isLogin, isRegister) =>{
     return(
         {
             type:LoginRegisterConstants.VALIDATE_USERNAME,
-            uri: 'http://localhost:8080/users/' + username,
+            uri: 'http://localhost:8080/users/available/' + username,
         }
     );
 };

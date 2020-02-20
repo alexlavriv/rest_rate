@@ -1,22 +1,32 @@
-import {ReviewViewConstatns} from './constants.js';
+import {ReviewViewConstants} from './constants.js';
 
-export const GetReviewsAction = () =>{
+export const ShowProfileAction = (userName) =>{
+    console.log("show profile action");
+    return({
+        type:ReviewViewConstants.SHOW_PROFILE,
+        uri: 'http://localhost:8080/users/' + userName,
+    });
+};
+
+export const gotUserSuccess = (user) => {
+    console.log("got user success action, user:", user);
     return{
-        type:ReviewViewConstatns.GET_REVIEWS,
-        payload: {}
-    };
+        type:ReviewViewConstants.GOT_USER,
+        payload: user
+    }
 };
 
-export const GetReviewsSuccessAction = (reviews) =>{
+export const gotUserFailure = (err) => {
   return{
-      type:ReviewViewConstatns.GET_REVIEWS,
-      payload: reviews
-  };
+      type:ReviewViewConstants.GOT_USER_FAIL,
+      payload: {err}
+  }
 };
 
-export const GetReviewsFailureAction = (message) =>{
-  return{
-      type:ReviewViewConstatns.GET_REVIEWS,
-      payload: {message}
-  };
-};
+// const ReviewViewActions = {
+//     ShowProfileAction,
+//     gotUserSuccess,
+//     gotUserFailure
+// };
+//
+// export default {ReviewViewActions};

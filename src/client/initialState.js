@@ -28,5 +28,9 @@ export default {
     }),
     review_list:Map({
       reviews:[]
+    }),
+    profile_view:Map({
+       user: {},
+       show: false
     })
 };

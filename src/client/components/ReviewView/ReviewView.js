@@ -4,10 +4,10 @@ import {connect} from 'react-redux';
 import Typography from "@material-ui/core/Typography";
 import Rating from "@material-ui/lab/Rating";
 import ImageGrid from '../ImageGrid'
+import ProfileView from "../ProfileView/ProfileView";
+import {ShowProfileAction} from "./actions";
 
 class ReviewView extends React.Component {
-
-
     render(){
         function showRating(review, id, name){
             return(
@@ -33,22 +33,21 @@ class ReviewView extends React.Component {
                     {showRating(this.props.review, "food_rating", "Food Quality:")}
                 </div>
 
-                <div className="ReviewView-author">{this.props.review.user}</div>
+                <div className="ReviewView-author" onClick={() => {console.log('clicky', this.props.state); this.props.showProfile(this.props.review.user_name)}}>{this.props.review.user_name}</div>
             </div>
         );
     }
 }
 
 const mapStateToProps = state =>{
-   
-  return {};
+  return {state};
 };
 
-function mapDispatchToProps(dispatch) {
 
+function mapDispatchToProps(dispatch) {
     return({
-       
-    });
+        showProfile: (userName) => {console.log("dispatching"); dispatch(ShowProfileAction(userName))}
+        });
 }
 
 

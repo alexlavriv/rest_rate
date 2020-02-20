@@ -5,13 +5,36 @@ const auth = require('../middleware/auth');
 const multer = require('multer');
 const sharp = require('sharp');
 const fs = require('fs');
+const Review = require('../models/review');
+
 
 router.get('/test', (req,res)=>{
     res.send('From a new file')
 });
 const upload = multer();
 
-router.get("/users/:username", async (req, res) => {
+router.get('/users/:username', async (req, res) => {
+    console.log("get user");
+    User.findOne({login_name: req.params.username}, async (err, foundUser) => {
+        if (err) {
+            res.status(400).send(err);
+        } else if (!foundUser) {
+            res.status(400).send("User not found");
+        } else {
+            const reviews = await Review.find({user: foundUser._id}).sort([['createdAt', -1]]);
+            let safeUserProfile = {
+                login_name: foundUser.login_name,
+                location: foundUser.location,
+                avatar: foundUser.avatar,
+                reviews: reviews
+            };
+            res.send(safeUserProfile);
+        }
+    });
+});
+
+
+router.get("/users/available/:username", async (req, res) => {
     console.log("in available, username:", req.params.username);
     User.findOne({login_name: req.params.username}, async (err, foundUsername) => {
         if (err) {
@@ -90,6 +113,7 @@ router.post('/users/logout', auth,async (req,res)=>{
         res.status(500).send(e);
     }
 });
+
 
 router.post('/users/logoutAll', auth,async (req,res)=>{
     try{

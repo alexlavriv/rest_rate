@@ -12,7 +12,7 @@ const upload = multer();
 router.post('/review/:login_name',upload.array('files'), async (req, res) => {
     const {files} = req;
     const review = new Review(req.body);
-    review.user = req.params.login_name;
+    // review.user = req.params.login_name;
     const restaurantName = review.rest_name;
     Restaurant.findOne({rest_name: restaurantName}, async (err, foundRestaurant) => {
         if (err) {
@@ -24,14 +24,24 @@ router.post('/review/:login_name',upload.array('files'), async (req, res) => {
         files.forEach(file => {
             review.files.push(file.buffer);
         });
-        try
-        {
-            await review.save();
-            const review_list = await Review.get_all();
-            res.send({review_list} )
-        } catch(e) {
-            res.send(e)
-        }
+        User.findOne({login_name: req.params.login_name}, async (err, foundUser) => {
+            if (err) {
+                res.status(400).send();
+            } else if (!foundUser) {
+                res.status(400).send("User not found");
+            } else {
+                review.user = foundUser._id;
+                review.user_name = foundUser.login_name;
+                try
+                {
+                    await review.save();
+                    const review_list = await Review.get_all();
+                    res.send({review_list} )
+                } catch(e) {
+                    res.send(e)
+                }
+            }
+        });
     } );
 });
 

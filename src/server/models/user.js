@@ -12,28 +12,28 @@ mongoose.connect('mongodb://127.0.0.1:27017/rest-rate-api',{
 const userSchema = new mongoose.Schema(
     {
         login_name:{},
-        age:{},
         password:{},
         location:{
             type:String,
         },
+
         avatar:{type:Buffer},
         tokens:[{
             token:{
                 type:String,
                 require: true
             }
-        }]
+        }],
     },{
         timestamps:true
     }
 );
 
-userSchema.virtual('reviews',{
-    ref:'Review',
-    localField:'_id', // the relation field between task and user
-    foreignField:'owner'
-});
+// userSchema.virtual('reviews',{
+//     ref:'Review',
+//     localField:'_id', // the relation field between task and user
+//     foreignField:'owner'
+// });
 
 userSchema.methods.generateAuthToken = async function (){
     const user = this
@@ -54,7 +54,7 @@ userSchema.methods.toJSON = function(){
 };
 
 userSchema.statics.findByCredentials = async  (login_name, password) =>{
-    console.log("in model")
+    console.log("in model");
     const user = await User.findOne({login_name});
 
     if (!user){
@@ -79,16 +79,16 @@ userSchema.pre('save', async function (next){
     
     console.log("just before saving ", user);
     next();
-})
+});
 
 /** This is a description of the foo function. */
 userSchema.pre('remove', async function (next){
     const user = this;
-     await Task.deleteMany({owner:user._id})
+     await Task.deleteMany({owner:user._id});
 
     console.log("just before removing ", user);
     next();
-})
+});
 
-const User = mongoose.model('user', userSchema);
-module.exports = User
+const User = mongoose.model('User', userSchema);
+module.exports = User;
