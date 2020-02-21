@@ -100,6 +100,7 @@ class ShowEditUser extends React.Component{
                     <div style={modalStyle} className={classes.paper} >
 
                         <div style={this.props.show?{'display':'block'}:{'display':'none'}}>
+                            {console.log("user:", this.props.userDetails)}
                             <List component="nav" aria-label="user profile">
                                 <ListItem>
                                     <Avatar id="avatar-size" src={`data:image/gif;base64,${this.props.userDetails.avatar}`} />

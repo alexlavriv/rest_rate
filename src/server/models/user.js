@@ -16,7 +16,7 @@ const userSchema = new mongoose.Schema(
         location:{
             type:String,
         },
-
+        join_date: String,
         avatar:{type:Buffer},
         tokens:[{
             token:{
@@ -24,6 +24,10 @@ const userSchema = new mongoose.Schema(
                 require: true
             }
         }],
+        reviews:[{
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'Review'
+        }]
     },{
         timestamps:true
     }
@@ -42,6 +46,7 @@ userSchema.methods.generateAuthToken = async function (){
         await user.save();
     return token
 };
+
 
 userSchema.methods.toJSON = function(){
     console.log("getPublicProfile");

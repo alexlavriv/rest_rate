@@ -5,9 +5,15 @@ import Typography from "@material-ui/core/Typography";
 import Rating from "@material-ui/lab/Rating";
 import ImageGrid from '../ImageGrid'
 import ProfileView from "../ProfileView/ProfileView";
-import {ShowProfileAction} from "./actions";
+import {CloseMenuAction, OpenMenuAction, ShowProfileAction} from "./actions";
+import Button from "@material-ui/core/Button";
+import Menu from "@material-ui/core/Menu";
+import MenuItem from "@material-ui/core/MenuItem";
+import MoreVertIcon from '@material-ui/icons/MoreVert';
 
 class ReviewView extends React.Component {
+
+
     render(){
         function showRating(review, id, name){
             return(
@@ -17,8 +23,24 @@ class ReviewView extends React.Component {
                 </div>
             );
         }
+
         return(
             <div className="ReviewView-root">
+                <Button aria-controls="simple-menu"
+                        aria-haspopup="true"
+                        style={{'display':'block', 'float':'right'}}
+                        onClick={this.props.openMenu()}>
+                    <MoreVertIcon />
+                </Button>
+                <Menu
+                    id="simple-menu"
+                    keepMounted
+                    open={false}
+                    onClose={this.props.closeMenu()}
+                >
+                    <MenuItem onClick={this.props.closeMenu()}>Edit</MenuItem>
+                    <MenuItem onClick={this.props.closeMenu()}>Delete</MenuItem>
+                </Menu>
                 <div className="ReviewView-header">{this.props.review.rest_name}</div>
                 <div className="ReviewView-body">
                     {this.props.review.rest_review}
@@ -46,6 +68,8 @@ const mapStateToProps = state =>{
 
 function mapDispatchToProps(dispatch) {
     return({
+        openMenu: () => {dispatch(OpenMenuAction())},
+        closeMenu: () => {dispatch(CloseMenuAction())},
         showProfile: (userName) => {console.log("dispatching"); dispatch(ShowProfileAction(userName))}
         });
 }

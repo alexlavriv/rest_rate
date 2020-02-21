@@ -7,11 +7,17 @@ const sharp = require('sharp');
 const fs = require('fs');
 const Review = require('../models/review');
 
-
 router.get('/test', (req,res)=>{
     res.send('From a new file')
 });
 const upload = multer();
+
+function generateDateString(date) {
+    let splitted = date.toString().split(' ');
+    let format = splitted[1] + ' ' + splitted[3];
+    console.log('DATE FORMAT:', format);
+    return format;
+}
 
 router.get('/users/:username', async (req, res) => {
     console.log("get user");
@@ -22,12 +28,15 @@ router.get('/users/:username', async (req, res) => {
             res.status(400).send("User not found");
         } else {
             const reviews = await Review.find({user: foundUser._id}).sort([['createdAt', -1]]);
-            let safeUserProfile = {
+            console.log("found user:", foundUser);
+            let safeUserProfile = new User({
                 login_name: foundUser.login_name,
                 location: foundUser.location,
                 avatar: foundUser.avatar,
-                reviews: reviews
-            };
+                reviews: reviews,
+                join_date: generateDateString(foundUser.createdAt)
+            });
+            console.log("safe user:", safeUserProfile);
             res.send(safeUserProfile);
         }
     });
