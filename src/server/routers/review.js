@@ -71,4 +71,20 @@ router.get('/restaurant_all_names', async (req, res) => {
     }
 });
 
+router.post('/query_review', async (req, res) => {
+    console.log("/query_review")
+    let query = req.body;
+    console.log(query)
+    try
+    {
+        console.log("In all rests");
+        const reviews = await Review.find(query);
+        console.log("got from db");
+        console.log(reviews);
+        res.send({reviews} )
+    } catch(e){
+        res.send(e)
+    }
+});
+
 module.exports = router;

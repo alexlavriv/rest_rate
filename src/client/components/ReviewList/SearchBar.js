@@ -19,6 +19,7 @@ render(){
                 freeSolo
                 id="free-solo-2-demo"
                 disableClearable
+                onChange={(e,value) => this.props.performQeury(e,value)}
                 options={this.props.rest_names}
                 renderInput={params => (
                 <TextField
@@ -46,6 +47,8 @@ console.log("MapstateProps", rest_names)
 function mapDispatchToProps(dispatch) {
 
   return({
+
+    performQeury:(e,value)=> {console.log("###############", value) || value===''? dispatch(SearchBarActions.GetQueryAction({})):dispatch(SearchBarActions.GetQueryAction({'rest_name':value}))},
    getRestNames: () => {dispatch(SearchBarActions.GetRestNamesAction())}
   });
 }
