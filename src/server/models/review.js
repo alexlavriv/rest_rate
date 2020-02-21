@@ -38,11 +38,21 @@ reviewSchema.statics.get_all = async  () =>{
 
 };
 
+const toTitleCase = (phrase) => {
+    return phrase
+      .toLowerCase()
+      .split(' ')
+      .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+      .join(' ');
+  };
+  
+ 
 
 reviewSchema.statics.get_all_rest_names = async  () =>{
     console.log("in model");
     const review_list = await Review.find();
-    let names = review_list.map(rest =>  rest.rest_name)
+    let names = review_list.map(rest =>  toTitleCase(rest.rest_name))
+    names =  [...new Set(names)]
     if (!names){
         throw new Error("Unable to log in")
     }
