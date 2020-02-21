@@ -91,9 +91,9 @@ class ProfileView extends React.Component{
 
 const mapStateToProps = (state) => {
     // console.log(state);
-    const show = state.view_profile.get("show");
+    const show = state.review_list.get("show");
     // const profileUserDetails = state.view_profile.get("user");
-    const profileUserDetails = state["view_profile"].get("user");
+    const profileUserDetails = state.review_list.get("user");
     // const show = state['profile_view'].show;
 
     return {show, profileUserDetails};

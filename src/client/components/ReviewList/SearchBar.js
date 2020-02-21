@@ -40,7 +40,7 @@ render(){
 
 const mapStateToProps = state => {
  const rest_names = state["review_list"].get("rest_names");;
-console.log("MapstateProps", rest_names)
+// console.log("MapstateProps", rest_names)
   return {rest_names};
 };
 

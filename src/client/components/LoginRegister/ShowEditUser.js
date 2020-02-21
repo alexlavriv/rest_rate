@@ -83,7 +83,10 @@ class ShowEditUser extends React.Component{
                                <div style={(!props.showEdit)?{'display':'block'}:{'display':'none'}}> {props.userDetails.location}</div>
                                <div style={(props.showEdit)?{'display':'block'}:{'display':'none'}}> <CountrySelect  /></div>
                                </div>
-
+                    <Button  margin="normal"
+                        // onClick={()=>props.register(props.userDetails)}
+                             style={{'display':'block', 'float':'left'}}
+                             variant="contained" color="primary">Show Reviews</Button>
                     <Button margin="normal" onClick={() => {props.save(props.userDetails); props.disableEdit()}}
                             style={{'display':'block', 'float':'right'}} variant="contained"
                             color="primary" disabled={!props.available}>Save</Button>
