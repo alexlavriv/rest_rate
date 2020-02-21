@@ -1,4 +1,4 @@
-import {ReviewListConstants, SearchBarConstants, ProfileViewConstants, ReviewViewConstants} from './constants.js';
+import {ReviewListConstants, SearchBarConstants, ProfileViewConstants, ReviewViewConstants, AdvancedSearchConstants} from './constants.js';
 
  const GetReviewsAction = () =>{
     return{
@@ -115,10 +115,19 @@ const clearShowProfile = () => {
     }
 };
 
+const showAdvancedSearchAction = (show) => {
+    return {
+        type:AdvancedSearchConstants.SHOW_ADVANCED_SEARCH,
+        payload: show
+    }
+}
+
 const ProfileViewActions = {clearShowProfile};
 const ReviewListActions = {GetReviewsAction, GetReviewsSuccessAction, GetReviewsFailureAction};
 const SearchBarActions = {GetRestNamesAction, GetRestNamesSuccessAction, GetRestNamesFailureAction,
                           GetQueryAction, GetQuerySuccessAction, GetQueryFailureAction};
 
-export {ReviewListActions, SearchBarActions, ProfileViewActions}
+const AdvancedSearchActions = {showAdvancedSearchAction}
+
+export {ReviewListActions, SearchBarActions, ProfileViewActions, AdvancedSearchActions}
 

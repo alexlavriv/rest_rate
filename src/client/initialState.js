@@ -33,6 +33,7 @@ export default {
         rest_names:[],
         user: {},
         show: false,
+        show_advanced_search : false,
 
     }),
 };

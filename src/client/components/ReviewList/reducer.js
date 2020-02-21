@@ -1,4 +1,4 @@
-import {ProfileViewConstants, ReviewListConstants, ReviewViewConstants, SearchBarConstants} from './constants'
+import {ProfileViewConstants, ReviewListConstants, ReviewViewConstants, SearchBarConstants, AdvancedSearchConstants} from './constants'
 
 import initialState from '../../initialState'
 
@@ -14,6 +14,9 @@ const toTitleCase = (phrase) => {
 const ReviewListReducer = (state = initialState.review_list, action) => {
  
     switch (action.type){
+        case AdvancedSearchConstants.SHOW_ADVANCED_SEARCH:{
+            return state.set("show_advanced_search", action.payload);
+        }
         case SearchBarConstants.GET_QUERY_SUCCESS:
             console.log("GET_QUERY_SUCCESS", action)
             return state = state.set('reviews', action.payload);

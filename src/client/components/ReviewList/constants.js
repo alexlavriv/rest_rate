@@ -29,6 +29,9 @@ const ProfileViewConstants = {
     CLOSE: 'CLOSE'
 };
 
+const AdvancedSearchConstants ={
+  SHOW_ADVANCED_SEARCH: 'SHOW_ADVANCED_SEARCH'
+}
 
-export { ReviewListConstants, SearchBarConstants, ReviewViewConstants, ProfileViewConstants}
+export { ReviewListConstants, SearchBarConstants, ReviewViewConstants, ProfileViewConstants, AdvancedSearchConstants}
   

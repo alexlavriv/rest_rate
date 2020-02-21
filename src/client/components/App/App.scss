@@ -7,8 +7,11 @@ body, html {
   box-sizing: border-box;
 }
 
+
+
 .logo{
-  padding-top:30px;
+  padding-top: 35px;
+  padding-left: 20px;
 }
 
 .app-root {
@@ -28,7 +31,10 @@ body, html {
   color: black;
   font-size: 20pt;
   text-align: left;
-  border: solid rgb(192, 190, 190)  1px;
+  border-bottom: solid #ccc 1px;
+  border-top: solid #ccc  1px;
+
+  margin-top: 30px;
   display: grid;
   grid-template-columns: auto auto auto;
 }

@@ -57,7 +57,7 @@ class ProfileView extends React.Component{
                     open={this.props.show}
                     onClose= {() => {this.props.clearShowProfile()}} >
                     <div style={modalStyle} className={classes.paper} >
-                        <div style={this.props.show?{'display':'block'}:{'display':'none'}}>
+                        <div   style={this.props.show?{'display':'block'}:{'display':'none'}}>
                             <Grid container spacing={2}>
                                 <Grid item>
                                     <Avatar alt="Person"
@@ -77,7 +77,7 @@ class ProfileView extends React.Component{
                                     </Grid>
                                 </Grid>
                             </Grid>
-                            <Button  margin="normal"
+                            <Button 
                                      // onClick={()=>props.register(props.userDetails)}
                                      style={{'display':'block', 'float':'right'}}
                                      variant="contained" color="primary">Show Reviews</Button>

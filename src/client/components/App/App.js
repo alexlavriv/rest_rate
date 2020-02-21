@@ -2,7 +2,7 @@ import React from 'react';
 import './App.scss';
 import Gallery from '../Gallery';
 import LoginRegister from '../LoginRegister'
-import {ReviewList, SearchBar} from '../ReviewList'
+import {ReviewList, SearchBar, AdvancedSearch} from '../ReviewList'
 import { connect } from 'react-redux';
 import AppActions from './actions';
 import GalleryActions from '../Gallery/actions';
@@ -21,7 +21,10 @@ class App extends React.Component {
       <div className="app-root">
         <div className="app-header">
           <div className="logo">REST RATE</div>
-          <SearchBar/>
+          <div>
+            <SearchBar/>
+            <AdvancedSearch/>
+          </div>
           <LoginRegister/>
         </div>
         <ReviewList />
