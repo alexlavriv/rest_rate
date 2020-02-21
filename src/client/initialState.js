@@ -27,12 +27,12 @@ export default {
         review:{}
     }),
     review_list:Map({
-      reviews:[],
-      rest_names:[]
+        open_menu_id: "",
+        menu_anchor: null,
+        reviews:[],
+        rest_names:[],
+        user: {},
+        show: false,
+
     }),
-    review_view:{},
-    profile_view:Map({
-       user: {},
-       show: false
-    })
 };

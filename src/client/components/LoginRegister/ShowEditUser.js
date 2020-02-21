@@ -83,7 +83,10 @@ class ShowEditUser extends React.Component{
                                <div style={(!props.showEdit)?{'display':'block'}:{'display':'none'}}> {props.userDetails.location}</div>
                                <div style={(props.showEdit)?{'display':'block'}:{'display':'none'}}> <CountrySelect  /></div>
                                </div>
-
+                    <Button  margin="normal"
+                        // onClick={()=>props.register(props.userDetails)}
+                             style={{'display':'block', 'float':'left'}}
+                             variant="contained" color="primary">Show Reviews</Button>
                     <Button margin="normal" onClick={() => {props.save(props.userDetails); props.disableEdit()}}
                             style={{'display':'block', 'float':'right'}} variant="contained"
                             color="primary" disabled={!props.available}>Save</Button>
@@ -100,6 +103,7 @@ class ShowEditUser extends React.Component{
                     <div style={modalStyle} className={classes.paper} >
 
                         <div style={this.props.show?{'display':'block'}:{'display':'none'}}>
+                            {console.log("user:", this.props.userDetails)}
                             <List component="nav" aria-label="user profile">
                                 <ListItem>
                                     <Avatar id="avatar-size" src={`data:image/gif;base64,${this.props.userDetails.avatar}`} />

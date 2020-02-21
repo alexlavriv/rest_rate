@@ -16,6 +16,19 @@ const ReviewListConstants = {
     GET_QUERY_FAIL: 'GET_QUERY_FAIL'
 
   };
-  
-  export { ReviewListConstants, SearchBarConstants}
+
+const ReviewViewConstants = {
+    OPEN_MENU: 'OPEN_MENU',
+    CLOSE_MENU: 'CLOSE_MENU',
+    SHOW_PROFILE: 'SHOW_PROFILE',
+    GOT_USER: 'GOT_USER',
+    GOT_USER_FAIL: 'GOT_USER_FAIL'
+};
+
+const ProfileViewConstants = {
+    CLOSE: 'CLOSE'
+};
+
+
+export { ReviewListConstants, SearchBarConstants, ReviewViewConstants, ProfileViewConstants}
   
