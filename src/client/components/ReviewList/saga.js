@@ -1,6 +1,6 @@
-import {ReviewListConstants, SearchBarConstants} from './constants'
+import {ReviewListConstants, ReviewViewConstants, SearchBarConstants} from './constants'
 import { call, put, takeEvery } from 'redux-saga/effects'
-import {ReviewListActions, SearchBarActions} from './actions'
+import {gotUserFailure, gotUserSuccess, ReviewListActions, SearchBarActions} from './actions'
 import {all} from 'redux-saga/effects'
 
 function* getReviews(action){
@@ -58,6 +58,23 @@ function* getQuery(action){
   }
 }
 
+function* getProfile(action){
+  console.log("get profile saga");
+  try {
+    const res = yield call(fetch, action.uri, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+    });
+    const json = yield call([res, 'json']); //retrieve body of response
+    console.log("got user success");
+    yield put(gotUserSuccess(json));
+  } catch (e) {
+    yield put(gotUserFailure(e.message));
+  }
+}
+
 
 
 function* GetReviewsSaga() {
@@ -65,7 +82,8 @@ function* GetReviewsSaga() {
     yield all ([
               takeEvery(ReviewListConstants.GET_REVIEWS, getReviews), 
               takeEvery(SearchBarConstants.GET_REST_NAMES, getRestNames), 
-              takeEvery(SearchBarConstants.GET_QUERY, getQuery)
+              takeEvery(SearchBarConstants.GET_QUERY, getQuery),
+              takeEvery(ReviewViewConstants.SHOW_PROFILE, getProfile)
     ]);
           }
           

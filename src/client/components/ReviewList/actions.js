@@ -1,4 +1,4 @@
-import {ReviewListConstants,SearchBarConstants} from './constants.js';
+import {ReviewListConstants, SearchBarConstants, ProfileViewConstants, ReviewViewConstants} from './constants.js';
 
  const GetReviewsAction = () =>{
     return{
@@ -56,7 +56,7 @@ const GetQueryAction = (query) =>{
 };
 
 const GetQuerySuccessAction = (result) =>{
-  console.log("GetQuerySuccessAction", result)
+  console.log("GetQuerySuccessAction", result);
   return{
       type:SearchBarConstants.GET_QUERY_SUCCESS,
       payload: result.reviews
@@ -64,17 +64,61 @@ const GetQuerySuccessAction = (result) =>{
 };
 
 const GetQueryFailureAction = (message) =>{
-  console.log("GetQueryFailureAction", message)
+  console.log("GetQueryFailureAction", message);
   return{
       type:ReviewListConstants.GET_QUERY_FAIL,
       payload: message
   };
 };
 
+export const OpenMenuAction = (review_id, target) => {
+    console.log('open menu action, id:', review_id);
+    console.log('open menu action, target:', target);
 
+    return({
+        type:ReviewViewConstants.OPEN_MENU,
+        payload: {review_id, target}
+    });
+};
+export const CloseMenuAction = () => {
+    return({
+        type:ReviewViewConstants.CLOSE_MENU,
+    });
+};
 
-const ReviewListActions = {GetReviewsAction, GetReviewsSuccessAction, GetReviewsFailureAction}
+export const ShowProfileAction = (userName) =>{
+    console.log("show profile action");
+    return({
+        type:ReviewViewConstants.SHOW_PROFILE,
+        uri: 'http://localhost:8080/users/' + userName,
+    });
+};
+
+export const gotUserSuccess = (user) => {
+    console.log("got user success action, user:", user);
+    return{
+        type:ReviewViewConstants.GOT_USER,
+        payload: user
+    }
+};
+
+export const gotUserFailure = (err) => {
+    return{
+        type:ReviewViewConstants.GOT_USER_FAIL,
+        payload: {err}
+    }
+};
+
+const clearShowProfile = () => {
+    return{
+        type:ProfileViewConstants.CLOSE,
+    }
+};
+
+const ProfileViewActions = {clearShowProfile};
+const ReviewListActions = {GetReviewsAction, GetReviewsSuccessAction, GetReviewsFailureAction};
 const SearchBarActions = {GetRestNamesAction, GetRestNamesSuccessAction, GetRestNamesFailureAction,
-                          GetQueryAction, GetQuerySuccessAction, GetQueryFailureAction}
+                          GetQueryAction, GetQuerySuccessAction, GetQueryFailureAction};
 
-export {ReviewListActions, SearchBarActions}
+export {ReviewListActions, SearchBarActions, ProfileViewActions}
+
