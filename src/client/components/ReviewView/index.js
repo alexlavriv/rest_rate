@@ -1,3 +1,4 @@
 import ReviewView from './ReviewView';
 
-export default ReviewView;
+
+export  default ReviewView

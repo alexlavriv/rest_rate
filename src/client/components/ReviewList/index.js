@@ -1,3 +1,3 @@
 import ReviewList from './ReviewList';
-
-export default ReviewList;
+import SearchBar from './SearchBar'
+export {ReviewList, SearchBar};

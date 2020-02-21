@@ -27,7 +27,8 @@ export default {
         review:{}
     }),
     review_list:Map({
-      reviews:[]
+      reviews:[],
+      rest_names:[]
     }),
     review_view:{},
     profile_view:Map({

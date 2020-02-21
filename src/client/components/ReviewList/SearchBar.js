@@ -3,8 +3,15 @@
 import React from 'react';
 import TextField from '@material-ui/core/TextField';
 import Autocomplete from '@material-ui/lab/Autocomplete';
+import {SearchBarActions} from './actions'
+import { connect } from 'react-redux';
 import './SearchBar.scss'
-export default function SearchBar() {
+class  SearchBar extends React.Component {
+
+  componentDidMount(){
+    this.props.getRestNames();
+}
+render(){
   return (
       <div className="searchbar-root">
         <div style={{ width: 500 }}>
@@ -12,7 +19,7 @@ export default function SearchBar() {
                 freeSolo
                 id="free-solo-2-demo"
                 disableClearable
-                options={top100Films.map(option => option.title)}
+                options={this.props.rest_names}
                 renderInput={params => (
                 <TextField
                     {...params}
@@ -26,9 +33,25 @@ export default function SearchBar() {
             />
             </div>
     </div>
-  );
+  )};
 }
 
+
+const mapStateToProps = state => {
+ const rest_names = state["review_list"].get("rest_names");;
+console.log("MapstateProps", rest_names)
+  return {rest_names};
+};
+
+function mapDispatchToProps(dispatch) {
+
+  return({
+   getRestNames: () => {dispatch(SearchBarActions.GetRestNamesAction())}
+  });
+}
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(SearchBar);
 // Top 100 films as rated by IMDb users. http://www.imdb.com/chart/top
 const top100Films = [
   { title: 'The Shawshank Redemption', year: 1994 },

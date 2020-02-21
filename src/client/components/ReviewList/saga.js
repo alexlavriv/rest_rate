@@ -1,6 +1,6 @@
-import {ReviewListConstants} from './constants'
+import {ReviewListConstants, SearchBarConstants} from './constants'
 import { call, put, takeEvery } from 'redux-saga/effects'
-import {GetReviewsFailureAction, GetReviewsSuccessAction} from './actions'
+import {ReviewListActions, SearchBarActions} from './actions'
 import {all} from 'redux-saga/effects'
 
 function* getReviews(action){
@@ -14,16 +14,35 @@ function* getReviews(action){
     });
 
     const json = yield call([res, 'json']); //retrieve body of response
-    yield put(GetReviewsSuccessAction(json));
+    yield put(ReviewListActions.GetReviewsSuccessAction(json));
   } catch (e) {
-    yield put(GetReviewsFailureAction(e.message));
+    yield put(ReviewListActions.GetReviewsFailureAction(e.message));
+  }
+}
+
+function* getRestNames(action){
+  try {
+    console.log("GET REST NAMES", action)
+    const res = yield call(fetch, action.uri, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+    });
+
+    const json = yield call([res, 'json']); //retrieve body of response
+    yield put(SearchBarActions.GetRestNamesSuccessAction(json));
+  } catch (e) {
+    yield put(SearchBarActions.GetRestNamesFailureAction(e.message));
   }
 }
 
 
+
 function* GetReviewsSaga() {
     //using takeEvery, you take the action away from reducer to saga
-    yield takeEvery(ReviewListConstants.GET_REVIEWS, getReviews);
+    yield all ([takeEvery(ReviewListConstants.GET_REVIEWS, getReviews), 
+              takeEvery(SearchBarConstants.GET_REST_NAMES, getRestNames)])
 }
 
 export default GetReviewsSaga;

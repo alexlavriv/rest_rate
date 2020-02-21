@@ -58,4 +58,17 @@ router.get('/all_reviews', async (req, res) => {
     }
 });
 
+router.get('/restaurant_all_names', async (req, res) => {
+    try
+    {
+        console.log("In all rests");
+        const names = await Review.get_all_rest_names();
+        console.log("got from db");
+        console.log(names);
+        res.send({names} )
+    } catch(e){
+        res.send(e)
+    }
+});
+
 module.exports = router;

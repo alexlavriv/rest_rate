@@ -39,6 +39,19 @@ reviewSchema.statics.get_all = async  () =>{
 };
 
 
+reviewSchema.statics.get_all_rest_names = async  () =>{
+    console.log("in model");
+    const review_list = await Review.find();
+    let names = review_list.map(rest =>  rest.rest_name)
+    if (!names){
+        throw new Error("Unable to log in")
+    }
+
+    return names;
+
+};
+
+
 const Review = mongoose.model('Review',reviewSchema);
 
 module.exports = Review;

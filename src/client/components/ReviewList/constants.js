@@ -3,7 +3,15 @@ const ReviewListConstants = {
     GET_REVIEWS_SUCCESS: 'GET_REVIEWS_SUCCESS',
     GET_REVIEWS_FAIL: 'GET_REVIEWS_FAIL',
     ADD_REVIEW_SUCCESS:'ADD_REVIEW_SUCCESS',
+
+  };
+
+  const SearchBarConstants = {
+    GET_REST_NAMES: 'GET_REST_NAMES',
+    GET_REST_NAMES_SUCCESS: 'GET_REST_NAMES_SUCCESS',
+    GET_REST_NAMES_FAIL: 'GET_REST_NAMES_FAIL'
+
   };
   
-  export { ReviewListConstants}
+  export { ReviewListConstants, SearchBarConstants}
   

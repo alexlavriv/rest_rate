@@ -1,6 +1,6 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import {GetReviewsAction} from './actions'
+import {ReviewListActions} from './actions'
 import ReviewView from '../ReviewView'
 import ProfileView from "../ProfileView/ProfileView";
 
@@ -35,7 +35,7 @@ const mapStateToProps = state =>{
 
 function mapDispatchToProps(dispatch) {
     return({
-        getReviews: () => {dispatch(GetReviewsAction())}
+        getReviews: () => {dispatch(ReviewListActions.GetReviewsAction())}
     });
 }
 
