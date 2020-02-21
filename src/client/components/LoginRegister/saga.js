@@ -75,7 +75,8 @@ function* validateUsername(action) {
 }
 
 function* edit(action) {
-    console.log("edit", action.payload);
+    console.log("edit", action.payload)
+    const { avatar, ...payload} = action.payload;
     try {
 
         const res = yield call(fetch, action.uri, {
@@ -83,7 +84,7 @@ function* edit(action) {
                 'Content-Type': 'application/json'
             },
             method: 'PATCH',
-            body: JSON.stringify(action.payload)
+            body: JSON.stringify(payload)
         });
         const json = yield call([res, 'json']); //retrieve body of response
         yield put(EditUserActions.EditSuccessAction(json));

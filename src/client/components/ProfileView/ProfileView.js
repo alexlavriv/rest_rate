@@ -47,7 +47,7 @@ class ProfileView extends React.Component{
                     <div style={modalStyle} className={classes.paper} >
                         <div style={this.props.show?{'display':'block'}:{'display':'none'}}>
                             {console.log('view profile')}
-                            <h2>Profile View!!</h2>
+                            <h2>Profl!!!!!!!e!</h2>
                         </div>
                     </div>
                 </Modal>

@@ -88,7 +88,7 @@ class simpleModal extends React.Component {
                                     <TextField style={{"height":"50px"}} onChange={(e)=>props.checkAvailability(e.target.value)} error={!props.available} helperText={props.available===false ? "USER ALREADY EXISTS":""} required fullWidth margin="normal" id="login_name"
                                              label="Username" />
                                     <TextField required fullWidth type="password" margin="normal"  id="password" label="Password" />
-                                    <Geosuggest onSuggestSelect={(value)=>{props.locationChange(value.label)}} onChange={(value) => {props.locationChange(value.label)}} />
+                                    <CountrySelect  />
                                     <div  className="loginRegister-dropzone" >
                                     <DropzoneArea   filesLimit={1} id="avatar" onChange={(event)=>props.fileChange(event)}/>
                                     </div>
@@ -127,7 +127,7 @@ function mapDispatchToProps(dispatch) {
     return({
         openWindow: (isRegister, isLogin) => {dispatch(LoginRegisterActions.openRegisterWindow(isRegister, isLogin))},
         formChange: (e) => {dispatch(LoginRegisterActions.formChangeAction(e.target.id, e.target.value))},
-        locationChange: (label) => {dispatch(LoginRegisterActions.formChangeAction('location', label))},
+
         checkAvailability: (username) => {dispatch(LoginRegisterActions.checkUsernameAction(username))},
         register: (userDetails) =>{dispatch(LoginRegisterActions.registerAction(userDetails))},
         login: (userDetails) => {dispatch(LoginRegisterActions.logIn(userDetails))},

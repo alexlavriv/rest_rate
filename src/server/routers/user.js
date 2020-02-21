@@ -64,8 +64,9 @@ router.post('/users/register',upload.single('avatar'), async (req, res) => {
 });
 
 router.patch("/users/edit", async (req, res) => {
-    console.log("EDIT", req.body);
-    User.findOneAndUpdate({login_name: req.body.prevUserName}, {login_name: req.body.userDetails.login_name, location: req.body.userDetails.location}, async (err, replaced) => {
+    var user = new User(req.body);
+    console.log("before updating", user)
+    User.findOneAndUpdate({_id:user._id}, user, async (err, replaced) => {
         if (err) {
             console.log("EDIT ERROR");
             res.status(400).send(err);
@@ -73,8 +74,8 @@ router.patch("/users/edit", async (req, res) => {
             console.log("EDIT ERROR2");
             res.status(400).send("Couldn't replace user");
         } else {
-            console.log("EDIT SUCCESS", replaced);
-            res.send({'user': replaced});
+            console.log("EDIT SUCCESS", user);
+            res.send({'user': user});
         }
     });
 });

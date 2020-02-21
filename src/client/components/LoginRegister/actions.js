@@ -84,6 +84,7 @@ const registerFailureAction = (message) =>{
 };
 
 const loginSuccessAction = (json) =>{
+    console.log(json)
     return(
     {
         type:LoginRegisterConstants.LOGIN_SUCCESS,
@@ -149,14 +150,15 @@ const ToggleEdit = (enable) => {
     );
 };
 
-const SaveEditedDetails = (prevUserName, userDetails) => {
-    console.log('prevUserName', prevUserName);
+const SaveEditedDetails = (userDetails) => {
+
     console.log('userDetails', userDetails);
+    
     return(
         {
             type:LoginRegisterConstants.EDIT,
             uri: 'http://localhost:8080/users/edit',
-            payload: {userDetails, prevUserName}
+            payload: userDetails
         }
     );
 };

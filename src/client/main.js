@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './components/App/index';
 import { Provider } from 'react-redux';
-import { createStore, applyMiddleware } from 'redux';
+import { createStore,compose, applyMiddleware } from 'redux';
 import reducers from './reducers';
 import createSagaMiddleware from 'redux-saga';
 import Sagas from './sagas';
@@ -14,10 +14,14 @@ import 'primeicons/primeicons.css';
 //create saga middleware
 const sagaMiddleware = createSagaMiddleware();
 
+const composeEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ &&
+  window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({ trace: true, traceLimit: 25 }) || compose;
+
 //create store, add reducers, attach saga
 const store = createStore(
   reducers,
-  applyMiddleware(sagaMiddleware)
+  composeEnhancer(applyMiddleware(sagaMiddleware)),
+  
 );
 
 //run saga(s)

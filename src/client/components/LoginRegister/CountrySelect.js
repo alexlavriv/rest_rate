@@ -3,7 +3,10 @@ import TextField from '@material-ui/core/TextField';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import { makeStyles } from '@material-ui/core/styles';
 import countries from './countries'
-
+import { render } from 'enzyme';
+import {withStyles} from '@material-ui/core/styles';
+import {connect} from 'react-redux';
+import {EditUserActions, LoginRegisterActions} from './actions'
 // ISO 3166-1 alpha-2
 // ⚠️ No support for IE 11
 function countryToFlag(isoCode) {
@@ -12,28 +15,34 @@ function countryToFlag(isoCode) {
     : isoCode;
 }
 
-const useStyles = makeStyles({
-  option: {
+
+const styles = theme => {
+  return ({option: {
     fontSize: 15,
     '& > span': {
       marginRight: 10,
       fontSize: 18,
     },
-  },
-});
+  },})
+  };
 
-export default function CountrySelect() {
-  const classes = useStyles();
 
+
+class CountrySelect extends React.Component {
+  
+  render(){ 
+    const { classes } = this.props;
   return (
     <Autocomplete
       id="country-select-demo"
+      
       style={{ width: 300 }}
       options={countries}
       classes={{
         option: classes.option,
       }}
-   
+
+      onChange={(e,value) => {this.props.locationChange(value.label)}}
       autoHighlight
       getOptionLabel={option => option.label}
       renderOption={option => (
@@ -57,5 +66,22 @@ export default function CountrySelect() {
         />
       )}
     />
-  );
+  )};
 }
+
+
+
+const mapStateToProps = state => {
+ 
+  const userDetails = state["login_register"].get("user");
+  return {userDetails};
+};
+
+function mapDispatchToProps(dispatch) {
+
+  return({
+    locationChange: (label) => {dispatch(LoginRegisterActions.formChangeAction('location', label))},
+  });
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(CountrySelect));

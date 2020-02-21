@@ -5,6 +5,7 @@ const CleanWebpackPlugin = require('clean-webpack-plugin');
 const outputDirectory = 'dist';
 
 module.exports = {
+  cache: false,
   devtool: "source-map",
   entry: ['babel-polyfill', './src/client/main.js'],
   output: {
@@ -42,6 +43,7 @@ module.exports = {
     extensions: ['*', '.js', '.jsx']
   },
   devServer: {
+    contentBase: ['./src', './public'],
     port: 8080,
     inline: true,
     hot: true,
@@ -50,6 +52,7 @@ module.exports = {
       '/': 'http://localhost:8000'
     }
   },
+
   plugins: [
     new HtmlWebpackPlugin({
       template: './public/index.html',

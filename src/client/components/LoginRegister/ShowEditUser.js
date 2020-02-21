@@ -68,21 +68,23 @@ class ShowEditUser extends React.Component{
         }
 
         function renderForm(props) {
-            let prevLoginName = props.userDetails.login_name;
             return(
-                <form noValidate autoComplete="off" onChange={(e)=>props.formChange(e)} >
+                <form className="showEditUser-form" noValidate autoComplete="off" onChange={(e)=>props.formChange(e)} >
                     <TextField disabled={!props.showEdit} style={{"height":"50px"}}
                                onChange={(e) => {
-                                   if (e.target.value !== prevLoginName) {
-                                       // props.checkAvailability(e.target.value);
+                                   if (e.target.value !== props.next_name) {
+                                       props.checkAvailability(e.target.value);
                                        props.formChange(e);
                                    }}}
-                               error={!props.available} helperText={props.available===false ? "USER ALREADY EXISTS":""}
+                               error={!props.available && props.showEdit} helperText={props.showEdit===true && props.available===false ? "USER ALREADY EXISTS":""}
                                required fullWidth margin="normal" id="login_name"
                                label="Username" defaultValue={props.userDetails.login_name}/>
-                    <Geosuggest placeholder={props.userDetails.location} disabled={!props.showEdit} onSuggestSelect={(value)=>{props.locationChange(value.label)}} onChange={(value) => {props.locationChange(value.label)}} />
+                               <div className="showEditUser-country">
+                               <div style={(!props.showEdit)?{'display':'block'}:{'display':'none'}}> {props.userDetails.location}</div>
+                               <div style={(props.showEdit)?{'display':'block'}:{'display':'none'}}> <CountrySelect  /></div>
+                               </div>
 
-                    <Button margin="normal" onClick={() => {props.save(prevLoginName, props.userDetails); prevLoginName = props.userDetails.login_name; props.disableEdit()}}
+                    <Button margin="normal" onClick={() => {props.save(props.userDetails); props.disableEdit()}}
                             style={{'display':'block', 'float':'right'}} variant="contained"
                             color="primary" disabled={!props.available}>Save</Button>
                 </form>
@@ -123,6 +125,7 @@ const mapStateToProps = state => {
     const available = state['login_register'].get('available');
     const showEdit = state['login_register'].get('enableEdit');
 
+
     return {show, userDetails, available, showEdit};
 };
 
@@ -133,7 +136,7 @@ function mapDispatchToProps(dispatch) {
         formChange: (e) => {dispatch(LoginRegisterActions.formChangeAction(e.target.id, e.target.value))},
         locationChange: (label) => {dispatch(LoginRegisterActions.formChangeAction('location', label))},
         checkAvailability: (username) => {dispatch(LoginRegisterActions.checkUsernameAction(username))},
-        save: (prevLoginName, userDetails) =>{dispatch(EditUserActions.SaveEditedDetails(prevLoginName, userDetails))},
+        save: (userDetails) =>{dispatch(EditUserActions.SaveEditedDetails(userDetails))},
         fileChange: (file) => {dispatch(LoginRegisterActions.fileChangeAction(file[0]))},
         enableEdit: () => {dispatch(EditUserActions.ToggleEdit(true))},
         disableEdit: () => {dispatch(EditUserActions.ToggleEdit(false))}

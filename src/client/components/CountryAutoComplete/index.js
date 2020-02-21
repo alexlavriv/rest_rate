@@ -1,3 +1,3 @@
-import CountrySelect from './CountrySelect';
+import CountrySelect from '../LoginRegister/CountrySelect';
 
 export default CountrySelect;
