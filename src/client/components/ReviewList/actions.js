@@ -46,7 +46,35 @@ const GetRestNamesFailureAction = (message) =>{
 };
 
 
+const GetQueryAction = (query) =>{
+
+  return{
+      type:SearchBarConstants.GET_QUERY,
+      uri:'http://localhost:8000/query_review',
+      payload: query
+  };
+};
+
+const GetQuerySuccessAction = (result) =>{
+  console.log("GetQuerySuccessAction", result)
+  return{
+      type:SearchBarConstants.GET_QUERY_SUCCESS,
+      payload: result.reviews
+  };
+};
+
+const GetQueryFailureAction = (message) =>{
+  console.log("GetQueryFailureAction", message)
+  return{
+      type:ReviewListConstants.GET_QUERY_FAIL,
+      payload: message
+  };
+};
+
+
+
 const ReviewListActions = {GetReviewsAction, GetReviewsSuccessAction, GetReviewsFailureAction}
-const SearchBarActions = {GetRestNamesAction, GetRestNamesSuccessAction, GetRestNamesFailureAction}
+const SearchBarActions = {GetRestNamesAction, GetRestNamesSuccessAction, GetRestNamesFailureAction,
+                          GetQueryAction, GetQuerySuccessAction, GetQueryFailureAction}
 
 export {ReviewListActions, SearchBarActions}

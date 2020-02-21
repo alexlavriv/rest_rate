@@ -14,6 +14,9 @@ const toTitleCase = (phrase) => {
 const ReviewListReducer = (state = initialState.review_list, action) => {
  
     switch (action.type){
+        case SearchBarConstants.GET_QUERY_SUCCESS:
+            console.log("GET_QUERY_SUCCESS", action)
+            return state = state.set('reviews', action.payload);
         case SearchBarConstants.GET_REST_NAMES_SUCCESS:
             console.log("GET_REST_NAMES_SUCCESS", action)
             return state = state.set('rest_names', action.payload.names);

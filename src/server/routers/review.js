@@ -71,7 +71,8 @@ router.get('/restaurant_all_names', async (req, res) => {
     }
 });
 
-router.get('/review/query', async (req, res) => {
+router.post('/query_review', async (req, res) => {
+    console.log("/query_review")
     let query = req.body;
     console.log(query)
     try
