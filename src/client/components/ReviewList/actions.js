@@ -47,11 +47,20 @@ const GetRestNamesFailureAction = (message) =>{
 
 
 const GetQueryAction = (query) =>{
-
+    var caseInsesativeQuery = {};
+    Object.keys(query).forEach(function(key,index) {
+        let value = query[key];
+        if ((typeof value) !== "string"){
+            caseInsesativeQuery[key] = value;
+        }
+        else{
+            caseInsesativeQuery[key] = {'$regex':`^${value}$`, '$options':'i'}
+        }
+    });
   return{
       type:SearchBarConstants.GET_QUERY,
       uri:'http://localhost:8000/query_review',
-      payload: query
+      payload: caseInsesativeQuery
   };
 };
 
