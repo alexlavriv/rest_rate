@@ -18,21 +18,30 @@ const ReviewListConstants = {
   };
 
 const ReviewViewConstants = {
-    OPEN_MENU: 'OPEN_MENU',
-    CLOSE_MENU: 'CLOSE_MENU',
     SHOW_PROFILE: 'SHOW_PROFILE',
     GOT_USER: 'GOT_USER',
-    GOT_USER_FAIL: 'GOT_USER_FAIL'
+    GOT_USER_FAIL: 'GOT_USER_FAIL',
+    DELETE: 'DELETE',
+    DELETE_SUCCESS: 'DELETE_SUCCESS',
+    DELETE_FAILURE: 'DELETE_FAILURE',
+    SET_EDIT_WINDOW: 'SET_EDIT_WINDOW',
+    RESET_EDIT_WINDOW: 'RESET_EDIT_WINDOW',
+    EDIT_REVIEW: 'EDIT_REVIEW',
+    EDIT_FAILURE: 'EDIT_FAILURE'
 };
 
 const ProfileViewConstants = {
     CLOSE: 'CLOSE'
 };
 
+const EditReviewConstants = {
+    EDIT_REVIEW_FORM_CHANGE: 'EDIT_REVIEW_FORM_CHANGE'
+};
+
 const AdvancedSearchConstants ={
   SHOW_ADVANCED_SEARCH: 'SHOW_ADVANCED_SEARCH',
   ADVANCED_SEARCH_FORM_CHANGE : 'ADVANCED_SEARCH_FORM_CHANGE'
-}
+};
 
-export { ReviewListConstants, SearchBarConstants, ReviewViewConstants, ProfileViewConstants, AdvancedSearchConstants}
+export { ReviewListConstants, SearchBarConstants, ReviewViewConstants, ProfileViewConstants, AdvancedSearchConstants, EditReviewConstants}
   

@@ -1,4 +1,5 @@
 import {ReviewListConstants, SearchBarConstants, ProfileViewConstants, ReviewViewConstants, AdvancedSearchConstants} from './constants.js';
+import {EditReviewConstants} from "./constants";
 
  const GetReviewsAction = () =>{
     return{
@@ -80,21 +81,6 @@ const GetQueryFailureAction = (message) =>{
   };
 };
 
-export const OpenMenuAction = (review_id, target) => {
-    console.log('open menu action, id:', review_id);
-    console.log('open menu action, target:', target);
-
-    return({
-        type:ReviewViewConstants.OPEN_MENU,
-        payload: {review_id, target}
-    });
-};
-export const CloseMenuAction = () => {
-    return({
-        type:ReviewViewConstants.CLOSE_MENU,
-    });
-};
-
 export const ShowProfileAction = (userName) =>{
     console.log("show profile action");
     return({
@@ -118,6 +104,67 @@ export const gotUserFailure = (err) => {
     }
 };
 
+export const DeleteReviewAction = (review_id) => {
+    console.log('delete action, id:', review_id);
+    return{
+        type: ReviewViewConstants.DELETE,
+        uri: 'http://localhost:8080/review/delete/' + review_id,
+    }
+};
+
+export const DeleteReviewSuccess = (id) => {
+    return{
+        type: ReviewViewConstants.DELETE_SUCCESS,
+        payload: id
+    }
+};
+
+export const DeleteReviewFailure = () => {
+    return{
+        type: ReviewViewConstants.DELETE_FAILURE
+    }
+};
+
+export const SetEditWindowAction = (review) => {
+    return{
+        type: ReviewViewConstants.SET_EDIT_WINDOW,
+        payload: review
+    }
+};
+
+export const ResetEditWindowAction = () => {
+    return{
+        type: ReviewViewConstants.RESET_EDIT_WINDOW,
+    }
+};
+
+export const EditReviewFormChangeAction = (id, value) => {
+    return {
+        type: EditReviewConstants.EDIT_REVIEW_FORM_CHANGE,
+        payload: {
+            id,
+            value
+        }
+    }
+};
+
+export const EditReviewAction = (review) => {
+
+    console.log('edit review action', review);
+
+    return{
+        type: ReviewViewConstants.EDIT_REVIEW,
+        uri: 'http://localhost:8080/review/edit',
+        payload: review
+    }
+};
+
+export const ReviewEditFailAction = (error) => {
+    return{
+        type: ReviewViewConstants.EDIT_FAILURE
+    }
+};
+
 const clearShowProfile = () => {
     return{
         type:ProfileViewConstants.CLOSE,
@@ -129,21 +176,24 @@ const showAdvancedSearchAction = (show) => {
         type:AdvancedSearchConstants.SHOW_ADVANCED_SEARCH,
         payload: show
     }
-}
+};
 
 const changeAdvancedSearchAction = (id, value)=>{
     return {
         type:AdvancedSearchConstants.ADVANCED_SEARCH_FORM_CHANGE,
         payload: {id, value}
     }
-}
+};
+
+
+
 
 const ProfileViewActions = {clearShowProfile};
 const ReviewListActions = {GetReviewsAction, GetReviewsSuccessAction, GetReviewsFailureAction};
 const SearchBarActions = {GetRestNamesAction, GetRestNamesSuccessAction, GetRestNamesFailureAction,
                           GetQueryAction, GetQuerySuccessAction, GetQueryFailureAction};
 
-const AdvancedSearchActions = {showAdvancedSearchAction, changeAdvancedSearchAction}
+const AdvancedSearchActions = {showAdvancedSearchAction, changeAdvancedSearchAction};
 
 export {ReviewListActions, SearchBarActions, ProfileViewActions, AdvancedSearchActions}
 

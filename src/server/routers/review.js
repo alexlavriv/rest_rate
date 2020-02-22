@@ -2,12 +2,40 @@ const express = require('express');
 const User = require('../models/user');
 const Review = require('../models/review');
 const Restaurant = require('../models/restaurant');
-const auth = require('../middleware/auth');
 const multer = require('multer');
-const sharp = require('sharp');
 
 const router = new express.Router();
 const upload = multer();
+
+async function getAllReviews(res) {
+    try
+    {
+        console.log("In all reviews");
+        const review_list = await Review.get_all();
+        console.log(review_list);
+        res.send({review_list} )
+    } catch(e){
+        res.send(e)
+    }
+}
+
+router.patch("/review/edit", async (req, res) => {
+    console.log('in review edit');
+    let review = new Review(req.body);
+    console.log('before updating', review);
+    Review.findOneAndUpdate({_id: review._id}, review, async (err, patchedReview) => {
+        if (err) {
+            console.log("EDIT ERROR");
+            res.status(400).send(err);
+        } else if (!patchedReview) {
+            console.log("EDIT ERROR2");
+            res.status(400).send("Couldn't replace review");
+        } else {
+            console.log("EDIT SUCCESS", review);
+            await getAllReviews(res);
+        }
+    })
+});
 
 router.post('/review/:login_name',upload.array('files'), async (req, res) => {
     const {files} = req;
@@ -46,16 +74,7 @@ router.post('/review/:login_name',upload.array('files'), async (req, res) => {
 });
 
 router.get('/all_reviews', async (req, res) => {
-    try
-    {
-        console.log("In all reviews");
-        const review_list = await Review.get_all();
-        console.log("got from db");
-        console.log(review_list);
-        res.send({review_list} )
-    } catch(e){
-        res.send(e)
-    }
+    await getAllReviews(res);
 });
 
 router.get('/restaurant_all_names', async (req, res) => {
@@ -63,7 +82,6 @@ router.get('/restaurant_all_names', async (req, res) => {
     {
         console.log("In all rests");
         const names = await Review.get_all_rest_names();
-        console.log("got from db");
         console.log(names);
         res.send({names} )
     } catch(e){
@@ -72,19 +90,32 @@ router.get('/restaurant_all_names', async (req, res) => {
 });
 
 router.post('/query_review', async (req, res) => {
-    console.log("/query_review")
+    console.log("/query_review");
     let query = req.body;
-    console.log(query)
+    console.log(query);
     try
     {
         console.log("In all rests");
         const reviews = await Review.find(query);
-        console.log("got from db");
         console.log(reviews);
         res.send({reviews} )
     } catch(e){
         res.send(e)
     }
 });
+
+router.delete('/review/delete/:id', async (req, res) => {
+   console.log('delete id:', req.params.id);
+   Review.findOneAndDelete({_id: req.params.id}, async (err) => {
+       if (err) {
+           res.status(400).send(err);
+       } else {
+           await getAllReviews(res);
+       }
+   })
+});
+
+
+
 
 module.exports = router;

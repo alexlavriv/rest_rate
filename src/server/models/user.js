@@ -40,7 +40,7 @@ const userSchema = new mongoose.Schema(
 // });
 
 userSchema.methods.generateAuthToken = async function (){
-    const user = this
+    const user = this;
     const token = jwt.sign({_id:user._id.toString()},'alexlavriv');
     user.tokens = user.tokens.concat({token});
         await user.save();
@@ -82,7 +82,6 @@ userSchema.pre('save', async function (next){
         user.password = await bcrypt.hash(user.password, 8)
     }
     
-    console.log("just before saving ", user);
     next();
 });
 
@@ -91,7 +90,6 @@ userSchema.pre('remove', async function (next){
     const user = this;
      await Task.deleteMany({owner:user._id});
 
-    console.log("just before removing ", user);
     next();
 });
 

@@ -27,14 +27,13 @@ export default {
         review:{}
     }),
     review_list:Map({
-        open_menu_id: "",
-        menu_anchor: null,
         reviews:[],
         rest_names:[],
         user: {},
         show: false,
         show_advanced_search : false,
-        advanced_search_form:{rest_name:"", avg_score:0}
-
+        advanced_search_form:{rest_name:"", avg_score:0},
+        open_edit_id: "",
+        edit_review: {}
     }),
 };

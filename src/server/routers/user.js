@@ -4,7 +4,6 @@ const User = require('../models/user');
 const auth = require('../middleware/auth');
 const multer = require('multer');
 const sharp = require('sharp');
-const fs = require('fs');
 const Review = require('../models/review');
 
 router.get('/test', (req,res)=>{
@@ -74,7 +73,7 @@ router.post('/users/register',upload.single('avatar'), async (req, res) => {
 
 router.patch("/users/edit", async (req, res) => {
     var user = new User(req.body);
-    console.log("before updating", user)
+    console.log("before updating", user);
     User.findOneAndUpdate({_id:user._id}, user, async (err, replaced) => {
         if (err) {
             console.log("EDIT ERROR");
@@ -150,10 +149,10 @@ router.patch('/users/me',auth, async (req,res)=>{
         await user.save();
 
         //const user = await User.findByIdAndUpdate(req.params.id, {name:req.body})
-        console.log("Done updating")
-        res.send(user)
+        console.log("Done updating");
+        res.send(user);
     } catch (error) {
-        res.send('error')
+        res.send('error');
     }
 });
 
@@ -161,13 +160,13 @@ router.delete('/users/me', auth, async(req,res) =>{
     try {
         //const user = await User.findByIdAndDelete(res.user._id)
         
-        await res.user.remove()
-        sendCancelEmail(res.user.email, res.user.name)
+        await res.user.remove();
+        sendCancelEmail(res.user.email, res.user.name);
         res.send(res.user);
     } catch (error) {
         res.send(error)
     }
-})
+});
 
 
 avatar = multer({
@@ -187,28 +186,28 @@ const errorMiddleware = (req,res,next)=>{
 };
 
 router.post('/users/me/avatar', auth ,avatar.single('avatar'), async (req,res) =>{
-    const buffer =await sharp(req.file.buffer).resize({width:250, height:250}).png().toBuffer()
-    res.user.avatar = buffer
-    await res.user.save()
+    const buffer =await sharp(req.file.buffer).resize({width:250, height:250}).png().toBuffer();
+    res.user.avatar = buffer;
+    await res.user.save();
     res.send()
 }, (error, req,res, next)=>{
     res.status(400).send({message:"fucking fuck"})
 });
 
 router.delete('/users/me/avatar', auth, async (req,res) =>{
-    res.user.avatar = undefined
-    await res.user.save()
+    res.user.avatar = undefined;
+    await res.user.save();
     res.send()
 });
 
 router.get('/users/:id/avatar', async (req,res)=>{
     try{
-        const user = await User.findById(req.params.id)
+        const user = await User.findById(req.params.id);
 
         if (!user || !user.avatar){
             throw new Error()
         }
-        res.set('Content-Type','image/png')
+        res.set('Content-Type','image/png');
         res.send(user.avatar)
     }catch(e){
         res.status(404).send()

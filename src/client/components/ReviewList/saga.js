@@ -1,6 +1,13 @@
 import {ReviewListConstants, ReviewViewConstants, SearchBarConstants} from './constants'
 import { call, put, takeEvery } from 'redux-saga/effects'
-import {gotUserFailure, gotUserSuccess, ReviewListActions, SearchBarActions} from './actions'
+import {
+  DeleteReviewFailure,
+  gotUserFailure,
+  gotUserSuccess,
+  ReviewListActions,
+  SearchBarActions,
+  ReviewEditFailAction
+} from './actions'
 import {all} from 'redux-saga/effects'
 
 function* getReviews(action){
@@ -22,7 +29,7 @@ function* getReviews(action){
 
 function* getRestNames(action){
   try {
-    console.log("GET REST NAMES", action)
+    console.log("GET REST NAMES", action);
     const res = yield call(fetch, action.uri, {
       method: 'GET',
       headers: {
@@ -38,7 +45,7 @@ function* getRestNames(action){
 }
 
 function* getQuery(action){
-  console.log("!!!!!!!!!!!!!getQuery",action)
+  console.log("!!!!!!!!!!!!!getQuery",action);
   const body = JSON.stringify(action.payload);
   try {
     const res = yield call(fetch, action.uri, {
@@ -75,6 +82,41 @@ function* getProfile(action){
   }
 }
 
+function* deleteReview(action) {
+  console.log("delete review saga");
+  try {
+    const res = yield call(fetch, action.uri, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+    });
+    console.log ('after call');
+    const json = yield call([res, 'json']);
+    console.log('delete review success for id:', json);
+    yield put(ReviewListActions.GetReviewsSuccessAction(json))
+  } catch (e) {
+    yield put(DeleteReviewFailure(e.message));
+  }
+
+}
+
+function* editReview(action) {
+  console.log('edit review saga', action.payload);
+  try {
+    const res = yield call(fetch, action.uri, {
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        method: 'PATCH',
+        body: JSON.stringify(action.payload)
+    });
+    const json = yield call ([res, 'json']);
+    yield put(ReviewListActions.GetReviewsSuccessAction(json));
+  } catch (e) {
+    yield put(ReviewEditFailAction(e));
+  }
+}
 
 
 function* GetReviewsSaga() {
@@ -83,7 +125,9 @@ function* GetReviewsSaga() {
               takeEvery(ReviewListConstants.GET_REVIEWS, getReviews), 
               takeEvery(SearchBarConstants.GET_REST_NAMES, getRestNames), 
               takeEvery(SearchBarConstants.GET_QUERY, getQuery),
-              takeEvery(ReviewViewConstants.SHOW_PROFILE, getProfile)
+              takeEvery(ReviewViewConstants.SHOW_PROFILE, getProfile),
+              takeEvery(ReviewViewConstants.DELETE, deleteReview),
+              takeEvery(ReviewViewConstants.EDIT_REVIEW, editReview),
     ]);
           }
           

@@ -75,10 +75,9 @@ function* validateUsername(action) {
 }
 
 function* edit(action) {
-    console.log("edit", action.payload)
+    console.log("edit", action.payload);
     const { avatar, ...payload} = action.payload;
     try {
-
         const res = yield call(fetch, action.uri, {
             headers: {
                 'Content-Type': 'application/json'

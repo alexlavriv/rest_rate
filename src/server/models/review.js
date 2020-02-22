@@ -35,7 +35,6 @@ reviewSchema.pre('save', async function (next){
     review.avg_rating = average([review.staff_rating, review.clean_rating, review.drive_rating, review.delivery_rating, 
                                     review.food_rating]);
     
-    console.log("just before saving ", review);
     next();
 });
 
@@ -65,8 +64,8 @@ const toTitleCase = (phrase) => {
 reviewSchema.statics.get_all_rest_names = async  () =>{
     console.log("in model");
     const review_list = await Review.find();
-    let names = review_list.map(rest =>  toTitleCase(rest.rest_name))
-    names =  [...new Set(names)]
+    let names = review_list.map(rest =>  toTitleCase(rest.rest_name));
+    names =  [...new Set(names)];
     if (!names){
         throw new Error("Unable to log in")
     }
