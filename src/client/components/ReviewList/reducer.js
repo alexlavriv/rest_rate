@@ -17,6 +17,13 @@ const ReviewListReducer = (state = initialState.review_list, action) => {
         case AdvancedSearchConstants.SHOW_ADVANCED_SEARCH:{
             return state.set("show_advanced_search", action.payload);
         }
+
+        case AdvancedSearchConstants.ADVANCED_SEARCH_FORM_CHANGE:{
+            var query = state.get("advanced_search_form")
+            query[action.payload.id] = action.payload.value;
+            console.log("###########################QUERY", query)
+            return state.set("advanced_search_form", query);
+        }
         case SearchBarConstants.GET_QUERY_SUCCESS:
             console.log("GET_QUERY_SUCCESS", action)
             return state = state.set('reviews', action.payload);

@@ -30,7 +30,8 @@ const ProfileViewConstants = {
 };
 
 const AdvancedSearchConstants ={
-  SHOW_ADVANCED_SEARCH: 'SHOW_ADVANCED_SEARCH'
+  SHOW_ADVANCED_SEARCH: 'SHOW_ADVANCED_SEARCH',
+  ADVANCED_SEARCH_FORM_CHANGE : 'ADVANCED_SEARCH_FORM_CHANGE'
 }
 
 export { ReviewListConstants, SearchBarConstants, ReviewViewConstants, ProfileViewConstants, AdvancedSearchConstants}

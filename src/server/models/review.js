@@ -14,6 +14,7 @@ const reviewSchema = new mongoose.Schema(
         drive_rating: {type: Number},
         delivery_rating: {type: Number},
         food_rating: {type: Number},
+        avg_rating: {type:Number},
         files: {type: Array},
         user: {
             type: mongoose.Schema.Types.ObjectId,
@@ -25,6 +26,19 @@ const reviewSchema = new mongoose.Schema(
         timestamps:true
     }
 );
+const average = arr => arr.reduce( ( p, c ) => p + c, 0 ) / arr.length;
+
+
+/** This is a description of the foo function. */
+reviewSchema.pre('save', async function (next){
+    const review = this;
+    review.avg_rating = average([review.staff_rating, review.clean_rating, review.drive_rating, review.delivery_rating, 
+                                    review.food_rating]);
+    
+    console.log("just before saving ", review);
+    next();
+});
+
 
 reviewSchema.statics.get_all = async  () =>{
     console.log("in model");

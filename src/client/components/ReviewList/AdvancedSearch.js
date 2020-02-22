@@ -3,8 +3,11 @@ import {withStyles} from '@material-ui/core/styles';
 import Modal from '@material-ui/core/Modal';
 import {connect} from 'react-redux';
 import "./AdvancedSearch.scss"
-import {AdvancedSearchActions} from "./actions";
-
+import {AdvancedSearchActions, SearchBarActions} from "./actions";
+import TextField from '@material-ui/core/TextField';
+import Button from '@material-ui/core/Button';
+import Typography from "@material-ui/core/Typography";
+import Rating from "@material-ui/lab/Rating";
 
 
 
@@ -13,7 +16,7 @@ const styles = theme => {
     return ({
         paper: {
             position: 'absolute',
-            width: 600,
+            width: 350,
             backgroundColor: theme.palette.background.paper,
             border: '2px solid #000',
             boxShadow: theme.shadows[5],
@@ -48,9 +51,18 @@ class AdvancedSearch extends React.Component{
                     aria-labelledby="simple-modal-title"
                     aria-describedby="simple-modal-description"
                     open={this.props.show}
+                    onClose={()=> this.props.advanced_search_click(false)}
                    >
                     <div style={modalStyle} className={classes.paper} >
-                            Search
+                        <form>
+                        <TextField fullWidth margin="normal" onChange={({target})=>this.props.change(target.id, target.value)}   id="rest_name"  label="Restaurant Name" />
+                          <div className="AdvancedSearch-rating">
+                                <div className="AdvancedSearch-text" ><Typography component="legend">Avarage Score:</Typography></div>
+                                <div className="AdvancedSearch-stars"><Rating id="avg_rating" onChange={(e,value)=>this.props.change(e.target.name,value)}  name="avg_score"  /> </div>
+                              </div>
+                              <Button onClick={()=> {this.props.search(this.props.query); this.props.advanced_search_click(false)}} variant="contained" color="primary" style={{float:"right"}}> Search</Button>
+                        </form>
+
                     </div>
                 </Modal>
                 </div>
@@ -61,14 +73,17 @@ class AdvancedSearch extends React.Component{
 
 
 const mapStateToProps = state =>{
+    const query = state["review_list"].get("advanced_search_form");
     const show = state["review_list"].get("show_advanced_search");
-    return {show};
+    return {show, query};
   };
   
   
   function mapDispatchToProps(dispatch) {
       return({
-            advanced_search_click: (show) => {dispatch(AdvancedSearchActions.showAdvancedSearchAction(show) )}
+            advanced_search_click: (show) => {dispatch(AdvancedSearchActions.showAdvancedSearchAction(show) )},
+            change:(id, value) => {dispatch(AdvancedSearchActions.changeAdvancedSearchAction(id, value))},
+            search:({rest_name, avg_score}) =>{dispatch(SearchBarActions.GetQueryAction({rest_name, 'avg_rating': { $gt: avg_score }}))}
           });
   }
   

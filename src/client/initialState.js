@@ -34,6 +34,7 @@ export default {
         user: {},
         show: false,
         show_advanced_search : false,
+        advanced_search_form:{rest_name:"", avg_score:0}
 
     }),
 };

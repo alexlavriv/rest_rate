@@ -122,12 +122,19 @@ const showAdvancedSearchAction = (show) => {
     }
 }
 
+const changeAdvancedSearchAction = (id, value)=>{
+    return {
+        type:AdvancedSearchConstants.ADVANCED_SEARCH_FORM_CHANGE,
+        payload: {id, value}
+    }
+}
+
 const ProfileViewActions = {clearShowProfile};
 const ReviewListActions = {GetReviewsAction, GetReviewsSuccessAction, GetReviewsFailureAction};
 const SearchBarActions = {GetRestNamesAction, GetRestNamesSuccessAction, GetRestNamesFailureAction,
                           GetQueryAction, GetQuerySuccessAction, GetQueryFailureAction};
 
-const AdvancedSearchActions = {showAdvancedSearchAction}
+const AdvancedSearchActions = {showAdvancedSearchAction, changeAdvancedSearchAction}
 
 export {ReviewListActions, SearchBarActions, ProfileViewActions, AdvancedSearchActions}
 
