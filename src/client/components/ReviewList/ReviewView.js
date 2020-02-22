@@ -84,7 +84,10 @@ class ReviewView extends React.Component {
                     {showRating(this.props.review, "food_rating", "Food Quality:")}
                 </div>
 
-                <div className="ReviewView-author" onClick={() => {console.log('this.props.review.user_name:', this.props.review.user_name, 'this.props.user.login_name:', this.props.user.login_name); this.props.showProfile(this.props.review.user_name)}}>{this.props.review.user_name}</div>
+                <div className="ReviewView-author">
+              
+                   <div  onClick={() => {console.log('this.props.review.user_name:', this.props.review.user_name, 'this.props.user.login_name:', this.props.user.login_name); this.props.showProfile(this.props.review.user_name)}}>author: <span>{this.props.review.user_name} </span> </div>
+                    </div>
             </div>
         );
     }

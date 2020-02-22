@@ -46,7 +46,7 @@ class AdvancedSearch extends React.Component{
         const modalStyle = this.getModelStyle();
         return (
             <div className="AdvancedSearch-root">
-                <div className="link-style" onClick={() => this.props.advanced_search_click(true)}>Advanced Search</div>
+                <div className="link-style" onClick={() => {console.log("I was clicked");this.props.advanced_search_click(true)}}>Advanced Search</div>
                 <Modal
                     aria-labelledby="simple-modal-title"
                     aria-describedby="simple-modal-description"
