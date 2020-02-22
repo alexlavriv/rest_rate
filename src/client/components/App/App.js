@@ -9,6 +9,7 @@ import GalleryActions from '../Gallery/actions';
 import { Button } from 'primereact/button';
 import { Dropdown } from 'primereact/dropdown';
 import AddReview from '../AddReview'
+import {SearchBarActions} from '../ReviewList/actions'
 
 class App extends React.Component {
     componentDidMount() {
@@ -20,7 +21,11 @@ class App extends React.Component {
     return (
       <div className="app-root">
         <div className="app-header">
-          <div className="logo">REST RATE</div>
+          <div >
+            <div onClick={()=> this.props.loadReviews()} className="logo">
+            REST RATE
+            </div>
+            </div>
           <div>
             <SearchBar/>
             <AdvancedSearch/>
@@ -45,8 +50,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-      loadTagsEventHandler: () => {
-         // dispatch(AppActions.loadTagsAction());
+      loadReviews: () => {
+        dispatch (SearchBarActions.GetQueryAction({}));
       },
     updateTagEventHandler: (e) => {
      // dispatch(AppActions.updateTagAction(e.value));

@@ -12,6 +12,13 @@ body, html {
 .logo{
   padding-top: 35px;
   padding-left: 20px;
+  width: 190px;
+}
+
+
+.logo:hover{
+  text-decoration: underline;
+  cursor: pointer;
 }
 
 .app-root {
