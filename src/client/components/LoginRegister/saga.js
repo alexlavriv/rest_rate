@@ -1,7 +1,7 @@
 import {LoginRegisterConstants} from './constants'
-import { call, put, takeEvery } from 'redux-saga/effects'
-import {LoginRegisterActions, EditUserActions} from './actions'
-import {all} from 'redux-saga/effects'
+import {all, call, put, takeEvery} from 'redux-saga/effects'
+import {EditUserActions, LoginRegisterActions} from './actions'
+import {ReviewListActions} from "../ReviewList/actions";
 
 function* register(action){
     try {
@@ -86,7 +86,7 @@ function* edit(action) {
             body: JSON.stringify(payload)
         });
         const json = yield call([res, 'json']); //retrieve body of response
-        yield put(EditUserActions.EditSuccessAction(json));
+        yield put(ReviewListActions.GetReviewsSuccessAction(json));
     } catch (e) {
         yield put(EditUserActions.EditFailureAction(e.message));
     }

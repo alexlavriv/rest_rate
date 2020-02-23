@@ -4,16 +4,13 @@ import {connect} from 'react-redux';
 import Typography from "@material-ui/core/Typography";
 import Rating from "@material-ui/lab/Rating";
 import ImageGrid from '../ImageGrid'
-import {
-    DeleteReviewAction,
-    SetEditWindowAction,
-    ShowProfileAction
-} from "./actions";
+import {DeleteReviewAction, SetEditWindowAction, ShowProfileAction} from "./actions";
 
 import IconButton from "@material-ui/core/IconButton";
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
 import EditReview from "./EditReview";
+
 
 class ReviewView extends React.Component {
 
@@ -72,9 +69,13 @@ class ReviewView extends React.Component {
                 </div>
 
                 <div className="ReviewView-author">
-              
-                   <div  onClick={() => {console.log('this.props.review.user_name:', this.props.review.user_name, 'this.props.user.login_name:', this.props.user.login_name); this.props.showProfile(this.props.review.user_name)}}>author: <span>{this.props.review.user_name} </span> </div>
+                    <div onClick={() => {console.log('this.props.review.user_name:',
+                                        this.props.review, 'this.props.user.login_name:', this.props.user.login_name);
+                                        this.props.showProfile(this.props.review.user)
+                        }}>
+                       author: <span>{this.props.review.user.login_name}</span>
                     </div>
+                </div>
             </div>
         );
     }

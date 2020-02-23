@@ -7,18 +7,16 @@ import Button from "@material-ui/core/Button";
 import {EditUserActions, LoginRegisterActions} from "./actions";
 import './LoginRegister.scss'
 import "./ShowEditUser.scss"
-import Typography from "@material-ui/core/Typography";
 import List from "@material-ui/core/List";
-import {ListItemSecondaryAction, ListItemText} from "@material-ui/core";
+import {ListItemSecondaryAction} from "@material-ui/core";
 import ListItem from "@material-ui/core/ListItem";
 import IconButton from "@material-ui/core/IconButton";
 import EditIcon from '@material-ui/icons/Edit';
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 import CountrySelect from "../CountryAutoComplete";
-import {DropzoneArea} from "material-ui-dropzone";
 import Avatar from "@material-ui/core/Avatar";
-import Geosuggest from "react-geosuggest";
 import Tooltip from "@material-ui/core/Tooltip";
+import {SearchBarActions} from "../ReviewList/actions";
 
 const styles = theme => {
     return ({
@@ -84,7 +82,7 @@ class ShowEditUser extends React.Component{
                                <div style={(props.showEdit)?{'display':'block'}:{'display':'none'}}> <CountrySelect  /></div>
                                </div>
                     <Button  margin="normal"
-                        // onClick={()=>props.register(props.userDetails)}
+                             onClick={()=>{props.getQuery(props.userDetails._id); props.ShowEditUser(false); props.disableEdit()}}
                              style={{'display':'block', 'float':'left'}}
                              variant="contained" color="primary">Show Reviews</Button>
                     <Button margin="normal" onClick={() => {props.save(props.userDetails); props.disableEdit()}}
@@ -143,7 +141,8 @@ function mapDispatchToProps(dispatch) {
         save: (userDetails) =>{dispatch(EditUserActions.SaveEditedDetails(userDetails))},
         fileChange: (file) => {dispatch(LoginRegisterActions.fileChangeAction(file[0]))},
         enableEdit: () => {dispatch(EditUserActions.ToggleEdit(true))},
-        disableEdit: () => {dispatch(EditUserActions.ToggleEdit(false))}
+        disableEdit: () => {dispatch(EditUserActions.ToggleEdit(false))},
+        getQuery: (query) => {dispatch(SearchBarActions.GetQueryAction(query, true))},
     });
 }
 

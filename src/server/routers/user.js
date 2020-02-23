@@ -18,9 +18,21 @@ function generateDateString(date) {
     return format;
 }
 
-router.get('/users/:username', async (req, res) => {
+async function getAllReviews(res) {
+    try
+    {
+        console.log("In all reviews");
+        const review_list = await Review.get_all();
+        console.log(review_list);
+        res.send({review_list} )
+    } catch(e){
+        res.send(e)
+    }
+}
+
+router.get('/users/:user_id', async (req, res) => {
     console.log("get user");
-    User.findOne({login_name: req.params.username}, async (err, foundUser) => {
+    User.findOne({_id: req.params.user_id}, async (err, foundUser) => {
         if (err) {
             res.status(400).send(err);
         } else if (!foundUser) {
@@ -83,7 +95,7 @@ router.patch("/users/edit", async (req, res) => {
             res.status(400).send("Couldn't replace user");
         } else {
             console.log("EDIT SUCCESS", user);
-            res.send({'user': user});
+            await getAllReviews(res);
         }
     });
 });

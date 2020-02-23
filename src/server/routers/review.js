@@ -59,7 +59,6 @@ router.post('/review/:login_name',upload.array('files'), async (req, res) => {
                 res.status(400).send("User not found");
             } else {
                 review.user = foundUser._id;
-                review.user_name = foundUser.login_name;
                 try
                 {
                     await review.save();
@@ -96,7 +95,7 @@ router.post('/query_review', async (req, res) => {
     try
     {
         console.log("In all rests");
-        const reviews = await Review.find(query);
+        const reviews = await Review.find(query).populate('user');
         console.log(reviews);
         res.send({reviews} )
     } catch(e){

@@ -3,15 +3,10 @@ import {withStyles} from '@material-ui/core/styles';
 import Modal from '@material-ui/core/Modal';
 import {connect} from 'react-redux';
 import "./ProfileView.scss"
-import List from "@material-ui/core/List";
-import {ListItemSecondaryAction, ListItemText} from "@material-ui/core";
-import ListItem from "@material-ui/core/ListItem";
 import Avatar from "@material-ui/core/Avatar";
-import {LoginRegisterActions} from "../LoginRegister/actions";
-import {ProfileViewActions} from "./actions";
+import {ProfileViewActions, SearchBarActions} from "./actions";
 import Typography from "@material-ui/core/Typography";
 import Grid from "@material-ui/core/Grid";
-import Paper from "@material-ui/core/Paper";
 import Button from "@material-ui/core/Button";
 
 
@@ -45,10 +40,21 @@ class ProfileView extends React.Component{
     }
 
 
-
     render(){
         const { classes } = this.props;
         const modalStyle = this.getModelStyle();
+
+        function generateDateString(date) {
+            console.log('date:', date);
+            if (date) {
+                let splitted = date.toString().split('-');
+                let splittedDay = splitted[2].split('T')[0];
+                let format = splittedDay + '/' + splitted[1] + '/' + splitted[0];
+                console.log('DATE FORMAT:', format);
+                return format;
+            }
+        }
+
 
         return (
             <div>
@@ -74,12 +80,12 @@ class ProfileView extends React.Component{
                                             {this.props.profileUserDetails.login_name}
                                         </Typography>
                                         <Typography variant="body1" gutterBottom>Location: {this.props.profileUserDetails.location}</Typography>
-                                        <Typography variant="body1" gutterBottom>Joined: {this.props.profileUserDetails.join_date}</Typography>
+                                        <Typography variant="body1" gutterBottom>Joined: {generateDateString(this.props.profileUserDetails.createdAt)}</Typography>
                                     </Grid>
                                 </Grid>
                             </Grid>
                             <Button 
-                                     // onClick={()=>props.register(props.userDetails)}
+                                     onClick={()=>{this.props.getQuery(this.props.profileUserDetails._id); this.props.clearShowProfile()}}
                                      style={{'display':'block', 'float':'right'}}
                                      variant="contained" color="primary">Show Reviews</Button>
                         </div>
@@ -102,6 +108,7 @@ const mapStateToProps = (state) => {
 
 function mapDispatchToProps(dispatch) {
     return({
+        getQuery: (query) => {dispatch(SearchBarActions.GetQueryAction(query, true))},
         clearShowProfile: () => {dispatch(ProfileViewActions.clearShowProfile())},
     });
 }

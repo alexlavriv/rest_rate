@@ -20,7 +20,6 @@ const reviewSchema = new mongoose.Schema(
             type: mongoose.Schema.Types.ObjectId,
             ref: 'User'
         },
-        user_name: String
     },
     {
         timestamps:true
@@ -41,7 +40,7 @@ reviewSchema.pre('save', async function (next){
 
 reviewSchema.statics.get_all = async  () =>{
     console.log("in model");
-    const review_list = await Review.find();
+    const review_list = await Review.find().populate('user');
 
     if (!review_list){
         throw new Error("Unable to log in")

@@ -1,14 +1,6 @@
 import {ReviewListConstants, ReviewViewConstants, SearchBarConstants} from './constants'
-import { call, put, takeEvery } from 'redux-saga/effects'
-import {
-  DeleteReviewFailure,
-  gotUserFailure,
-  gotUserSuccess,
-  ReviewListActions,
-  SearchBarActions,
-  ReviewEditFailAction
-} from './actions'
-import {all} from 'redux-saga/effects'
+import {all, call, put, takeEvery} from 'redux-saga/effects'
+import {DeleteReviewFailure, ReviewEditFailAction, ReviewListActions, SearchBarActions} from './actions'
 
 function* getReviews(action){
   try {
@@ -65,22 +57,22 @@ function* getQuery(action){
   }
 }
 
-function* getProfile(action){
-  console.log("get profile saga");
-  try {
-    const res = yield call(fetch, action.uri, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-    });
-    const json = yield call([res, 'json']); //retrieve body of response
-    console.log("got user success");
-    yield put(gotUserSuccess(json));
-  } catch (e) {
-    yield put(gotUserFailure(e.message));
-  }
-}
+// function* getProfile(action){
+//   console.log("get profile saga");
+//   try {
+//     const res = yield call(fetch, action.uri, {
+//       method: 'GET',
+//       headers: {
+//         'Content-Type': 'application/json'
+//       },
+//     });
+//     const json = yield call([res, 'json']); //retrieve body of response
+//     console.log("got user success");
+//     yield put(ShowProfileSuccessAction(json));
+//   } catch (e) {
+//     yield put(ShowProfileFailureAction(e.message));
+//   }
+// }
 
 function* deleteReview(action) {
   console.log("delete review saga");
@@ -118,14 +110,13 @@ function* editReview(action) {
   }
 }
 
-
 function* GetReviewsSaga() {
     //using takeEvery, you take the action away from reducer to saga
     yield all ([
               takeEvery(ReviewListConstants.GET_REVIEWS, getReviews), 
               takeEvery(SearchBarConstants.GET_REST_NAMES, getRestNames), 
               takeEvery(SearchBarConstants.GET_QUERY, getQuery),
-              takeEvery(ReviewViewConstants.SHOW_PROFILE, getProfile),
+              // takeEvery(ReviewViewConstants.SHOW_PROFILE, getProfile),
               takeEvery(ReviewViewConstants.DELETE, deleteReview),
               takeEvery(ReviewViewConstants.EDIT_REVIEW, editReview),
     ]);

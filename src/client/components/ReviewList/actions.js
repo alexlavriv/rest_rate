@@ -1,10 +1,16 @@
-import {ReviewListConstants, SearchBarConstants, ProfileViewConstants, ReviewViewConstants, AdvancedSearchConstants} from './constants.js';
+import {
+    AdvancedSearchConstants,
+    ProfileViewConstants,
+    ReviewListConstants,
+    ReviewViewConstants,
+    SearchBarConstants
+} from './constants.js';
 import {EditReviewConstants} from "./constants";
 
- const GetReviewsAction = () =>{
+const GetReviewsAction = () =>{
     return{
         type:ReviewListConstants.GET_REVIEWS,
-        uri:'http://localhost:8000/all_reviews',
+        uri:'http://localhost:8080/all_reviews',
         payload: {}
     };
 };
@@ -27,7 +33,7 @@ import {EditReviewConstants} from "./constants";
 const GetRestNamesAction = () =>{
   return{
       type:SearchBarConstants.GET_REST_NAMES,
-      uri:'http://localhost:8000/restaurant_all_names',
+      uri:'http://localhost:8080/restaurant_all_names',
       payload: {}
   };
 };
@@ -47,23 +53,29 @@ const GetRestNamesFailureAction = (message) =>{
 };
 
 
-const GetQueryAction = (query) =>{
-    var caseInsesativeQuery = {};
-    Object.keys(query).forEach(function(key,index) {
-        let value = query[key];
-        if ((typeof value) !== "string"){
-            caseInsesativeQuery[key] = value;
-        }
-        else{
-            caseInsesativeQuery[key] = {'$regex':`^${value}$`, '$options':'i'}
-        }
-    });
+const GetQueryAction = (query, isUser) =>{
+    let caseInsensitiveQuery = {};
+    if (!isUser) {
+        Object.keys(query).forEach(function(key,index) {
+            let value = query[key];
+            if ((typeof value) !== "string"){
+                caseInsensitiveQuery[key] = value;
+            }
+            else{
+                caseInsensitiveQuery[key] = {'$regex':`^${value}$`, '$options':'i'}
+            }
+        });
+    } else {
+        caseInsensitiveQuery['user'] = query;
+    }
+
   return{
       type:SearchBarConstants.GET_QUERY,
-      uri:'http://localhost:8000/query_review',
-      payload: caseInsesativeQuery
+      uri:'http://localhost:8080/query_review',
+      payload: caseInsensitiveQuery
   };
 };
+
 
 const GetQuerySuccessAction = (result) =>{
   console.log("GetQuerySuccessAction", result);
@@ -81,27 +93,12 @@ const GetQueryFailureAction = (message) =>{
   };
 };
 
-export const ShowProfileAction = (userName) =>{
+export const ShowProfileAction = (user) =>{
     console.log("show profile action");
     return({
         type:ReviewViewConstants.SHOW_PROFILE,
-        uri: 'http://localhost:8080/users/' + userName,
-    });
-};
-
-export const gotUserSuccess = (user) => {
-    console.log("got user success action, user:", user);
-    return{
-        type:ReviewViewConstants.GOT_USER,
         payload: user
-    }
-};
-
-export const gotUserFailure = (err) => {
-    return{
-        type:ReviewViewConstants.GOT_USER_FAIL,
-        payload: {err}
-    }
+    });
 };
 
 export const DeleteReviewAction = (review_id) => {
@@ -159,7 +156,7 @@ export const EditReviewAction = (review) => {
     }
 };
 
-export const ReviewEditFailAction = (error) => {
+export const ReviewEditFailAction = () => {
     return{
         type: ReviewViewConstants.EDIT_FAILURE
     }

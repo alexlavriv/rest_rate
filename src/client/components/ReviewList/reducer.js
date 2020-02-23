@@ -1,10 +1,10 @@
 import {
+    AdvancedSearchConstants,
+    EditReviewConstants,
     ProfileViewConstants,
     ReviewListConstants,
     ReviewViewConstants,
-    SearchBarConstants,
-    AdvancedSearchConstants,
-    EditReviewConstants
+    SearchBarConstants
 } from './constants'
 
 import initialState from '../../initialState'
@@ -46,7 +46,7 @@ const ReviewListReducer = (state = initialState.review_list, action) => {
              state = state.set('rest_names', unique_names);
 
             return state = state.set('reviews', action.payload.review_list);
-        case ReviewViewConstants.GOT_USER_FAIL: {
+        case ReviewViewConstants.SHOW_PROFILE_FAILURE: {
             state = state.set('user', {});
             state = state.set('show', false);
             return state;
@@ -58,9 +58,9 @@ const ReviewListReducer = (state = initialState.review_list, action) => {
             return state;
         }
 
-        case ReviewViewConstants.GOT_USER:
+        case ReviewViewConstants.SHOW_PROFILE:
         {
-            console.log("got user reducer", state);
+            console.log("user profile reducer", state);
             state = state.set('user', action.payload);
             state = state.set('show', true);
             console.log(state);
