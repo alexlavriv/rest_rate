@@ -16,10 +16,10 @@
    * Rate by categories
 5. Search:
    * Quick Search 
-      ** Restaurant names auto complete
+      * Restaurant names auto complete
    * Advanced Search
-      ** Search by name
-      ** Search by avarage rating
+      * Search by name
+      * Search by avarage rating
       
 
 
